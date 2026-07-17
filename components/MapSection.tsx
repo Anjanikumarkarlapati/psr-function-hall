@@ -13,13 +13,13 @@ export function MapSection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-16 sm:py-28 px-4 bg-dark-card">
+    <section className="py-12 sm:py-28 px-3 sm:px-4 bg-dark-card">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10 sm:mb-14">
-          <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-4">
+        <div className="text-center mb-8 sm:mb-14">
+          <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-3 sm:mb-4">
             {t.map.label}
           </p>
-          <h2 className="text-[26px] sm:text-[34px] md:text-4xl text-cream font-bold mb-4 font-display">
+          <h2 className="text-[24px] sm:text-[34px] md:text-4xl text-cream font-bold mb-3 sm:mb-4 font-display">
             {t.map.heading}
           </h2>
           <div className="flex items-center gap-3 justify-center my-2">
@@ -29,7 +29,7 @@ export function MapSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4 sm:gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-3 sm:gap-6 items-start">
           {/* Map Panel */}
           <div className="border border-gold/[0.18] overflow-hidden">
             {/* Tab bar */}
@@ -50,7 +50,7 @@ export function MapSection() {
             </div>
 
             {/* Iframe container — only render the active iframe */}
-            <div className="relative h-[280px] sm:h-[360px] lg:h-[460px]">
+            <div className="relative h-[240px] sm:h-[360px] lg:h-[460px]">
               {MAP_VIEWS.filter((v) => v.id === activeView).map((v) => (
                 <iframe
                   key={v.id}
@@ -70,7 +70,7 @@ export function MapSection() {
             </div>
 
             {/* Footer bar */}
-            <div className="bg-dark-surface border-t border-gold/10 px-4 sm:px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div className="bg-dark-surface border-t border-gold/10 px-3 sm:px-5 py-2.5 sm:py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <span className="text-cream/30 text-[10px] sm:text-[11px]">
                 {activeView === 'street'
                   ? t.map.footerStreet
@@ -82,7 +82,7 @@ export function MapSection() {
                 href={ADDRESS.gmaps}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gold text-[11px] flex items-center gap-1 hover:underline shrink-0"
+                className="text-gold text-[11px] flex items-center gap-1 hover:underline shrink-0 touch-manipulation py-1"
               >
                 {t.map.openInGoogleMaps} <ExternalLink size={10} />
               </a>
@@ -91,7 +91,7 @@ export function MapSection() {
 
           {/* Info Card */}
           <div className="border border-gold/[0.18] bg-dark-surface flex flex-col">
-            <div className="border-b border-gold/12 px-6 py-5">
+            <div className="border-b border-gold/12 px-4 sm:px-6 py-4 sm:py-5">
               <div className="text-gold text-lg font-bold font-display">
                 Pasumarthi Banquet Hall
               </div>
@@ -100,7 +100,7 @@ export function MapSection() {
               </div>
             </div>
 
-            <div className="px-6 py-6 space-y-5 flex-1">
+            <div className="px-4 sm:px-6 py-5 sm:py-6 space-y-4 sm:space-y-5 flex-1">
               {/* Address */}
               <div className="flex items-start gap-3.5">
                 <div className="w-7 h-7 border border-gold/25 flex items-center justify-center shrink-0 mt-0.5">
@@ -182,12 +182,12 @@ export function MapSection() {
             </div>
 
             {/* Action buttons */}
-            <div className="px-6 pb-6 space-y-2">
+            <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-2">
               <a
                 href={ADDRESS.gmaps}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-gold text-dark text-xs font-bold tracking-widest uppercase hover:bg-gold-bright transition-colors"
+                className="flex items-center justify-center gap-2 w-full py-3.5 sm:py-3 bg-gold text-dark text-xs font-bold tracking-widest uppercase hover:bg-gold-bright active:bg-gold-bright transition-colors touch-manipulation"
               >
                 <MapPin size={13} /> {t.common.getDirections}
               </a>
@@ -195,7 +195,7 @@ export function MapSection() {
                 href={ADDRESS.justdial}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 border border-gold/30 text-gold text-xs tracking-widest uppercase hover:border-gold/60 hover:bg-gold/5 transition-all"
+                className="flex items-center justify-center gap-2 w-full py-3.5 sm:py-3 border border-gold/30 text-gold text-xs tracking-widest uppercase hover:border-gold/60 hover:bg-gold/5 active:bg-gold/10 transition-all touch-manipulation"
               >
                 <ExternalLink size={12} /> {t.common.justdialListing}
               </a>

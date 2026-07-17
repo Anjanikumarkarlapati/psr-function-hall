@@ -92,6 +92,31 @@ body {
   }
 }
 
+/* ─── Mobile Viewport & Overscroll ─────────────────────────────────── */
+
+html, body {
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix 100vh issue on mobile browsers (address bar) */
+@supports (height: 100svh) {
+  .min-h-screen {
+    min-height: 100svh;
+  }
+}
+
+/* Ensure touch interactions feel responsive */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Prevent text size inflation on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 /* ─── Marquee Animation ───────────────────────────────────────────── */
 
 @keyframes marquee {

@@ -38,8 +38,8 @@ function VideoTile({ video, onPlay }: { video: typeof VIDEOS[number]; onPlay: (s
   return (
     <div
       ref={ref}
-      className="group relative overflow-hidden cursor-pointer"
-      style={{ ...(glass.dark as React.CSSProperties), height: '240px' }}
+      className="group relative overflow-hidden cursor-pointer h-[180px] sm:h-[240px] touch-manipulation active:scale-[0.98] transition-transform"
+      style={glass.dark as React.CSSProperties}
       onClick={() => onPlay(video.src)}
       onMouseOver={() => videoRef.current?.play()}
       onMouseOut={() => {
@@ -67,12 +67,12 @@ function VideoTile({ video, onPlay }: { video: typeof VIDEOS[number]; onPlay: (s
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       {/* Play icon */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-14 h-14 rounded-full flex items-center justify-center bg-gold/20 border border-gold/40 group-hover:bg-gold/30 group-hover:scale-110 transition-all duration-300">
-          <Play size={22} className="text-gold ml-1" fill="currentColor" />
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-gold/20 border border-gold/40 group-hover:bg-gold/30 group-hover:scale-110 group-active:scale-95 transition-all duration-300">
+          <Play size={20} className="text-gold ml-0.5 sm:ml-1" fill="currentColor" />
         </div>
       </div>
       {/* Label */}
-      <div className="absolute bottom-0 inset-x-0 p-4">
+      <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4">
         <span
           className="inline-block text-gold text-[9px] tracking-[0.35em] uppercase px-2 py-0.5"
           style={glass.chip as React.CSSProperties}
@@ -91,17 +91,17 @@ export function VideoGallery() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-24 px-4 bg-dark-card">
+    <section className="py-14 sm:py-24 px-3 sm:px-4 bg-dark-card">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-8 sm:mb-14">
           <span
-            className="inline-block text-gold text-[9px] tracking-[0.48em] uppercase px-3 py-1.5 mb-5"
+            className="inline-block text-gold text-[9px] tracking-[0.48em] uppercase px-3 py-1.5 mb-4 sm:mb-5"
             style={glass.gold as React.CSSProperties}
           >
             {t.home.videoLabel}
           </span>
-          <h2 className="text-[34px] sm:text-4xl text-white font-light mb-3 font-display">
+          <h2 className="text-[24px] sm:text-4xl text-white font-light mb-3 font-display">
             {t.home.videoHeading}{' '}
             <span className="text-gold font-semibold italic">
               {t.home.videoHeadingAccent}
@@ -112,25 +112,25 @@ export function VideoGallery() {
             <div className="w-1 h-1 rounded-full bg-gold/70" />
             <div className="h-[1px] w-12 bg-gold/40" />
           </div>
-          <p className="text-silver text-sm mt-4 max-w-md mx-auto leading-relaxed">
+          <p className="text-silver text-xs sm:text-sm mt-4 max-w-md mx-auto leading-relaxed">
             {t.home.videoSubtitle}
           </p>
         </div>
 
         {/* Video Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {VIDEOS.map((video) => (
             <VideoTile key={video.id} video={video} onPlay={setActiveVideo} />
           ))}
 
           {/* CTA tile */}
           <div
-            className="relative flex flex-col items-center justify-center text-center p-8 gap-4"
-            style={{ ...(glass.dark as React.CSSProperties), height: '240px' }}
+            className="relative flex flex-col items-center justify-center text-center p-6 sm:p-8 gap-3 sm:gap-4 h-[180px] sm:h-[240px]"
+            style={glass.dark as React.CSSProperties}
           >
             <div className="w-8 h-[1px] bg-gold/40" />
             <div>
-              <div className="text-white/75 text-[16px] font-light mb-1 font-display">
+              <div className="text-white/75 text-[15px] sm:text-[16px] font-light mb-1 font-display">
                 {t.home.videoCta}
               </div>
               <div className="text-silver text-xs leading-relaxed">
@@ -139,7 +139,7 @@ export function VideoGallery() {
             </div>
             <a
               href="/book"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-dark font-bold text-[10px] tracking-widest uppercase hover:bg-gold-bright transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-dark font-bold text-[10px] tracking-widest uppercase hover:bg-gold-bright active:bg-gold-bright transition-colors touch-manipulation"
             >
               {t.home.heroBookBtn}
             </a>
@@ -151,11 +151,11 @@ export function VideoGallery() {
       {/* Fullscreen Video Modal */}
       {activeVideo && (
         <div
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-2 sm:p-4"
           onClick={() => setActiveVideo(null)}
         >
           <button
-            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+            className="absolute top-4 right-4 text-white/70 hover:text-white active:text-white transition-colors z-10 p-2 touch-manipulation"
             onClick={() => setActiveVideo(null)}
             aria-label="Close video"
           >
@@ -163,9 +163,10 @@ export function VideoGallery() {
           </button>
           <video
             src={activeVideo}
-            className="max-w-full max-h-[85vh] rounded-sm"
+            className="max-w-full max-h-[80vh] sm:max-h-[85vh] rounded-sm"
             controls
             autoPlay
+            playsInline
             onClick={(e) => e.stopPropagation()}
           />
         </div>

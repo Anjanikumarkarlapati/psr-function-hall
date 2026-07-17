@@ -5,3 +5,5 @@ node_modules/
 .env.production.local
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+.vercel

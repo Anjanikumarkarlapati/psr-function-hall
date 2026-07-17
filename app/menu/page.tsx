@@ -17,7 +17,7 @@ export default function MenuPage() {
   return (
     <div className="min-h-screen bg-dark">
       {/* Hero Header */}
-      <div className="relative overflow-hidden" style={{ height: '240px' }}>
+      <div className="relative overflow-hidden h-[200px] sm:h-[240px]">
         <div
           className="absolute inset-0 bg-cover bg-center sm:bg-fixed"
           style={{ backgroundImage: `url('/images/hall-bg.jpg')` }}
@@ -30,28 +30,28 @@ export default function MenuPage() {
               'radial-gradient(ellipse at 50% 120%, #d4aa4c 0%, transparent 60%)',
           }}
         />
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 pt-6 sm:pt-8">
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 pt-4 sm:pt-8">
           <GlassCard
             variant="gold"
-            className="inline-block text-gold text-[9px] tracking-[0.52em] uppercase px-3 py-1.5 mb-4 sm:mb-5"
+            className="inline-block text-gold text-[9px] tracking-[0.52em] uppercase px-3 py-1.5 mb-3 sm:mb-5"
           >
             {t.menu.label}
           </GlassCard>
-          <h1 className="text-[32px] sm:text-[46px] md:text-6xl text-white font-light leading-tight font-display">
+          <h1 className="text-[26px] sm:text-[46px] md:text-6xl text-white font-light leading-tight font-display">
             {t.menu.heading.split(' ').slice(0, -1).join(' ')}{' '}
             <span className="text-gold font-semibold italic">
               {t.menu.heading.split(' ').slice(-1)[0]}
             </span>
           </h1>
-          <div className="flex items-center gap-2 mt-3 sm:mt-4 text-silver text-sm">
+          <div className="flex items-center gap-2 mt-2 sm:mt-4 text-silver text-xs sm:text-sm">
             <Leaf size={13} className="text-green-400/70" />
             {t.menu.vegNote}
           </div>
         </div>
       </div>
 
-      <div className="px-4 py-16">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <div className="px-3 sm:px-4 py-10 sm:py-16">
+        <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
           {/* Package Legend */}
           <div className="grid sm:grid-cols-2 gap-4">
             {[
@@ -210,7 +210,7 @@ export default function MenuPage() {
                     const msg = 'Hello, I would like to know more about the menu and packages at Pasumarthi Banquet Hall.';
                     window.open(`https://wa.me/${number}?text=${encodeURIComponent(msg)}`, '_blank');
                   }}
-                  className="group flex flex-col items-center gap-3 px-6 py-6 bg-[#25D366] hover:bg-[#20bd5a] text-white transition-all cursor-pointer"
+                  className="group flex flex-col items-center gap-3 px-6 py-5 sm:py-6 bg-[#25D366] hover:bg-[#20bd5a] active:bg-[#19a34d] text-white transition-all cursor-pointer touch-manipulation"
                 >
                   <div className="w-10 h-10 flex items-center justify-center border border-white/25 text-white">
                     <WhatsAppIcon size={18} />
@@ -232,7 +232,7 @@ export default function MenuPage() {
                     const phone = decodeDisplayNumber(ADDRESS.phone1);
                     window.open(`tel:${phone.replace(/\s/g, '')}`);
                   }}
-                  className="group flex flex-col items-center gap-3 px-6 py-6 text-gold hover:border-gold/50 transition-all cursor-pointer"
+                  className="group flex flex-col items-center gap-3 px-6 py-5 sm:py-6 text-gold hover:border-gold/50 active:bg-gold/10 transition-all cursor-pointer touch-manipulation"
                   style={glass.gold as React.CSSProperties}
                 >
                   <div className="w-10 h-10 flex items-center justify-center border border-gold/35 text-gold">
@@ -250,7 +250,7 @@ export default function MenuPage() {
 
                 <Link
                   href="/book"
-                  className="group flex flex-col items-center gap-3 px-6 py-6 text-gold hover:border-gold/50 transition-all"
+                  className="group flex flex-col items-center gap-3 px-6 py-5 sm:py-6 text-gold hover:border-gold/50 active:bg-gold/10 transition-all touch-manipulation"
                   style={glass.gold as React.CSSProperties}
                 >
                   <div className="w-10 h-10 flex items-center justify-center border border-gold/35 text-gold">
