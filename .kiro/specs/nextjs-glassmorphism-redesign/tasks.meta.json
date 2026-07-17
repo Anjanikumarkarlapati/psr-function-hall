@@ -1,0 +1,750 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Initialize Next.js 14+ project with App Router (`npx create-next-app@latest` with TypeScript, Tailwind CSS, App Router, src directory disabled)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277904195
+      },
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277934276
+      },
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784278109769
+      }
+    ],
+    "1.2 Configure `next.config.ts` with image remote patterns for `images.unsplash.com`": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277904402
+      },
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784278132605
+      },
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784278152799
+      }
+    ],
+    "1.3 Set up Tailwind CSS 4 with custom theme tokens (gold, dark, silver, cream colors) in `app/globals.css`": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277904552
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784280979367
+      }
+    ],
+    "1.4 Configure `next/font` with display and body font families, exporting CSS variables `--font-display` and `--font-body` in `app/layout.tsx`": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277904900
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784280986834
+      }
+    ],
+    "1.5 Install minimal dependencies: `lucide-react`, `fast-check` (dev)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277905053
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784280995831
+      }
+    ],
+    "1.6 Remove/ignore old Vite project files (this task only sets up the new Next.js project structure)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277905171
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281004650
+      }
+    ],
+    "2.1 Create `styles/glass.ts` exporting the typed `glass` object with all 5 variants (dark, gold, silver, light, chip) matching the design spec": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277905286
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281010707
+      }
+    ],
+    "2.2 Create `GlassCard` reusable component that applies a variant's styles with optional className merging": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277905456
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281016901
+      }
+    ],
+    "3.1 Create `lib/data.ts` with all static data: `CATEGORIES`, `MENU_ITEMS`, `MENU_2_EXTRAS`, `REVIEWS`, `ADDRESS`, `WHATSAPP_NUMBER`, `EVENT_TYPES`, `MAP_VIEWS` — ported from existing `App.tsx`": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277905632
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281025851
+      }
+    ],
+    "3.2 Create `lib/whatsapp.ts` with the pure `buildWhatsAppUrl` function extracted from the existing form submission logic": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277905867
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281033949
+      }
+    ],
+    "3.3 Add TypeScript interfaces: `Category`, `Review`, `Address`, `MapView`, `WhatsAppFormData`": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277906033
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281043258
+      }
+    ],
+    "4.1 Create `components/GoldRule.tsx` (server component) — decorative gold divider": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277906168
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281054944
+      }
+    ],
+    "4.2 Create `components/icons/WhatsAppIcon.tsx` (server component) — inline SVG": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277906432
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281068892
+      }
+    ],
+    "4.3 Create `components/RotatedPhoto.tsx` (server component) — 90° CW rotation-corrected image using next/image": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277906584
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281076440
+      }
+    ],
+    "4.4 Create `components/ReviewCard.tsx` (server component) — single review in glass-dark card": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277906787
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281084669
+      }
+    ],
+    "4.5 Create `components/StatCard.tsx` (server component) — numeric stat with label": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277906933
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281091669
+      }
+    ],
+    "4.6 Create `components/CategoryCard.tsx` (server component) — event category image card with hover effects and Link": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907044
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281103162
+      }
+    ],
+    "4.7 Create `components/Navbar.tsx` (client component) — fixed glassmorphic nav with mobile hamburger toggle, uses `usePathname()` for active state and `Link` for navigation": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907169
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281117029
+      }
+    ],
+    "4.8 Create `components/Footer.tsx` (server component) — contact info, navigation links, copyright": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907301
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281124474
+      }
+    ],
+    "4.9 Create `components/MapSection.tsx` (client component) — three-tab iframe switcher with glassmorphic info card": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907452
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281130543
+      }
+    ],
+    "5.1 Implement `app/layout.tsx` with font loading, global metadata (title, description, OG tags), Navbar, Footer, and `<main>` wrapper": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907584
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281138426
+      }
+    ],
+    "5.2 Create `app/not-found.tsx` for custom 404 page with glassmorphic styling": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907683
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281146507
+      }
+    ],
+    "6.1 Create `app/page.tsx` with server-rendered home page structure": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277907802
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281166212
+      }
+    ],
+    "6.2 Implement Hero section — parallax background, gradient overlay, glass-dark content card with venue name, tagline, CTAs": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908004
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281173044
+      }
+    ],
+    "6.3 Implement Marquee strip — gold gradient bar with scrolling venue highlights": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908124
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281182354
+      }
+    ],
+    "6.4 Implement About section — stat cards (glass-dark) + feature cards (glass-dark) in two-column layout over parallax background": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908233
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281204013
+      }
+    ],
+    "6.5 Integrate MapSection component": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908412
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281218160
+      }
+    ],
+    "6.6 Implement Events Preview grid — featured category row + second row with glass chip labels and hover-reveal links": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908502
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281225899
+      }
+    ],
+    "6.7 Implement Decoration Gallery section — RotatedPhoto grid with glass chip captions + CTA tile": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908584
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281235957
+      }
+    ],
+    "6.8 Implement Reviews section — ReviewCard grid with source badges and external links": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908668
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281243112
+      }
+    ],
+    "6.9 Implement CTA section — glass-dark card with \"Book via WhatsApp\" button over parallax background": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908741
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281250339
+      }
+    ],
+    "7.1 Create `app/menu/page.tsx` with page metadata": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908811
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281257358
+      }
+    ],
+    "7.2 Implement hero header with glass-gold label and parallax background": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908887
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281275234
+      }
+    ],
+    "7.3 Implement package legend — two glass-dark cards for Menu 1 and Menu 2 with visual differentiation": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277908960
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281285401
+      }
+    ],
+    "7.4 Implement combined menu card — glass-dark container with color-coded item grid (gold dots for shared, green for Menu-2 exclusive)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909032
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281295916
+      }
+    ],
+    "7.5 Implement \"Connect With Us\" section — WhatsApp (green), Call, and Book buttons in glass panels": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909194
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281309997
+      }
+    ],
+    "8.1 Create `app/events/page.tsx` with page metadata": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909296
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281321637
+      }
+    ],
+    "8.2 Implement category grid using CategoryCard component — responsive grid with glassmorphic gradient overlays and hover border animations": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909404
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281329041
+      }
+    ],
+    "9.1 Create `app/events/[categoryId]/page.tsx` with dynamic metadata and `generateStaticParams`": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909499
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281337670
+      }
+    ],
+    "9.2 Implement cover hero with breadcrumb navigation, title block, and quote": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909580
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281348934
+      }
+    ],
+    "9.3 Implement description section with booking CTAs (gold button + WhatsApp button)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909660
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281357017
+      }
+    ],
+    "9.4 Create `components/GalleryUpload.tsx` (client component) — file input, object URL creation, responsive image grid with \"Add More\" tile": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909734
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281364762
+      }
+    ],
+    "9.5 Implement \"Other Events\" strip — filtered category links excluding current": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909812
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281375289
+      }
+    ],
+    "10.1 Create `app/book/page.tsx` with page metadata": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909884
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281383970
+      }
+    ],
+    "10.2 Create `components/BookingForm.tsx` (client component) — controlled form with all fields, validation, and WhatsApp submission": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277909958
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281415306
+      }
+    ],
+    "10.3 Integrate `buildWhatsAppUrl` from `lib/whatsapp.ts` into form submit handler": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910081
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281434163
+      }
+    ],
+    "10.4 Implement confirmation notice display after successful WhatsApp open": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910226
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281449244
+      }
+    ],
+    "10.5 Implement contact info section below form (phone, address, hours, external links)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910325
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281460412
+      }
+    ],
+    "11.1 Add `priority` prop to above-the-fold hero `Image` components on home and menu pages": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910427
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281467304
+      }
+    ],
+    "11.2 Add `loading=\"lazy\"` to Google Maps iframes in MapSection": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910569
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281482112
+      }
+    ],
+    "11.3 Add `will-change: transform` or CSS `contain: paint` to glassmorphic elements for backdrop-filter performance": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910699
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281493530
+      }
+    ],
+    "11.4 Add per-route metadata using Next.js Metadata API (title, description, openGraph) for all 5 routes": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910819
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281502230
+      }
+    ],
+    "11.5 Copy static images from `src/imports/` to `public/images/` and update references": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277910935
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281512130
+      }
+    ],
+    "12.1 Add semantic HTML elements: `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`, proper heading hierarchy": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911065
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281522191
+      }
+    ],
+    "12.2 Add ARIA attributes: `aria-label` on Navbar toggle, `aria-current` on active nav link, `aria-expanded` on mobile menu": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911200
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281531938
+      }
+    ],
+    "12.3 Ensure all interactive elements are keyboard-focusable with visible focus indicators": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911316
+      },
+      {
+        "executionId": "0062cbc0-75ea-4c59-a171-7c4d26e45d3f",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784281548471
+      }
+    ],
+    "12.4 Verify color contrast on glassmorphic backgrounds meets WCAG AA 4.5:1 for body text": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911394
+      }
+    ],
+    "13.1 Set up Vitest with React Testing Library for unit/component tests": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911480
+      }
+    ],
+    "13.2.1 Property 1: URL contains all required fields when decoded": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911556
+      }
+    ],
+    "13.2.2 Property 2: Encode/decode round-trip preserves message content": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911641
+      }
+    ],
+    "13.2.3 Property 3: Optional empty fields are excluded from message": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911724
+      }
+    ],
+    "13.3 Write unit tests for `lib/data.ts` integrity (all categories have IDs, no empty names)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911851
+      }
+    ],
+    "13.4 Write unit tests for `styles/glass.ts` (all variants export valid properties)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277911956
+      }
+    ],
+    "13.5 Write component tests for BookingForm (form validation, submit behavior)": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277912047
+      }
+    ],
+    "13.6 Write smoke tests verifying each route renders without errors": [
+      {
+        "executionId": "c30d40d4-b5e8-4083-b037-4ba09589d0c2",
+        "chatSessionId": "sess_95a21dad-f3d4-4622-b6b6-27214f90c7a1",
+        "timestamp": 1784277912140
+      }
+    ]
+  }
+}
