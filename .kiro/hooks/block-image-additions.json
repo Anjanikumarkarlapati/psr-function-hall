@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Block Image Additions",
+      "trigger": "PreToolUse",
+      "description": "Prevents adding any image files (png, jpg, jpeg, gif, webp, svg, ico, bmp, tiff, avif) to the project.",
+      "matcher": "fs_write|fs_append",
+      "action": {
+        "type": "command",
+        "command": "powershell -Command \"$input = [Console]::In.ReadToEnd(); $json = $input | ConvertFrom-Json; $path = ''; if ($json.toolInput.path) { $path = $json.toolInput.path }; if ($path -match '\\.(png|jpg|jpeg|gif|webp|svg|ico|bmp|tiff|avif)$') { [Console]::Error.WriteLine('Blocked: Adding image files is not allowed in this project.'); exit 2 } else { exit 0 }\""
+      }
+    }
+  ]
+}

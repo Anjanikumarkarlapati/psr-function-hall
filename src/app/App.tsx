@@ -1,37 +1,9 @@
 import { useState, useRef } from "react";
-import heroImage from "@/imports/Screenshot_2026-07-16_214621.png";
 import hallImage from "@/imports/Screenshot_2026-07-16_214621-2.png";
-import decor1 from "@/imports/Creative_Event_s__kanjirappally__7736685828-1.jpeg";
-import decor2 from "@/imports/reception_decoration____9949989560-1.jpeg";
-import decor3 from "@/imports/Stage_1-1.jpeg";
-import decor4 from "@/imports/19773685859543452-1.jpeg";
-import decor5 from "@/imports/85849936643384850-1.jpeg";
-import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import {
   MapPin, Phone, Menu as MenuIcon, X, Camera,
   Leaf, Star, CheckCircle, Clock, ExternalLink, ArrowRight, ArrowLeft,
 } from "lucide-react";
-
-// Corrects portrait phone photos shot sideways (90° CW rotation)
-function RotatedPhoto({ src, alt, scale = 1 }: { src: string; alt: string; scale?: number }) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        height: `${scale * 100}%`,
-        width: "auto",
-        minWidth: `${scale * 100}%`,
-        maxWidth: "none",
-        transform: `translate(-50%, -50%) rotate(90deg)`,
-        objectFit: "cover",
-      }}
-    />
-  );
-}
 
 const WHATSAPP_NUMBER = "919999999999"; // Replace with owner's number
 
@@ -89,10 +61,8 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "A Celebration Worthy of Your Love",
     subtitle: "Grand wedding setups crafted with floral mandaps, silk drapes, and chandelier-lit elegance for your most treasured day.",
     quote: "The greatest thing you will ever learn is just to love and be loved in return.",
-    cover: "https://images.unsplash.com/photo-1772127822562-a898d9f5733c?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [
-      "https://images.unsplash.com/photo-1587271636175-90d58cdad458?w=800&h=550&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1772127822552-ce9ef537bdcf?w=800&h=550&fit=crop&auto=format",
     ],
   },
   {
@@ -101,9 +71,8 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Celebrate the Beginning of Forever",
     subtitle: "Elegant engagement decorations crafted for unforgettable first promises.",
     quote: "Every love story begins with a beautiful promise.",
-    cover: "https://images.unsplash.com/photo-1746044159204-1c0dc41802ea?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [
-      "https://images.unsplash.com/photo-1745573674471-e057af420757?w=800&h=550&fit=crop&auto=format",
     ],
   },
   {
@@ -112,7 +81,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Where Two Hearts Become One",
     subtitle: "Sophisticated ring ceremony décor designed with elegance and charm.",
     quote: "A ring is the smallest circle with the biggest meaning.",
-    cover: "https://images.unsplash.com/photo-1767986012147-352900f75221?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
   {
@@ -121,9 +90,8 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Epic Adventures Start Here",
     subtitle: "Superhero, jungle, racing, and space-themed birthday celebrations.",
     quote: "Every birthday is another adventure waiting to happen.",
-    cover: "https://images.unsplash.com/photo-1741969494307-55394e3e4071?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [
-      "https://images.unsplash.com/photo-1560128411-79892dd93bf8?w=800&h=550&fit=crop&auto=format",
     ],
   },
   {
@@ -132,7 +100,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Dreams, Sparkles & Smiles",
     subtitle: "Princess, unicorn, Barbie, butterfly, and fairy-themed birthday decorations.",
     quote: "Make every birthday magical and unforgettable.",
-    cover: "https://images.unsplash.com/photo-1583875762487-5f8f7c718d14?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
   {
@@ -141,7 +109,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Celebrating Love Through the Years",
     subtitle: "Romantic anniversary setups for every milestone of your journey together.",
     quote: "Love grows stronger with every passing year.",
-    cover: "https://images.unsplash.com/photo-1560505605-f300b17028d6?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
   {
@@ -150,7 +118,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Welcoming a Little Miracle",
     subtitle: "Beautiful baby shower decorations filled with warmth and joy.",
     quote: "Tiny feet leave the biggest footprints in our hearts.",
-    cover: "https://images.unsplash.com/photo-1635927300503-05044fadd0bb?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
   {
@@ -159,7 +127,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "A Beautiful Beginning",
     subtitle: "Celebrate your baby's first milestone with elegant decorations.",
     quote: "Every name carries a story waiting to be written.",
-    cover: "https://images.unsplash.com/photo-1771769076330-c424547f5c1c?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
   {
@@ -168,7 +136,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Turning a House Into a Home",
     subtitle: "Traditional and modern décor for your special Gruhapravesam celebration.",
     quote: "Home is where beautiful memories begin.",
-    cover: "https://images.unsplash.com/photo-1759477274116-e3cb02d2b9d8?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
   {
@@ -177,7 +145,7 @@ const INITIAL_CATEGORIES: Category[] = [
     title: "Celebrating a Lifetime of Achievements",
     subtitle: "Honor years of dedication with a memorable retirement celebration.",
     quote: "Retirement is not the end — it is the beginning of a new adventure.",
-    cover: "https://images.unsplash.com/photo-1560128411-79892dd93bf8?w=1200&h=700&fit=crop&auto=format",
+    cover: "",
     images: [],
   },
 ];
@@ -599,7 +567,7 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
 
             {/* Glass stat cards */}
             <div className="grid grid-cols-3 gap-3">
-              {[{ n: "200+", l: "Events Hosted" }, { n: "300+", l: "Guests Capacity" }, { n: "10+", l: "Years Service" }].map((s) => (
+              {[{ n: "200+", l: "Events Hosted" }, { n: "400+", l: "Guests Capacity" }, { n: "5+", l: "Years Service" }].map((s) => (
                 <div key={s.l} className="p-5 text-center" style={glass.dark}>
                   <div className="text-[32px] text-[#d4aa4c] font-semibold leading-none mb-1"
                     style={{ fontFamily: "var(--font-display)" }}>{s.n}</div>
@@ -654,9 +622,7 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
           {/* Featured row */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
             <button onClick={() => onNav({ page: "category", categoryId: INITIAL_CATEGORIES[0].id })}
-              className="group relative col-span-2 lg:col-span-2 overflow-hidden" style={{ height: "360px" }}>
-              <img src={INITIAL_CATEGORIES[0].cover} alt={INITIAL_CATEGORIES[0].name}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out" />
+              className="group relative col-span-2 lg:col-span-2 overflow-hidden bg-[#111]" style={{ height: "360px" }}>
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-left">
                 {/* Glass label chip */}
@@ -677,9 +643,7 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
             <div className="col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
               {INITIAL_CATEGORIES.slice(1, 4).map((cat) => (
                 <button key={cat.id} onClick={() => onNav({ page: "category", categoryId: cat.id })}
-                  className="group relative overflow-hidden" style={{ height: "360px" }}>
-                  <img src={cat.cover} alt={cat.name}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out" />
+                  className="group relative overflow-hidden bg-[#111]" style={{ height: "360px" }}>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/40 to-black/5" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-left">
                     <span className="inline-block text-[#d4aa4c] text-[9px] tracking-[0.35em] uppercase px-2 py-0.5 mb-2"
@@ -703,9 +667,7 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {INITIAL_CATEGORIES.slice(4).map((cat) => (
               <button key={cat.id} onClick={() => onNav({ page: "category", categoryId: cat.id })}
-                className="group relative overflow-hidden" style={{ height: "200px" }}>
-                <img src={cat.cover} alt={cat.name}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.08] transition-transform duration-700 ease-out" />
+                className="group relative overflow-hidden bg-[#111]" style={{ height: "200px" }}>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4 text-left">
                   <div className="text-white/55 text-[10px] leading-snug group-hover:text-[#d4aa4c]/80 transition-colors duration-300">{cat.name}</div>
@@ -751,16 +713,14 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
           {/* Uniform grid — 1 col mobile, 2 col tablet, 3 col desktop */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { src: decor1, alt: "Floral arch and candle event setup",  cat: "Floral & Arches",   label: "Creative Event Setup" },
-              { src: decor2, alt: "Reception stage decoration",          cat: "Reception",          label: "Reception Decoration" },
-              { src: decor3, alt: "Grand stage with floral wreath",      cat: "Stage",              label: "Grand Stage Setup" },
-              { src: decor4, alt: "Themed event arrangement",            cat: "Themed Décor",       label: "Themed Arrangement" },
-              { src: decor5, alt: "Banquet hall decoration",             cat: "Hall Décor",         label: "Banquet Décor" },
+              { alt: "Floral arch and candle event setup",  cat: "Floral & Arches",   label: "Creative Event Setup" },
+              { alt: "Reception stage decoration",          cat: "Reception",          label: "Reception Decoration" },
+              { alt: "Grand stage with floral wreath",      cat: "Stage",              label: "Grand Stage Setup" },
+              { alt: "Themed event arrangement",            cat: "Themed Décor",       label: "Themed Arrangement" },
+              { alt: "Banquet hall decoration",             cat: "Hall Décor",         label: "Banquet Décor" },
             ].map((d, i) => (
-              <div key={i} className="group relative overflow-hidden"
+              <div key={i} className="group relative overflow-hidden bg-[#111]"
                 style={{ height: "280px" }}>
-                {/* Straight-corrected rotated photo */}
-                <RotatedPhoto src={d.src} alt={d.alt} scale={1.05} />
                 {/* Hover shimmer */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500" />
                 {/* Bottom gradient */}
@@ -1088,15 +1048,8 @@ function CategoriesPage({ categories, onNav }: {
             {categories.map((cat) => (
               <button key={cat.id}
                 onClick={() => onNav({ page: "category", categoryId: cat.id })}
-                className="group relative overflow-hidden text-left h-80 flex flex-col justify-end">
-                <img src={cat.cover} alt={cat.name}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                className="group relative overflow-hidden text-left h-80 flex flex-col justify-end bg-[#111] border border-[#c9a84c]/10 hover:border-[#c9a84c]/30 transition-all">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 to-black/10" />
-                {cat.images.length > 0 && (
-                  <div className="absolute top-4 right-4 bg-[#c9a84c] text-[#0a0908] text-[10px] font-bold px-2.5 py-1 tracking-wide">
-                    {cat.images.length} {cat.images.length === 1 ? "Photo" : "Photos"}
-                  </div>
-                )}
                 <div className="relative p-6">
                   <div className="text-[#c9a84c] text-[9px] tracking-[0.4em] uppercase mb-2 opacity-80">{cat.name}</div>
                   <h3 className="text-white text-xl font-bold leading-snug mb-2"
@@ -1140,9 +1093,7 @@ function CategoryDetailPage({ category, categories, onNav, onUpdateCategory }: {
   return (
     <div className="min-h-screen bg-[#0a0908]">
       {/* Hero */}
-      <div className="relative h-[70vh] min-h-[420px] flex flex-col justify-end overflow-hidden">
-        <img src={category.cover} alt={category.title}
-          className="absolute inset-0 w-full h-full object-cover scale-[1.03]" />
+      <div className="relative h-[70vh] min-h-[420px] flex flex-col justify-end overflow-hidden bg-[#111]">
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-black/50 to-black/20" />
 
         {/* Breadcrumb */}
@@ -1246,9 +1197,7 @@ function CategoryDetailPage({ category, categories, onNav, onUpdateCategory }: {
               {others.map((cat) => (
                 <button key={cat.id}
                   onClick={() => onNav({ page: "category", categoryId: cat.id })}
-                  className="group relative h-36 overflow-hidden text-left">
-                  <img src={cat.cover} alt={cat.name}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  className="group relative h-36 overflow-hidden text-left bg-[#111] border border-[#c9a84c]/10 hover:border-[#c9a84c]/30 transition-all">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10" />
                   <div className="absolute bottom-0 left-0 p-3">
                     <div className="text-white/55 text-[10px] tracking-wide leading-snug group-hover:text-[#c9a84c] transition-colors">

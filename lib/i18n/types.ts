@@ -1,0 +1,181 @@
+export type Locale = 'en' | 'te';
+
+export interface TranslationDictionary {
+  navbar: {
+    home: string;
+    menu: string;
+    events: string;
+    bookNow: string;
+    subtitle: string;
+  };
+  home: {
+    heroWelcome: string;
+    heroBanquetHall: string;
+    heroTagline: string;
+    heroBookBtn: string;
+    heroMenuBtn: string;
+    scroll: string;
+    marquee: string[];
+    aboutLabel: string;
+    aboutHeading1: string;
+    aboutHeading2: string;
+    aboutHeading3: string;
+    aboutDesc1: string;
+    aboutDesc2: string;
+    stats: { number: string; label: string }[];
+    features: { title: string; desc: string }[];
+    eventsLabel: string;
+    eventsHeading1: string;
+    eventsHeading2: string;
+    eventsSubtitle: string;
+    viewGallery: string;
+    exploreAll: string;
+    decorLabel: string;
+    decorHeading: string;
+    decorSubtitle: string;
+    decorCta: string;
+    reviewsLabel: string;
+    reviewsHeading: string;
+    reviewsSubheading: string;
+    ctaLabel: string;
+    ctaHeading1: string;
+    ctaHeading2: string;
+    ctaDesc: string;
+    ctaBtn: string;
+    mapLabel: string;
+    mapHeading: string;
+    videoLabel: string;
+    videoHeading: string;
+    videoHeadingAccent: string;
+    videoSubtitle: string;
+    videoCta: string;
+    videoCtaDesc: string;
+  };
+  menu: {
+    label: string;
+    heading: string;
+    vegNote: string;
+    menu1Label: string;
+    menu1Count: string;
+    menu1Desc: string;
+    menu2Label: string;
+    menu2Count: string;
+    menu2Desc: string;
+    menu2Extra: string;
+    fullMenuLabel: string;
+    fullMenuHeading: string;
+    legend1: string;
+    legend2: string;
+    note: string;
+    ctaLabel: string;
+    ctaHeading1: string;
+    ctaHeading2: string;
+    ctaDesc: string;
+    whatsappBtn: string;
+    whatsappSubtext: string;
+    callBtn: string;
+    bookBtn: string;
+    bookSubtext: string;
+    items: Record<string, string>;
+  };
+  events: {
+    label: string;
+    heading: string;
+    subtitle: string;
+    categories: Record<string, {
+      name: string;
+      title: string;
+      subtitle: string;
+      quote: string;
+    }>;
+    aboutEvent: string;
+    bookThisEvent: string;
+    galleryLabel: string;
+    addPhotos: string;
+    noPhotos: string;
+    clickToUpload: string;
+    addMore: string;
+    otherEvents: string;
+    viewAll: string;
+    backToEvents: string;
+    photos: string;
+    photo: string;
+  };
+  book: {
+    label: string;
+    heading: string;
+    description: string;
+    labels: {
+      fullName: string;
+      phone: string;
+      email: string;
+      eventType: string;
+      eventDate: string;
+      guests: string;
+      specialRequests: string;
+    };
+    placeholders: {
+      fullName: string;
+      phone: string;
+      email: string;
+      eventType: string;
+      eventDate: string;
+      guests: string;
+      specialRequests: string;
+    };
+    submitBtn: string;
+    successMsg: string;
+    callPrompt: string;
+    eventTypes: Record<string, string>;
+  };
+  footer: {
+    tagline: string;
+    contactHeading: string;
+    navigateHeading: string;
+    whatsappBooking: string;
+    copyright: string;
+  };
+  gallery: {
+    decorationGallery: string;
+    addPhotos: string;
+    add: string;
+    addMore: string;
+    noPhotosYet: string;
+    clickToUpload: string;
+    photoCount: string;
+    photosCount: string;
+    addFirstPhoto: string;
+  };
+  map: {
+    label: string;
+    heading: string;
+    openInGoogleMaps: string;
+    footerStreet: string;
+    footerSatellite: string;
+    footerMap: string;
+    view3d: string;
+  };
+  common: {
+    getDirections: string;
+    justdialListing: string;
+    openNow: string;
+    address: string;
+    phone: string;
+    hours: string;
+    explore: string;
+  };
+  addressInfo: {
+    line1: string;
+    line2: string;
+    line3: string;
+    state: string;
+    full: string;
+    timings: string;
+  };
+  datePicker: {
+    days: string[];
+    months: string[];
+    today: string;
+    clear: string;
+  };
+}

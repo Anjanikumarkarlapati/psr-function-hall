@@ -2,7 +2,8 @@
 
 import { useRef, useState } from 'react';
 import { Camera } from 'lucide-react';
-import Image from 'next/image';
+import { WatermarkImage } from '@/components/WatermarkImage';
+import { useTranslation } from '@/lib/i18n';
 
 interface GalleryUploadProps {
   categoryName: string;
@@ -12,6 +13,7 @@ interface GalleryUploadProps {
 export function GalleryUpload({ categoryName, initialImages }: GalleryUploadProps) {
   const [images, setImages] = useState<string[]>(initialImages);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -21,23 +23,23 @@ export function GalleryUpload({ categoryName, initialImages }: GalleryUploadProp
   };
 
   return (
-    <div className="mb-16">
-      <div className="flex items-center justify-between mb-8">
+    <div className="mb-12 sm:mb-16">
+      <div className="flex items-center justify-between mb-6 sm:mb-8">
         <div>
           <p className="text-gold text-[10px] tracking-[0.38em] uppercase mb-1">
-            Decoration Gallery
+            {t.gallery.decorationGallery}
           </p>
-          <h2 className="text-2xl text-cream font-bold font-display">
+          <h2 className="text-xl sm:text-2xl text-cream font-bold font-display">
             {images.length > 0
-              ? `${images.length} Photo${images.length !== 1 ? 's' : ''}`
-              : 'Add Your First Photo'}
+              ? `${images.length} ${images.length !== 1 ? t.gallery.photosCount : t.gallery.photoCount}`
+              : t.gallery.addFirstPhoto}
           </h2>
         </div>
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="flex items-center gap-2 text-gold text-xs border border-gold/35 hover:border-gold/70 hover:bg-gold/5 px-4 py-2.5 transition-all"
+          className="flex items-center gap-2 text-gold text-xs border border-gold/35 hover:border-gold/70 hover:bg-gold/5 px-3 sm:px-4 py-2 sm:py-2.5 transition-all"
         >
-          <Camera size={13} /> Add Photos
+          <Camera size={13} /> <span className="hidden sm:inline">{t.gallery.addPhotos}</span><span className="sm:hidden">{t.gallery.add}</span>
         </button>
       </div>
 
@@ -57,25 +59,24 @@ export function GalleryUpload({ categoryName, initialImages }: GalleryUploadProp
         >
           <Camera size={36} className="text-gold/25 mx-auto mb-4" />
           <p className="text-cream/30 text-base mb-1">
-            No decoration photos yet
+            {t.gallery.noPhotosYet}
           </p>
           <p className="text-gold/40 text-sm">
-            Click to upload photos for {categoryName}
+            {t.gallery.clickToUpload} {categoryName}
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
           {images.map((img, idx) => (
             <div
               key={idx}
               className="group relative aspect-[4/3] overflow-hidden"
             >
-              <Image
+              <WatermarkImage
                 src={img}
                 alt={`${categoryName} decoration ${idx + 1}`}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                wrapperClassName="w-full h-full"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
             </div>
@@ -86,7 +87,7 @@ export function GalleryUpload({ categoryName, initialImages }: GalleryUploadProp
             className="aspect-[4/3] border border-dashed border-gold/20 flex flex-col items-center justify-center gap-2 text-gold/40 hover:text-gold hover:border-gold/50 transition-colors"
           >
             <Camera size={22} />
-            <span className="text-[11px] tracking-wide">Add More</span>
+            <span className="text-[11px] tracking-wide">{t.gallery.addMore}</span>
           </button>
         </div>
       )}

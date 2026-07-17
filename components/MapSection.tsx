@@ -3,21 +3,24 @@
 import { useState } from 'react';
 import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react';
 import { ADDRESS, MAP_VIEWS } from '@/lib/data';
+import { ProtectedPhone } from './ProtectedPhone';
+import { useTranslation } from '@/lib/i18n';
 
 export function MapSection() {
   const [activeView, setActiveView] = useState<'map' | 'satellite' | 'street'>(
     'satellite'
   );
+  const { t } = useTranslation();
 
   return (
-    <section className="py-28 px-4 bg-dark-card">
+    <section className="py-16 sm:py-28 px-4 bg-dark-card">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
+        <div className="text-center mb-10 sm:mb-14">
           <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-4">
-            Location
+            {t.map.label}
           </p>
-          <h2 className="text-[34px] sm:text-4xl text-cream font-bold mb-4 font-display">
-            Find Us in Khammam
+          <h2 className="text-[26px] sm:text-[34px] md:text-4xl text-cream font-bold mb-4 font-display">
+            {t.map.heading}
           </h2>
           <div className="flex items-center gap-3 justify-center my-2">
             <div className="h-[1px] w-12 bg-gold/40" />
@@ -26,7 +29,7 @@ export function MapSection() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_340px] gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4 sm:gap-6 items-start">
           {/* Map Panel */}
           <div className="border border-gold/[0.18] overflow-hidden">
             {/* Tab bar */}
@@ -46,9 +49,9 @@ export function MapSection() {
               ))}
             </div>
 
-            {/* Iframe container */}
-            <div className="relative" style={{ height: '460px' }}>
-              {MAP_VIEWS.map((v) => (
+            {/* Iframe container — only render the active iframe */}
+            <div className="relative h-[280px] sm:h-[360px] lg:h-[460px]">
+              {MAP_VIEWS.filter((v) => v.id === activeView).map((v) => (
                 <iframe
                   key={v.id}
                   src={v.src}
@@ -58,9 +61,6 @@ export function MapSection() {
                     border: 0,
                     position: 'absolute',
                     inset: 0,
-                    opacity: activeView === v.id ? 1 : 0,
-                    transition: 'opacity 0.4s ease',
-                    pointerEvents: activeView === v.id ? 'auto' : 'none',
                   }}
                   loading="lazy"
                   title={`Pasumarthi Banquet Hall — ${v.label}`}
@@ -70,13 +70,13 @@ export function MapSection() {
             </div>
 
             {/* Footer bar */}
-            <div className="bg-dark-surface border-t border-gold/10 px-5 py-3 flex items-center justify-between">
-              <span className="text-cream/30 text-[11px]">
+            <div className="bg-dark-surface border-t border-gold/10 px-4 sm:px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <span className="text-cream/30 text-[10px] sm:text-[11px]">
                 {activeView === 'street'
-                  ? 'Google Street View · Wyra Rd, Khammam'
+                  ? t.map.footerStreet
                   : activeView === 'satellite'
-                  ? 'Google Satellite · 3D aerial view'
-                  : 'Google Maps · Nizampet, Khammam'}
+                  ? t.map.footerSatellite
+                  : t.map.footerMap}
               </span>
               <a
                 href={ADDRESS.gmaps}
@@ -84,7 +84,7 @@ export function MapSection() {
                 rel="noopener noreferrer"
                 className="text-gold text-[11px] flex items-center gap-1 hover:underline shrink-0"
               >
-                Open in Google Maps <ExternalLink size={10} />
+                {t.map.openInGoogleMaps} <ExternalLink size={10} />
               </a>
             </div>
           </div>
@@ -108,13 +108,13 @@ export function MapSection() {
                 </div>
                 <div>
                   <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-1.5">
-                    Address
+                    {t.common.address}
                   </div>
                   <div className="text-cream/60 text-[13px] leading-relaxed">
-                    {ADDRESS.line1},<br />
-                    {ADDRESS.line2},<br />
-                    {ADDRESS.line3},<br />
-                    {ADDRESS.state}
+                    {t.addressInfo.line1},<br />
+                    {t.addressInfo.line2},<br />
+                    {t.addressInfo.line3},<br />
+                    {t.addressInfo.state}
                   </div>
                 </div>
               </div>
@@ -127,10 +127,10 @@ export function MapSection() {
                 </div>
                 <div>
                   <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-1.5">
-                    Phone
+                    {t.common.phone}
                   </div>
                   <div className="text-cream/60 text-[13px]">
-                    {ADDRESS.phone1}
+                    <ProtectedPhone encoded={ADDRESS.phone1} className="text-[13px] text-cream/60" />
                   </div>
                 </div>
               </div>
@@ -143,15 +143,15 @@ export function MapSection() {
                 </div>
                 <div>
                   <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-1.5">
-                    Hours
+                    {t.common.hours}
                   </div>
                   <div className="text-cream/60 text-[13px]">
-                    {ADDRESS.timings}
+                    {t.addressInfo.timings}
                   </div>
                   <div className="inline-flex items-center gap-1.5 mt-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
                     <span className="text-green-500/70 text-[11px]">
-                      Open Now
+                      {t.common.openNow}
                     </span>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export function MapSection() {
               {/* Explore buttons */}
               <div>
                 <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-3">
-                  Explore
+                  {t.common.explore}
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   {MAP_VIEWS.map((v) => (
@@ -174,7 +174,7 @@ export function MapSection() {
                           : 'border-gold/15 text-cream/35 hover:border-gold/35 hover:text-cream/55'
                       }`}
                     >
-                      {v.label === 'Satellite / 3D' ? '3D View' : v.label}
+                      {v.label === 'Satellite / 3D' ? t.map.view3d : v.label}
                     </button>
                   ))}
                 </div>
@@ -189,7 +189,7 @@ export function MapSection() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-gold text-dark text-xs font-bold tracking-widest uppercase hover:bg-gold-bright transition-colors"
               >
-                <MapPin size={13} /> Get Directions
+                <MapPin size={13} /> {t.common.getDirections}
               </a>
               <a
                 href={ADDRESS.justdial}
@@ -197,7 +197,7 @@ export function MapSection() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 border border-gold/30 text-gold text-xs tracking-widest uppercase hover:border-gold/60 hover:bg-gold/5 transition-all"
               >
-                <ExternalLink size={12} /> JustDial Listing
+                <ExternalLink size={12} /> {t.common.justdialListing}
               </a>
             </div>
           </div>

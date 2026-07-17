@@ -184,3 +184,13 @@
     line-height: 1.5;
   }
 }
+
+
+/* ─── Hide carousel navigation arrows ─────────────────────────────── */
+
+[data-slot="carousel-previous"],
+[data-slot="carousel-next"],
+button[aria-label="Previous slide"],
+button[aria-label="Next slide"] {
+  display: none !important;
+}

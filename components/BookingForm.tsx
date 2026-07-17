@@ -1,22 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { CheckCircle, MapPin, Clock, ExternalLink } from 'lucide-react';
-import { ADDRESS, EVENT_TYPES, WHATSAPP_NUMBER } from '@/lib/data';
-import { buildWhatsAppUrl } from '@/lib/whatsapp';
+import { CheckCircle, MapPin, Clock, ExternalLink, AlertCircle } from 'lucide-react';
+import { ADDRESS, EVENT_TYPES } from '@/lib/data';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { ProtectedPhone } from './ProtectedPhone';
+import { GlassDatePicker } from './GlassDatePicker';
+import { useTranslation } from '@/lib/i18n';
 
 export function BookingForm() {
+  const { t } = useTranslation();
   const [form, setForm] = useState({
     name: '',
     phone: '',
-    email: '',
-    date: '',
     event: '',
+    date: '',
     guests: '',
-    message: '',
+    website: '', // honeypot field — bots fill this, humans never see it
   });
   const [sent, setSent] = useState(false);
+  const [whatsappUrls, setWhatsappUrls] = useState<string[]>([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const update =
     (key: keyof typeof form) =>
@@ -26,12 +31,36 @@ export function BookingForm() {
       >
     ) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const url = buildWhatsAppUrl(form, WHATSAPP_NUMBER);
-    window.open(url, '_blank');
-    setSent(true);
-    setTimeout(() => setSent(false), 6000);
+    setError('');
+    setLoading(true);
+    setWhatsappUrls([]);
+
+    try {
+      const res = await fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      // Store all WhatsApp URLs so user can send to both numbers
+      const urls: string[] = data.urls || [data.url];
+      setWhatsappUrls(urls);
+      setSent(true);
+    } catch {
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -43,42 +72,34 @@ export function BookingForm() {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="border border-gold/12 bg-dark-surface p-8 space-y-5"
+        className="border border-gold/12 bg-dark-surface p-5 sm:p-8 space-y-4 sm:space-y-5"
       >
         <div>
-          <label className={labelClass}>Full Name *</label>
+          <label className={labelClass}>{t.book.labels.fullName}</label>
           <input
             type="text"
             required
             value={form.name}
             onChange={update('name')}
-            placeholder="Your full name"
+            placeholder={t.book.placeholders.fullName}
             className={inputClass}
+            maxLength={100}
           />
         </div>
         <div>
-          <label className={labelClass}>Phone Number *</label>
+          <label className={labelClass}>{t.book.labels.phone}</label>
           <input
             type="tel"
             required
             value={form.phone}
             onChange={update('phone')}
-            placeholder="+91 XXXXX XXXXX"
+            placeholder={t.book.placeholders.phone}
             className={inputClass}
+            maxLength={20}
           />
         </div>
         <div>
-          <label className={labelClass}>Email Address</label>
-          <input
-            type="email"
-            value={form.email}
-            onChange={update('email')}
-            placeholder="Optional"
-            className={inputClass}
-          />
-        </div>
-        <div>
-          <label className={labelClass}>Event Type *</label>
+          <label className={labelClass}>{t.book.labels.eventType}</label>
           <select
             required
             value={form.event}
@@ -86,58 +107,103 @@ export function BookingForm() {
             className={`${inputClass} appearance-none`}
           >
             <option value="" disabled>
-              Select event type
+              {t.book.placeholders.eventType}
             </option>
-            {EVENT_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
+            {EVENT_TYPES.map((eventType) => (
+              <option key={eventType} value={eventType}>
+                {t.book.eventTypes[eventType] || eventType}
               </option>
             ))}
           </select>
         </div>
         <div>
-          <label className={labelClass}>Event Date *</label>
-          <input
-            type="date"
-            required
+          <label className={labelClass}>{t.book.labels.eventDate}</label>
+          <GlassDatePicker
             value={form.date}
-            onChange={update('date')}
+            onChange={(date) => setForm((f) => ({ ...f, date }))}
             min={new Date().toISOString().split('T')[0]}
-            className={inputClass}
+            placeholder={t.book.placeholders.eventDate || 'Select event date'}
+            required
           />
         </div>
         <div>
-          <label className={labelClass}>Number of Guests *</label>
+          <label className={labelClass}>{t.book.labels.guests}</label>
           <input
             type="number"
             required
             value={form.guests}
             onChange={update('guests')}
-            placeholder="e.g. 200"
+            placeholder={t.book.placeholders.guests}
             min="1"
+            max="5000"
             className={inputClass}
           />
         </div>
-        <div>
-          <label className={labelClass}>Special Requests</label>
-          <textarea
-            value={form.message}
-            onChange={update('message')}
-            placeholder="Decoration theme, menu preference, special arrangements…"
-            rows={4}
-            className={`${inputClass} resize-none`}
+
+        {/* Honeypot field — visually hidden from humans, bots will fill it */}
+        <div
+          aria-hidden="true"
+          className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10 overflow-hidden"
+        >
+          <label htmlFor="website">Website</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={form.website}
+            onChange={update('website')}
           />
         </div>
-        <button
-          type="submit"
-          className="w-full py-4 bg-[#25D366] hover:bg-[#1eb85a] text-white font-bold tracking-widest text-xs uppercase transition-colors flex items-center justify-center gap-3"
-        >
-          <WhatsAppIcon size={18} /> Send Booking Request via WhatsApp
-        </button>
-        {sent && (
-          <div className="flex items-center gap-2 text-green-400/80 text-sm justify-center pt-1">
-            <CheckCircle size={15} /> WhatsApp opened — send the message to
-            confirm your booking.
+
+        {error && (
+          <div className="flex items-center gap-2 text-red-400/80 text-sm justify-center pt-1">
+            <AlertCircle size={15} /> {error}
+          </div>
+        )}
+
+        {!sent && (
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 bg-[#25D366] hover:bg-[#1eb85a] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold tracking-widest text-xs uppercase transition-colors flex items-center justify-center gap-3"
+          >
+            <WhatsAppIcon size={18} /> {loading ? 'Sending...' : t.book.submitBtn}
+          </button>
+        )}
+
+        {sent && whatsappUrls.length > 0 && (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-green-400/80 text-sm justify-center">
+              <CheckCircle size={15} /> {t.book.successMsg}
+            </div>
+            <p className="text-cream/50 text-xs text-center">
+              Please tap both buttons below to send the booking request:
+            </p>
+            <div className="grid gap-3">
+              {whatsappUrls.map((url, index) => (
+                <a
+                  key={index}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 bg-[#25D366] hover:bg-[#1eb85a] active:bg-[#19a34d] text-white font-bold tracking-widest text-xs uppercase transition-colors flex items-center justify-center gap-3 touch-manipulation"
+                >
+                  <WhatsAppIcon size={18} /> Send to Number {index + 1}
+                </a>
+              ))}
+            </div>
+            <p className="text-cream/30 text-[10px] text-center">
+              After sending to Number 1, come back here and tap Number 2
+            </p>
+            <button
+              type="button"
+              onClick={() => { setSent(false); setWhatsappUrls([]); }}
+              className="w-full py-3 text-cream/40 hover:text-cream/60 text-xs transition-colors touch-manipulation"
+            >
+              Book another event
+            </button>
           </div>
         )}
       </form>
@@ -145,15 +211,17 @@ export function BookingForm() {
       {/* Contact info below form */}
       <div className="mt-10 text-center text-cream/28 text-[13px] space-y-2.5">
         <div>
-          Prefer to call? <span className="text-gold">{ADDRESS.phone1}</span>
+          {t.book.callPrompt}{' '}
+          <ProtectedPhone encoded={ADDRESS.phone1} className="text-[13px]" /> /{' '}
+          <ProtectedPhone encoded={ADDRESS.phone2} className="text-[13px]" />
         </div>
         <div className="flex items-start justify-center gap-2 max-w-xs mx-auto">
           <MapPin size={12} className="text-gold mt-[3px] shrink-0" />
-          <span className="leading-relaxed text-xs">{ADDRESS.full}</span>
+          <span className="leading-relaxed text-xs">{t.addressInfo.full}</span>
         </div>
         <div className="flex items-center justify-center gap-1.5 text-xs">
           <Clock size={11} className="text-gold" />{' '}
-          <span>{ADDRESS.timings}</span>
+          <span>{t.addressInfo.timings}</span>
         </div>
         <div className="flex items-center justify-center gap-5 pt-1">
           <a

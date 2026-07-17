@@ -1,98 +1,92 @@
-import type { Metadata } from 'next';
+'use client';
+
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CATEGORIES } from '@/lib/data';
 import { GalleryUpload } from '@/components/GalleryUpload';
+import { WatermarkImage } from '@/components/WatermarkImage';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
+import { useTranslation } from '@/lib/i18n';
 
 interface PageProps {
   params: { categoryId: string };
 }
 
-export function generateStaticParams() {
-  return CATEGORIES.map((cat) => ({ categoryId: cat.id }));
-}
-
-export function generateMetadata({ params }: PageProps): Metadata {
-  const category = CATEGORIES.find((c) => c.id === params.categoryId);
-  if (!category) return { title: 'Not Found' };
-  return {
-    title: category.name,
-    description: category.subtitle,
-  };
-}
-
 export default function CategoryDetailPage({ params }: PageProps) {
-  const category = CATEGORIES.find((c) => c.id === params.categoryId);
+  const { categoryId } = params;
+  const { t } = useTranslation();
+  const category = CATEGORIES.find((c) => c.id === categoryId);
   if (!category) notFound();
 
+  const catTranslation = t.events.categories[category.id];
   const others = CATEGORIES.filter((c) => c.id !== category.id).slice(0, 4);
 
   return (
     <div className="min-h-screen bg-dark">
       {/* Hero */}
-      <div className="relative h-[70vh] min-h-[420px] flex flex-col justify-end overflow-hidden">
-        <Image
-          src={category.cover}
-          alt={category.title}
-          fill
-          className="object-cover scale-[1.03]"
-          priority
-          sizes="100vw"
-        />
+      <div className="relative h-[50vh] sm:h-[70vh] min-h-[320px] sm:min-h-[420px] flex flex-col justify-end overflow-hidden">
+        {category.cover ? (
+          <WatermarkImage
+            src={category.cover}
+            alt={category.name}
+            className="absolute inset-0 w-full h-full object-cover"
+            wrapperClassName="absolute inset-0"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-dark-card" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-black/50 to-black/20" />
 
         {/* Breadcrumb */}
-        <div className="absolute top-[20px] left-0 right-0 px-6 sm:px-10">
+        <div className="absolute top-[16px] sm:top-[20px] left-0 right-0 px-4 sm:px-6 md:px-10">
           <Link
             href="/events"
             className="inline-flex items-center gap-2 text-cream/45 hover:text-gold text-xs tracking-wide transition-colors"
           >
-            <ArrowLeft size={13} /> All Events
+            <ArrowLeft size={13} /> {t.events.backToEvents}
           </Link>
         </div>
 
         {/* Title */}
-        <div className="relative px-6 sm:px-10 pb-14 max-w-4xl">
-          <div className="text-gold text-[10px] tracking-[0.45em] uppercase mb-3">
-            {category.name}
+        <div className="relative px-4 sm:px-6 md:px-10 pb-8 sm:pb-14 max-w-4xl">
+          <div className="text-gold text-[10px] tracking-[0.45em] uppercase mb-2 sm:mb-3">
+            {catTranslation?.name || category.name}
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-bold leading-tight mb-4 font-display">
-            {category.title}
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight mb-3 sm:mb-4 font-display">
+            {catTranslation?.title || category.title}
           </h1>
-          <div className="flex items-center gap-4">
-            <div className="h-[1px] w-10 bg-gold/50" />
-            <p className="text-white/50 text-sm italic">
-              &ldquo;{category.quote}&rdquo;
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="h-[1px] w-8 sm:w-10 bg-gold/50" />
+            <p className="text-white/50 text-xs sm:text-sm italic">
+              &ldquo;{catTranslation?.quote || category.quote}&rdquo;
             </p>
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 py-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-16">
         {/* Subtitle + CTA */}
-        <div className="grid md:grid-cols-[1fr_auto] gap-8 items-start mb-16 pb-16 border-b border-gold/10">
+        <div className="grid md:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-start mb-10 sm:mb-16 pb-10 sm:pb-16 border-b border-gold/10">
           <div>
             <p className="text-gold text-[10px] tracking-[0.38em] uppercase mb-3">
-              About This Event
+              {t.events.aboutEvent}
             </p>
-            <p className="text-cream/60 text-[16px] leading-relaxed max-w-xl">
-              {category.subtitle}
+            <p className="text-cream/60 text-[14px] sm:text-[16px] leading-relaxed max-w-xl">
+              {catTranslation?.subtitle || category.subtitle}
             </p>
           </div>
-          <div className="flex flex-col gap-3 shrink-0">
+          <div className="flex flex-row sm:flex-col gap-3 shrink-0">
             <Link
               href="/book"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-gold text-dark font-bold text-xs tracking-widest uppercase hover:bg-gold-bright transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2.5 px-5 sm:px-7 py-3 sm:py-3.5 bg-gold text-dark font-bold text-xs tracking-widest uppercase hover:bg-gold-bright transition-colors whitespace-nowrap"
             >
-              Book This Event
+              {t.events.bookThisEvent}
             </Link>
             <Link
               href="/book"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#25D366] text-white font-bold text-xs tracking-widest uppercase hover:bg-[#20bd5a] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 bg-[#25D366] text-white font-bold text-xs tracking-widest uppercase hover:bg-[#20bd5a] transition-colors"
             >
               <WhatsAppIcon size={14} /> WhatsApp
             </Link>
@@ -101,7 +95,7 @@ export default function CategoryDetailPage({ params }: PageProps) {
 
         {/* Gallery (client component) */}
         <GalleryUpload
-          categoryName={category.name}
+          categoryName={catTranslation?.name || category.name}
           initialImages={category.images}
         />
 
@@ -110,37 +104,41 @@ export default function CategoryDetailPage({ params }: PageProps) {
           <div>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-cream/60 text-xs tracking-[0.3em] uppercase">
-                Other Events
+                {t.events.otherEvents}
               </h3>
               <Link
                 href="/events"
                 className="text-gold text-xs hover:underline flex items-center gap-1"
               >
-                View All <ArrowRight size={11} />
+                {t.events.viewAll} <ArrowRight size={11} />
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {others.map((cat) => (
-                <Link
-                  key={cat.id}
-                  href={`/events/${cat.id}`}
-                  className="group relative h-36 overflow-hidden text-left"
-                >
-                  <Image
-                    src={cat.cover}
-                    alt={cat.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10" />
-                  <div className="absolute bottom-0 left-0 p-3">
-                    <div className="text-white/55 text-[10px] tracking-wide leading-snug group-hover:text-gold transition-colors">
-                      {cat.name}
+              {others.map((cat) => {
+                const otherTranslation = t.events.categories[cat.id];
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/events/${cat.id}`}
+                    className="group relative h-36 overflow-hidden text-left bg-dark-card border border-gold/10 hover:border-gold/30 transition-all"
+                  >
+                    {cat.cover && (
+                      <WatermarkImage
+                        src={cat.cover}
+                        alt={cat.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        wrapperClassName="absolute inset-0"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10" />
+                    <div className="absolute bottom-0 left-0 p-3">
+                      <div className="text-white/55 text-[10px] tracking-wide leading-snug group-hover:text-gold transition-colors">
+                        {otherTranslation?.name || cat.name}
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

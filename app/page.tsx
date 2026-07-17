@@ -1,67 +1,74 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, ArrowRight, ExternalLink, Leaf } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { Star, ArrowRight, ExternalLink } from 'lucide-react';
 import { CATEGORIES, REVIEWS, ADDRESS } from '@/lib/data';
 import { glass } from '@/styles/glass';
 import { GlassCard } from '@/components/GlassCard';
 import { GoldRule } from '@/components/GoldRule';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
-import { MapSection } from '@/components/MapSection';
+import { useTranslation } from '@/lib/i18n';
 
-const HALL_BG = '/images/hall.png';
+const VideoGallery = dynamic(() => import('@/components/VideoGallery').then(m => ({ default: m.VideoGallery })), { ssr: false });
+const MapSection = dynamic(() => import('@/components/MapSection').then(m => ({ default: m.MapSection })), { ssr: false });
+
+const HALL_BG = '/images/hall-bg.jpg';
 
 export default function HomePage() {
+  const { t } = useTranslation();
+
   return (
     <div>
       {/* ── Hero ──────────────────────────────────────────────────── */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden px-3 sm:px-4 py-16 sm:py-20">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
+          className="absolute inset-0 bg-cover bg-center sm:bg-fixed"
           style={{ backgroundImage: `url(${HALL_BG})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
 
         <GlassCard
           variant="dark"
-          className="relative z-10 text-center px-10 py-12 mx-4 max-w-2xl w-full"
+          className="relative z-10 text-center px-4 sm:px-10 py-8 sm:py-12 max-w-2xl w-full"
         >
-          <div className="w-12 h-[1px] bg-gold-light mx-auto mb-6" />
-          <p className="text-gold-light/80 text-[10px] tracking-[0.65em] uppercase mb-4">
-            Welcome to
+          <div className="w-12 h-[1px] bg-gold-light mx-auto mb-5 sm:mb-6" />
+          <p className="text-gold-light/80 text-[9px] sm:text-[10px] tracking-[0.35em] sm:tracking-[0.65em] uppercase mb-3 sm:mb-4">
+            {t.home.heroWelcome}
           </p>
-          <h1 className="text-[56px] sm:text-7xl text-white font-light leading-[0.95] mb-1 font-display tracking-wide">
+          <h1 className="text-[30px] sm:text-[56px] md:text-7xl text-white font-light leading-[0.95] mb-1 font-display tracking-wide">
             Pasumarthi
           </h1>
-          <h2 className="text-[56px] sm:text-7xl text-gold-light font-semibold leading-[0.95] mb-6 font-display tracking-wide">
-            Banquet Hall
+          <h2 className="text-[28px] sm:text-[56px] md:text-7xl text-gold-light font-semibold leading-[0.95] mb-5 sm:mb-6 font-display tracking-wide">
+            {t.home.heroBanquetHall}
           </h2>
           <GoldRule />
-          <p className="text-white/50 text-[15px] mt-5 mb-9 leading-relaxed font-body">
-            One of the finest banquet halls in Khammam — where every celebration
-            becomes a cherished memory.
+          <p className="text-white/50 text-[12px] sm:text-[15px] mt-4 sm:mt-5 mb-6 sm:mb-9 leading-relaxed font-body px-2 sm:px-0">
+            {t.home.heroTagline}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/book"
-              className="px-9 py-3.5 bg-gold-light text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright transition-colors"
+              className="w-full sm:w-auto px-7 sm:px-9 py-4 sm:py-3.5 bg-gold-light text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright transition-colors text-center touch-manipulation"
             >
-              Book an Event
+              {t.home.heroBookBtn}
             </Link>
             <Link
               href="/menu"
-              className="px-9 py-3.5 text-gold-light text-[11px] tracking-widest uppercase transition-all"
+              className="w-full sm:w-auto px-7 sm:px-9 py-4 sm:py-3.5 text-gold-light text-[11px] tracking-widest uppercase transition-all text-center touch-manipulation"
               style={glass.silver as React.CSSProperties}
             >
-              View Menu
+              {t.home.heroMenuBtn}
             </Link>
           </div>
-          <div className="w-12 h-[1px] bg-gold-light/30 mx-auto mt-8" />
+          <div className="w-12 h-[1px] bg-gold-light/30 mx-auto mt-6 sm:mt-8" />
         </GlassCard>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <div className="w-[1px] h-10 bg-gold-light" />
-          <span className="text-gold-light text-[9px] tracking-[0.5em] uppercase">
-            Scroll
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+          <div className="w-[1px] h-6 sm:h-10 bg-gold-light" />
+          <span className="text-gold-light text-[8px] sm:text-[9px] tracking-[0.5em] uppercase">
+            {t.home.scroll}
           </span>
         </div>
       </section>
@@ -74,80 +81,60 @@ export default function HomePage() {
             'linear-gradient(90deg, #b8903a, #d4aa4c, #e8c870, #d4aa4c, #b8903a)',
         }}
       >
-        <div className="flex gap-10 text-dark text-[10px] tracking-[0.28em] uppercase font-bold whitespace-nowrap justify-center flex-wrap px-4">
-          {[
-            'Finest Banquet Hall in Khammam',
-            'Marble Interiors',
-            'Exquisite Cuisine',
-            'All Celebrations',
-            'Nizampet · Khammam',
-            'Silver Curtains · Crystal Chandelier',
-          ].map((t, i) => (
-            <span key={i} className="flex items-center gap-3">
+        <div className="flex gap-4 sm:gap-10 text-dark text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.28em] uppercase font-bold whitespace-nowrap justify-center flex-wrap px-3 sm:px-4">
+          {t.home.marquee.map((text, i) => (
+            <span key={i} className="flex items-center gap-2 sm:gap-3">
               <span className="inline-block w-1 h-1 rounded-full bg-dark/35" />
-              {t}
+              {text}
             </span>
           ))}
         </div>
       </div>
 
       {/* ── About Section ────────────────────────────────────────── */}
-      <section className="relative py-28 px-4 overflow-hidden">
+      <section className="relative py-14 sm:py-28 px-3 sm:px-4 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
+          className="absolute inset-0 bg-cover bg-center sm:bg-fixed"
           style={{ backgroundImage: `url(${HALL_BG})` }}
         />
         <div className="absolute inset-0 bg-black/82" />
 
-        <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start">
+        <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-16 items-start">
           {/* Left — text + stats */}
           <div>
             <GlassCard
               variant="gold"
-              className="inline-block text-gold text-[9px] tracking-[0.48em] uppercase px-3 py-1.5 mb-6"
+              className="inline-block text-gold text-[9px] tracking-[0.48em] uppercase px-3 py-1.5 mb-5 sm:mb-6"
             >
-              Our Story
+              {t.home.aboutLabel}
             </GlassCard>
-            <h2 className="text-[38px] sm:text-5xl text-white font-light leading-[1.08] mb-7 font-display">
-              One of the Finest
+            <h2 className="text-[24px] sm:text-[38px] md:text-5xl text-white font-light leading-[1.12] sm:leading-[1.08] mb-4 sm:mb-7 font-display">
+              {t.home.aboutHeading1}
               <br />
               <span className="text-gold font-semibold italic">
-                Banquet Halls
+                {t.home.aboutHeading2}
               </span>
               <br />
-              in Khammam
+              {t.home.aboutHeading3}
             </h2>
-            <div className="space-y-3 text-silver leading-relaxed text-[15px] mb-10">
-              <p>
-                Pasumarthi Banquet Hall stands as one of Khammam&apos;s most
-                distinguished celebration venues. Our stunning marble floors,
-                crystal chandelier, and silver-draped walls create an atmosphere
-                of timeless elegance.
-              </p>
-              <p>
-                From intimate family gatherings to grand wedding receptions, we
-                offer customisable spaces, exquisite cuisine, and dedicated event
-                coordination for every unforgettable moment.
-              </p>
+            <div className="space-y-3 text-silver leading-relaxed text-[13px] sm:text-[15px] mb-6 sm:mb-10">
+              <p>{t.home.aboutDesc1}</p>
+              <p>{t.home.aboutDesc2}</p>
             </div>
 
             {/* Glass stat cards */}
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { n: '200+', l: 'Events Hosted' },
-                { n: '300+', l: 'Guests Capacity' },
-                { n: '10+', l: 'Years Service' },
-              ].map((s) => (
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {t.home.stats.map((s) => (
                 <GlassCard
-                  key={s.l}
+                  key={s.label}
                   variant="dark"
-                  className="p-5 text-center"
+                  className="p-2.5 sm:p-5 text-center"
                 >
-                  <div className="text-[32px] text-gold font-semibold leading-none mb-1 font-display">
-                    {s.n}
+                  <div className="text-[20px] sm:text-[32px] text-gold font-semibold leading-none mb-1 font-display">
+                    {s.number}
                   </div>
-                  <div className="text-silver text-[10px] tracking-wide leading-snug">
-                    {s.l}
+                  <div className="text-silver text-[8px] sm:text-[10px] tracking-wide leading-snug">
+                    {s.label}
                   </div>
                 </GlassCard>
               ))}
@@ -155,36 +142,19 @@ export default function HomePage() {
           </div>
 
           {/* Right — feature cards */}
-          <div className="space-y-3 md:pt-[70px]">
-            {[
-              {
-                title: 'Grand Marble Interiors',
-                desc: 'Pristine marble floors, silver curtains, and a stunning crystal chandelier create an atmosphere of royalty.',
-              },
-              {
-                title: 'Exquisite Catering',
-                desc: 'From savoury mains to traditional sweets — every dish is prepared with the finest ingredients.',
-              },
-              {
-                title: 'Dedicated Event Team',
-                desc: 'Our coordinators handle décor, catering, and logistics so you can focus entirely on celebrating.',
-              },
-              {
-                title: 'All Occasion Venue',
-                desc: 'Weddings, engagements, birthdays, namings — we set the perfect stage for every milestone.',
-              },
-            ].map((f, i) => (
+          <div className="space-y-2.5 sm:space-y-3 md:pt-[70px]">
+            {t.home.features.map((f, i) => (
               <GlassCard
                 key={i}
                 variant="dark"
-                className="p-5 flex gap-4 items-start"
+                className="p-4 sm:p-5 flex gap-3 sm:gap-4 items-start"
               >
                 <div className="w-[2px] h-8 bg-gold/50 shrink-0 mt-1" />
                 <div>
-                  <div className="text-white/85 text-[15px] font-medium mb-1 font-display">
+                  <div className="text-white/85 text-[14px] sm:text-[15px] font-medium mb-1 font-display">
                     {f.title}
                   </div>
-                  <div className="text-silver text-[13px] leading-relaxed">
+                  <div className="text-silver text-[12px] sm:text-[13px] leading-relaxed">
                     {f.desc}
                   </div>
                 </div>
@@ -194,64 +164,68 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Video Gallery ────────────────────────────────────── */}
+      <VideoGallery />
+
       {/* ── Find Us (Map Section) ────────────────────────────────── */}
       <MapSection />
 
       {/* ── Events Preview ───────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-dark-surface">
+      <section className="py-14 sm:py-24 px-3 sm:px-4 bg-dark-surface">
         <div className="max-w-7xl mx-auto">
           {/* Glass heading */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 sm:mb-16">
             <GlassCard
               variant="dark"
-              className="inline-block px-10 py-8 mb-4"
+              className="inline-block px-5 sm:px-10 py-5 sm:py-8 mb-4"
             >
               <span className="block text-gold text-[9px] tracking-[0.48em] uppercase mb-3">
-                We Host
+                {t.home.eventsLabel}
               </span>
-              <h2 className="text-[34px] sm:text-4xl text-white font-light leading-tight font-display">
-                Every Occasion,
+              <h2 className="text-[22px] sm:text-[34px] md:text-4xl text-white font-light leading-tight font-display">
+                {t.home.eventsHeading1}
                 <br />
                 <span className="text-gold font-semibold italic">
-                  Every Joy
+                  {t.home.eventsHeading2}
                 </span>
               </h2>
               <GoldRule />
-              <p className="text-silver text-sm mt-3 max-w-sm leading-relaxed">
-                From intimate namings to grand wedding receptions — we set the
-                stage for every milestone.
+              <p className="text-silver text-xs sm:text-sm mt-3 max-w-sm leading-relaxed">
+                {t.home.eventsSubtitle}
               </p>
             </GlassCard>
           </div>
 
           {/* Featured row */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
             <Link
               href={`/events/${CATEGORIES[0].id}`}
-              className="group relative col-span-2 lg:col-span-2 overflow-hidden"
-              style={{ height: '360px' }}
+              className="group relative col-span-1 sm:col-span-2 lg:col-span-2 overflow-hidden bg-dark-card h-[220px] sm:h-[280px]"
             >
-              <Image
-                src={CATEGORIES[0].cover}
-                alt={CATEGORIES[0].name}
-                fill
-                className="object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
+              {CATEGORIES[0].cover && (
+                <Image
+                  src={CATEGORIES[0].cover}
+                  alt={CATEGORIES[0].name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-left">
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 text-left">
                 <span
-                  className="inline-block text-gold text-[9px] tracking-[0.38em] uppercase px-2.5 py-1 mb-3"
+                  className="inline-block text-gold text-[9px] tracking-[0.38em] uppercase px-2.5 py-1 mb-2 sm:mb-3"
                   style={glass.chip as React.CSSProperties}
                 >
-                  {CATEGORIES[0].name}
+                  {t.events.categories[CATEGORIES[0].id]?.name || CATEGORIES[0].name}
                 </span>
-                <h3 className="text-white text-2xl font-light leading-snug mb-3 font-display">
-                  {CATEGORIES[0].title}
+                <h3 className="text-white text-lg sm:text-2xl font-light leading-snug mb-2 sm:mb-3 font-display">
+                  {t.events.categories[CATEGORIES[0].id]?.title || CATEGORIES[0].title}
                 </h3>
-                <div className="flex items-center gap-2 text-gold/0 group-hover:text-gold transition-all duration-300">
+                <div className="flex items-center gap-2 text-gold sm:text-gold/0 sm:group-hover:text-gold transition-all duration-300">
                   <span className="text-[11px] tracking-widest uppercase">
-                    View Gallery
+                    {t.home.viewGallery}
                   </span>
                   <ArrowRight size={12} />
                 </div>
@@ -259,35 +233,37 @@ export default function HomePage() {
               <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/25 transition-all duration-500" />
             </Link>
 
-            <div className="col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="col-span-1 sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
               {CATEGORIES.slice(1, 4).map((cat) => (
                 <Link
                   key={cat.id}
                   href={`/events/${cat.id}`}
-                  className="group relative overflow-hidden"
-                  style={{ height: '360px' }}
+                  className="group relative overflow-hidden bg-dark-card h-[180px] sm:h-[280px]"
                 >
-                  <Image
-                    src={cat.cover}
-                    alt={cat.name}
-                    fill
-                    className="object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                  />
+                  {cat.cover && (
+                    <Image
+                      src={cat.cover}
+                      alt={cat.name}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 20vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/40 to-black/5" />
-                  <div className="absolute inset-x-0 bottom-0 p-5 text-left">
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-left">
                     <span
-                      className="inline-block text-gold text-[9px] tracking-[0.35em] uppercase px-2 py-0.5 mb-2"
+                      className="inline-block text-gold text-[8px] sm:text-[9px] tracking-[0.35em] uppercase px-2 py-0.5 mb-1.5 sm:mb-2"
                       style={glass.chip as React.CSSProperties}
                     >
-                      {cat.name}
+                      {t.events.categories[cat.id]?.name || cat.name}
                     </span>
-                    <h3 className="text-white text-base font-light leading-snug mb-2.5 font-display">
-                      {cat.title}
+                    <h3 className="text-white text-sm sm:text-base font-light leading-snug mb-1.5 sm:mb-2.5 font-display">
+                      {t.events.categories[cat.id]?.title || cat.title}
                     </h3>
-                    <div className="flex items-center gap-1.5 text-gold/0 group-hover:text-gold transition-all duration-300">
+                    <div className="flex items-center gap-1.5 text-gold sm:text-gold/0 sm:group-hover:text-gold transition-all duration-300">
                       <span className="text-[10px] tracking-widest uppercase">
-                        Gallery
+                        {t.home.viewGallery}
                       </span>
                       <ArrowRight size={10} />
                     </div>
@@ -299,27 +275,29 @@ export default function HomePage() {
           </div>
 
           {/* Second row */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
             {CATEGORIES.slice(4).map((cat) => (
               <Link
                 key={cat.id}
                 href={`/events/${cat.id}`}
-                className="group relative overflow-hidden"
-                style={{ height: '200px' }}
+                className="group relative overflow-hidden bg-dark-card h-[130px] sm:h-[160px]"
               >
-                <Image
-                  src={cat.cover}
-                  alt={cat.name}
-                  fill
-                  className="object-cover group-hover:scale-[1.08] transition-transform duration-700 ease-out"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                />
+                {cat.cover && (
+                  <Image
+                    src={cat.cover}
+                    alt={cat.name}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4 text-left">
+                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-left">
                   <div className="text-white/55 text-[10px] leading-snug group-hover:text-gold/80 transition-colors duration-300">
-                    {cat.name}
+                    {t.events.categories[cat.id]?.name || cat.name}
                   </div>
-                  <div className="mt-1.5 text-gold/0 group-hover:text-gold/70 transition-all duration-300">
+                  <div className="mt-1 sm:mt-1.5 text-gold/0 group-hover:text-gold/70 transition-all duration-300">
                     <ArrowRight size={10} />
                   </div>
                 </div>
@@ -328,32 +306,32 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-12">
             <Link
               href="/events"
-              className="inline-flex items-center gap-3 px-8 py-3.5 text-gold text-[11px] tracking-[0.3em] uppercase hover:border-gold/60 transition-all"
+              className="inline-flex items-center gap-3 px-6 sm:px-8 py-3.5 text-gold text-[11px] tracking-[0.3em] uppercase hover:border-gold/60 transition-all touch-manipulation"
               style={glass.gold as React.CSSProperties}
             >
-              Explore All Events & Galleries <ArrowRight size={12} />
+              {t.home.exploreAll} <ArrowRight size={12} />
             </Link>
           </div>
         </div>
       </section>
 
       {/* ── Reviews ──────────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-dark">
+      <section className="py-16 sm:py-24 px-4 bg-dark">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10 sm:mb-14">
             <GlassCard
               variant="gold"
               className="inline-block text-gold text-[9px] tracking-[0.48em] uppercase px-3 py-1.5 mb-5"
             >
-              What Guests Say
+              {t.home.reviewsLabel}
             </GlassCard>
-            <h2 className="text-[34px] sm:text-4xl text-cream font-light mb-3 font-display">
-              Reviews &amp;{' '}
+            <h2 className="text-[26px] sm:text-[34px] md:text-4xl text-cream font-light mb-3 font-display">
+              {t.home.reviewsHeading}{' '}
               <span className="text-gold font-semibold italic">
-                Experiences
+                {t.home.reviewsSubheading}
               </span>
             </h2>
             <div className="flex items-center justify-center gap-1 mt-4">
@@ -419,7 +397,7 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="text-gold text-sm hover:underline flex items-center gap-1.5"
             >
-              <ExternalLink size={13} /> View on Google Maps
+              <ExternalLink size={13} /> {t.map.openInGoogleMaps}
             </a>
             <a
               href={ADDRESS.justdial}
@@ -427,16 +405,16 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="text-gold text-sm hover:underline flex items-center gap-1.5"
             >
-              <ExternalLink size={13} /> View on JustDial
+              <ExternalLink size={13} /> {t.common.justdialListing}
             </a>
           </div>
         </div>
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="relative py-28 px-4 overflow-hidden">
+      <section className="relative py-16 sm:py-28 px-4 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
+          className="absolute inset-0 bg-cover bg-center sm:bg-fixed"
           style={{ backgroundImage: `url(${HALL_BG})` }}
         />
         <div className="absolute inset-0 bg-black/72" />
@@ -448,26 +426,25 @@ export default function HomePage() {
           }}
         />
         <div className="relative max-w-xl mx-auto text-center">
-          <GlassCard variant="dark" className="px-10 py-12 mx-4">
+          <GlassCard variant="dark" className="px-5 sm:px-10 py-10 sm:py-12 mx-2 sm:mx-4">
             <div className="w-10 h-[1px] bg-gold/50 mx-auto mb-6" />
             <p className="text-gold/70 text-[9px] tracking-[0.5em] uppercase mb-4">
-              Reserve Your Date
+              {t.home.ctaLabel}
             </p>
-            <h2 className="text-4xl sm:text-5xl text-white font-light mb-2 font-display">
-              Ready to Create
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-white font-light mb-2 font-display">
+              {t.home.ctaHeading1}
             </h2>
-            <h2 className="text-4xl sm:text-5xl text-gold font-semibold italic mb-6 font-display">
-              Memories?
+            <h2 className="text-3xl sm:text-4xl md:text-5xl text-gold font-semibold italic mb-6 font-display">
+              {t.home.ctaHeading2}
             </h2>
-            <p className="text-silver text-[15px] mb-10 leading-relaxed">
-              Book your event today — our team will take care of every last
-              detail.
+            <p className="text-silver text-[14px] sm:text-[15px] mb-8 sm:mb-10 leading-relaxed">
+              {t.home.ctaDesc}
             </p>
             <Link
               href="/book"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-gold text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright transition-colors"
+              className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 bg-gold text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright transition-colors"
             >
-              <WhatsAppIcon size={16} /> Book via WhatsApp
+              <WhatsAppIcon size={16} /> {t.home.ctaBtn}
             </Link>
             <div className="w-10 h-[1px] bg-gold/30 mx-auto mt-8" />
           </GlassCard>

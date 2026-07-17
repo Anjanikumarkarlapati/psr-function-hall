@@ -26,6 +26,7 @@ export interface Address {
   state: string;
   full: string;
   phone1: string;
+  phone2: string;
   timings: string;
   justdial: string;
   gmaps: string;
@@ -39,7 +40,17 @@ export interface MapView {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-export const WHATSAPP_NUMBER = '919999999999';
+/**
+ * WhatsApp numbers stored in obfuscated form to prevent bot scraping.
+ * Use decodeNumber() from '@/lib/obfuscate' to get the actual values at runtime.
+ */
+export const WHATSAPP_NUMBERS = [
+  { label: 'ODAxODAgMTgwMjkgMTkr', number: 'ODAxODAxODAyOTE5' },
+  { label: 'NzcwMzcgNjYwMzcgMTkr', number: 'NzcwMzc2NjAzNzE5' },
+] as const;
+
+/** @deprecated Use WHATSAPP_NUMBERS instead */
+export const WHATSAPP_NUMBER = WHATSAPP_NUMBERS[0].number;
 
 export const ADDRESS: Address = {
   line1: '4th Floor, Koppu Naresh Complex, Wyra Rd',
@@ -47,12 +58,20 @@ export const ADDRESS: Address = {
   line3: 'B K Bazar Colony, Nizampet, Khammam',
   state: 'Telangana 507001, India',
   full: '4th Floor, Koppu Naresh Complex, Wyra Rd, Above Avantara, Opp. Babu Rao Complex, B K Bazar Colony, Nizampet, Khammam, Telangana 507001',
-  phone1: '+91 92081 08108',
+  phone1: 'ODAxODAgMTgwMjkgMTkr', // obfuscated — use decodeDisplayNumber()
+  phone2: 'NzcwMzcgNjYwMzcgMTkr', // obfuscated — use decodeDisplayNumber()
   timings: 'Mon – Sun  ·  10:00 AM – 10:00 PM',
   justdial:
     'https://www.justdial.com/Khammam/Pasumarthi-Banquet-Hall-Above-Avantara-Opposite-Babu-Rao-Compex-B-K-Bazar-Colony/9999P8742-8742-250125012404-V8A9_BZDET',
   gmaps: 'https://www.google.com/maps/place/Pasumarthi+Banquet+hall/@17.2500476,80.1448094,17z',
 };
+
+// ─── Advertisements / Pamphlets ───────────────────────────────────────────────
+
+export const ADVERTISEMENTS: string[] = [
+  '/images/gallery/poster-telugu.jpg',
+  '/images/gallery/poster-english.jpg',
+];
 
 // ─── Menu ─────────────────────────────────────────────────────────────────────
 
@@ -82,7 +101,7 @@ export const MENU_ITEMS: string[] = [
   'Mineral Water',
 ];
 
-export const MENU_2_EXTRAS: string[] = ['Welcome Drink', 'Chicken Biryani'];
+export const MENU_2_EXTRAS: string[] = ['Welcome Drink', 'Chicken Biryani', 'Mutton Curry'];
 
 // ─── Reviews ──────────────────────────────────────────────────────────────────
 
@@ -147,10 +166,30 @@ export const CATEGORIES: Category[] = [
     subtitle:
       'Grand wedding setups crafted with floral mandaps, silk drapes, and chandelier-lit elegance for your most treasured day.',
     quote: 'The greatest thing you will ever learn is just to love and be loved in return.',
-    cover: 'https://images.unsplash.com/photo-1772127822562-a898d9f5733c?w=1200&h=700&fit=crop&auto=format',
+    cover: '/images/gallery/wedding-stage-floral-arch.jpg',
     images: [
-      'https://images.unsplash.com/photo-1587271636175-90d58cdad458?w=800&h=550&fit=crop&auto=format',
-      'https://images.unsplash.com/photo-1772127822552-ce9ef537bdcf?w=800&h=550&fit=crop&auto=format',
+      '/images/gallery/wedding-stage-floral-arch.jpg',
+      '/images/gallery/wedding-hall-seating.jpg',
+      '/images/gallery/wedding-traditional-mandap.jpg',
+      '/images/gallery/wedding-traditional-mandap-closeup.jpg',
+      '/images/gallery/wedding-modern-minimalist.jpg',
+      '/images/gallery/wedding-white-floral-arch.jpg',
+      '/images/gallery/wedding-colorful-traditional.jpg',
+      '/images/gallery/wedding-white-green-elegant.jpg',
+      '/images/gallery/wedding-better-together.jpg',
+      '/images/gallery/wedding-premium-gold-floral.jpg',
+      '/images/gallery/wedding-colorful-garland-circle.jpg',
+      '/images/gallery/wedding-hanging-wisteria.jpg',
+      '/images/gallery/wedding-double-gold-frame.jpg',
+      '/images/gallery/wedding-white-green-candles.jpg',
+      '/images/gallery/wedding-green-arch-gold.jpg',
+      '/images/gallery/wedding-pink-drapes-stage.jpg',
+      '/images/gallery/wedding-green-yellow-stage.jpg',
+      '/images/gallery/wedding-peach-elegant.jpg',
+      '/images/gallery/wedding-golden-sofa-red.jpg',
+      '/images/gallery/wedding-white-curtain-floral.jpg',
+      '/images/gallery/wedding-pink-gold-arch.jpg',
+      '/images/gallery/wedding-golden-ornate-stage.jpg',
     ],
   },
   {
@@ -159,9 +198,11 @@ export const CATEGORIES: Category[] = [
     title: 'Celebrate the Beginning of Forever',
     subtitle: 'Elegant engagement decorations crafted for unforgettable first promises.',
     quote: 'Every love story begins with a beautiful promise.',
-    cover: 'https://images.unsplash.com/photo-1746044159204-1c0dc41802ea?w=1200&h=700&fit=crop&auto=format',
+    cover: '/images/gallery/wedding-better-together.jpg',
     images: [
-      'https://images.unsplash.com/photo-1745573674471-e057af420757?w=800&h=550&fit=crop&auto=format',
+      '/images/gallery/wedding-better-together.jpg',
+      '/images/gallery/wedding-premium-gold-floral.jpg',
+      '/images/gallery/wedding-modern-minimalist.jpg',
     ],
   },
   {
@@ -170,8 +211,11 @@ export const CATEGORIES: Category[] = [
     title: 'Where Two Hearts Become One',
     subtitle: 'Sophisticated ring ceremony décor designed with elegance and charm.',
     quote: 'A ring is the smallest circle with the biggest meaning.',
-    cover: 'https://images.unsplash.com/photo-1767986012147-352900f75221?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/wedding-double-gold-frame.jpg',
+    images: [
+      '/images/gallery/wedding-double-gold-frame.jpg',
+      '/images/gallery/wedding-hanging-wisteria.jpg',
+    ],
   },
   {
     id: 'birthday-boys',
@@ -179,9 +223,9 @@ export const CATEGORIES: Category[] = [
     title: 'Epic Adventures Start Here',
     subtitle: 'Superhero, jungle, racing, and space-themed birthday celebrations.',
     quote: 'Every birthday is another adventure waiting to happen.',
-    cover: 'https://images.unsplash.com/photo-1741969494307-55394e3e4071?w=1200&h=700&fit=crop&auto=format',
+    cover: '/images/gallery/birthday-boss-baby-theme.jpg',
     images: [
-      'https://images.unsplash.com/photo-1560128411-79892dd93bf8?w=800&h=550&fit=crop&auto=format',
+      '/images/gallery/birthday-boss-baby-theme.jpg',
     ],
   },
   {
@@ -190,8 +234,11 @@ export const CATEGORIES: Category[] = [
     title: 'Dreams, Sparkles & Smiles',
     subtitle: 'Princess, unicorn, Barbie, butterfly, and fairy-themed birthday decorations.',
     quote: 'Make every birthday magical and unforgettable.',
-    cover: 'https://images.unsplash.com/photo-1583875762487-5f8f7c718d14?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/babyshower-flower-cart.jpg',
+    images: [
+      '/images/gallery/babyshower-flower-cart.jpg',
+      '/images/gallery/naming-ceremony-colorful.jpg',
+    ],
   },
   {
     id: 'anniversary',
@@ -199,8 +246,11 @@ export const CATEGORIES: Category[] = [
     title: 'Celebrating Love Through the Years',
     subtitle: 'Romantic anniversary setups for every milestone of your journey together.',
     quote: 'Love grows stronger with every passing year.',
-    cover: 'https://images.unsplash.com/photo-1560505605-f300b17028d6?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/wedding-white-floral-arch.jpg',
+    images: [
+      '/images/gallery/wedding-white-floral-arch.jpg',
+      '/images/gallery/wedding-colorful-garland-circle.jpg',
+    ],
   },
   {
     id: 'babyshower',
@@ -208,8 +258,12 @@ export const CATEGORIES: Category[] = [
     title: 'Welcoming a Little Miracle',
     subtitle: 'Beautiful baby shower decorations filled with warmth and joy.',
     quote: 'Tiny feet leave the biggest footprints in our hearts.',
-    cover: 'https://images.unsplash.com/photo-1635927300503-05044fadd0bb?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/babyshower-ceremony.jpg',
+    images: [
+      '/images/gallery/babyshower-ceremony.jpg',
+      '/images/gallery/babyshower-rangoli-balloons.jpg',
+      '/images/gallery/babyshower-flower-cart.jpg',
+    ],
   },
   {
     id: 'naming',
@@ -217,8 +271,11 @@ export const CATEGORIES: Category[] = [
     title: 'A Beautiful Beginning',
     subtitle: 'Celebrate your baby\'s first milestone with elegant decorations.',
     quote: 'Every name carries a story waiting to be written.',
-    cover: 'https://images.unsplash.com/photo-1771769076330-c424547f5c1c?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/naming-ceremony-colorful.jpg',
+    images: [
+      '/images/gallery/naming-ceremony-colorful.jpg',
+      '/images/gallery/naming-ceremony-rangoli.jpg',
+    ],
   },
   {
     id: 'housewarming',
@@ -226,8 +283,14 @@ export const CATEGORIES: Category[] = [
     title: 'Turning a House Into a Home',
     subtitle: 'Traditional and modern décor for your special Gruhapravesam celebration.',
     quote: 'Home is where beautiful memories begin.',
-    cover: 'https://images.unsplash.com/photo-1759477274116-e3cb02d2b9d8?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/housewarming-orange-floral.jpg',
+    images: [
+      '/images/gallery/housewarming-orange-floral.jpg',
+      '/images/gallery/housewarming-gold-drapes.jpg',
+      '/images/gallery/housewarming-traditional-golden.jpg',
+      '/images/gallery/wedding-traditional-mandap.jpg',
+      '/images/gallery/wedding-traditional-mandap-closeup.jpg',
+    ],
   },
   {
     id: 'retirement',
@@ -235,8 +298,11 @@ export const CATEGORIES: Category[] = [
     title: 'Celebrating a Lifetime of Achievements',
     subtitle: 'Honor years of dedication with a memorable retirement celebration.',
     quote: 'Retirement is not the end — it is the beginning of a new adventure.',
-    cover: 'https://images.unsplash.com/photo-1560128411-79892dd93bf8?w=1200&h=700&fit=crop&auto=format',
-    images: [],
+    cover: '/images/gallery/wedding-hall-seating.jpg',
+    images: [
+      '/images/gallery/wedding-hall-seating.jpg',
+      '/images/gallery/wedding-white-green-candles.jpg',
+    ],
   },
 ];
 

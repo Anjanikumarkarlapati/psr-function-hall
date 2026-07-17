@@ -1,31 +1,26 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { Leaf, Phone, ArrowRight, Clock, MapPin } from 'lucide-react';
-import { MENU_ITEMS, MENU_2_EXTRAS, ADDRESS, WHATSAPP_NUMBER } from '@/lib/data';
+import { MENU_ITEMS, MENU_2_EXTRAS, ADDRESS, WHATSAPP_NUMBERS } from '@/lib/data';
+import { decodeNumber, decodeDisplayNumber } from '@/lib/obfuscate';
 import { glass } from '@/styles/glass';
 import { GlassCard } from '@/components/GlassCard';
 import { GoldRule } from '@/components/GoldRule';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
-
-export const metadata: Metadata = {
-  title: 'Pure Veg Menu',
-  description:
-    'Complete vegetarian menu with 23+ dishes including biryanis, curries, sweets, and refreshments at Pasumarthi Banquet Hall, Khammam.',
-};
-
-const HALL_BG =
-  '/images/hall.png';
+import { useTranslation } from '@/lib/i18n';
 
 export default function MenuPage() {
+  const { t } = useTranslation();
   const allItems = [...MENU_ITEMS, ...MENU_2_EXTRAS];
 
   return (
     <div className="min-h-screen bg-dark">
       {/* Hero Header */}
-      <div className="relative overflow-hidden" style={{ height: '320px' }}>
+      <div className="relative overflow-hidden" style={{ height: '240px' }}>
         <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{ backgroundImage: `url(${HALL_BG})` }}
+          className="absolute inset-0 bg-cover bg-center sm:bg-fixed"
+          style={{ backgroundImage: `url('/images/hall-bg.jpg')` }}
         />
         <div className="absolute inset-0 bg-black/75" />
         <div
@@ -35,19 +30,22 @@ export default function MenuPage() {
               'radial-gradient(ellipse at 50% 120%, #d4aa4c 0%, transparent 60%)',
           }}
         />
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 pt-8">
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 pt-6 sm:pt-8">
           <GlassCard
             variant="gold"
-            className="inline-block text-gold text-[9px] tracking-[0.52em] uppercase px-3 py-1.5 mb-5"
+            className="inline-block text-gold text-[9px] tracking-[0.52em] uppercase px-3 py-1.5 mb-4 sm:mb-5"
           >
-            Our Offerings
+            {t.menu.label}
           </GlassCard>
-          <h1 className="text-[46px] sm:text-6xl text-white font-light leading-tight font-display">
-            Pure Veg <span className="text-gold font-semibold italic">Menu</span>
+          <h1 className="text-[32px] sm:text-[46px] md:text-6xl text-white font-light leading-tight font-display">
+            {t.menu.heading.split(' ').slice(0, -1).join(' ')}{' '}
+            <span className="text-gold font-semibold italic">
+              {t.menu.heading.split(' ').slice(-1)[0]}
+            </span>
           </h1>
-          <div className="flex items-center gap-2 mt-4 text-silver text-sm">
+          <div className="flex items-center gap-2 mt-3 sm:mt-4 text-silver text-sm">
             <Leaf size={13} className="text-green-400/70" />
-            100% Pure Vegetarian · Finest Quality Ingredients
+            {t.menu.vegNote}
           </div>
         </div>
       </div>
@@ -58,16 +56,16 @@ export default function MenuPage() {
           <div className="grid sm:grid-cols-2 gap-4">
             {[
               {
-                label: 'Menu 1',
-                count: '23 Dishes',
-                desc: 'Complete vegetarian spread — all dishes listed below without extras.',
+                label: t.menu.menu1Label,
+                count: t.menu.menu1Count,
+                desc: t.menu.menu1Desc,
                 extra: null,
               },
               {
-                label: 'Menu 2',
-                count: '25 Dishes + Welcome Drink',
-                desc: 'Everything in Menu 1, plus Welcome Drink & Chicken Biryani.',
-                extra: 'Includes extras',
+                label: t.menu.menu2Label,
+                count: t.menu.menu2Count,
+                desc: t.menu.menu2Desc,
+                extra: t.menu.menu2Extra,
               },
             ].map((pkg, i) => (
               <GlassCard
@@ -104,34 +102,35 @@ export default function MenuPage() {
           <GlassCard variant="dark" className="overflow-hidden">
             {/* Header */}
             <div
-              className="px-8 py-6 flex items-center justify-between flex-wrap gap-3"
+              className="px-4 sm:px-8 py-4 sm:py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
               style={{ borderBottom: '1px solid rgba(212,170,76,0.14)' }}
             >
               <div>
                 <div className="text-gold text-[9px] tracking-[0.45em] uppercase mb-1">
-                  Complete Listing
+                  {t.menu.fullMenuLabel}
                 </div>
-                <h2 className="text-2xl text-white font-light font-display">
-                  Full Menu — All Items
+                <h2 className="text-xl sm:text-2xl text-white font-light font-display">
+                  {t.menu.fullMenuHeading}
                 </h2>
               </div>
               <div className="flex items-center gap-4 text-[11px] text-silver">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-gold/60" />
-                  Menu 1 &amp; 2
+                  {t.menu.legend1}
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-green-400/70" />
-                  Menu 2 only
+                  {t.menu.legend2}
                 </div>
               </div>
             </div>
 
             {/* Items Grid */}
-            <div className="p-8">
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3.5">
+            <div className="p-4 sm:p-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 sm:gap-y-3.5">
                 {allItems.map((item, i) => {
                   const isExtra = MENU_2_EXTRAS.includes(item);
+                  const translatedName = t.menu.items[item] || item;
                   return (
                     <div key={i} className="flex items-center gap-3">
                       <div
@@ -146,7 +145,7 @@ export default function MenuPage() {
                             : 'text-silver'
                         }`}
                       >
-                        {item}
+                        {translatedName}
                       </span>
                       {isExtra && (
                         <span className="text-[9px] text-green-400/70 px-1.5 py-0.5 border border-green-400/20 tracking-wide shrink-0">
@@ -165,11 +164,7 @@ export default function MenuPage() {
               >
                 <div className="w-[2px] h-10 bg-green-400/40 shrink-0 mt-0.5" />
                 <p className="text-silver text-xs leading-relaxed">
-                  Items marked{' '}
-                  <span className="text-green-300/80 font-medium">M2</span> are
-                  exclusive to Menu 2 — Welcome Drink is served on arrival and
-                  Chicken Biryani replaces or accompanies the standard rice
-                  course. Contact us to discuss customisation.
+                  {t.menu.note}
                 </p>
               </div>
             </div>
@@ -184,54 +179,60 @@ export default function MenuPage() {
                   'radial-gradient(ellipse at 50% 100%, #d4aa4c 0%, transparent 65%)',
               }}
             />
-            <div className="relative p-8 sm:p-10">
-              <div className="text-center mb-8">
+            <div className="relative p-5 sm:p-8 md:p-10">
+              <div className="text-center mb-6 sm:mb-8">
                 <div className="w-8 h-[1px] bg-gold/40 mx-auto mb-5" />
                 <GlassCard
                   variant="gold"
                   className="inline-block text-gold text-[9px] tracking-[0.5em] uppercase px-3 py-1.5 mb-4"
                 >
-                  Want to Know More?
+                  {t.menu.ctaLabel}
                 </GlassCard>
-                <h3 className="text-3xl sm:text-4xl text-white font-light mb-3 font-display">
-                  For More Menu Details
+                <h3 className="text-2xl sm:text-3xl md:text-4xl text-white font-light mb-3 font-display">
+                  {t.menu.ctaHeading1}
                   <br />
                   <span className="text-gold font-semibold italic">
-                    Connect With Us
+                    {t.menu.ctaHeading2}
                   </span>
                 </h3>
-                <p className="text-silver text-[14px] leading-relaxed max-w-md mx-auto">
-                  Our team will walk you through the full menu, seasonal
-                  specials, custom packages, and pricing — just reach out.
+                <p className="text-silver text-[13px] sm:text-[14px] leading-relaxed max-w-md mx-auto">
+                  {t.menu.ctaDesc}
                 </p>
                 <div className="w-8 h-[1px] bg-gold/30 mx-auto mt-5" />
               </div>
 
-              <div className="grid sm:grid-cols-3 gap-4 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
                 <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                    'Hello, I would like to know more about the menu and packages at Pasumarthi Banquet Hall.'
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col items-center gap-3 px-6 py-6 bg-[#25D366] hover:bg-[#20bd5a] text-white transition-all"
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const number = decodeNumber(WHATSAPP_NUMBERS[0].number);
+                    const msg = 'Hello, I would like to know more about the menu and packages at Pasumarthi Banquet Hall.';
+                    window.open(`https://wa.me/${number}?text=${encodeURIComponent(msg)}`, '_blank');
+                  }}
+                  className="group flex flex-col items-center gap-3 px-6 py-6 bg-[#25D366] hover:bg-[#20bd5a] text-white transition-all cursor-pointer"
                 >
                   <div className="w-10 h-10 flex items-center justify-center border border-white/25 text-white">
                     <WhatsAppIcon size={18} />
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-semibold tracking-wide text-white font-display">
-                      WhatsApp Us
+                      {t.menu.whatsappBtn}
                     </div>
                     <div className="text-[11px] mt-0.5 text-white/70">
-                      Instant reply, 9AM–9PM
+                      {t.menu.whatsappSubtext}
                     </div>
                   </div>
                 </a>
 
                 <a
-                  href={`tel:${ADDRESS.phone1.replace(/\s/g, '')}`}
-                  className="group flex flex-col items-center gap-3 px-6 py-6 text-gold hover:border-gold/50 transition-all"
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const phone = decodeDisplayNumber(ADDRESS.phone1);
+                    window.open(`tel:${phone.replace(/\s/g, '')}`);
+                  }}
+                  className="group flex flex-col items-center gap-3 px-6 py-6 text-gold hover:border-gold/50 transition-all cursor-pointer"
                   style={glass.gold as React.CSSProperties}
                 >
                   <div className="w-10 h-10 flex items-center justify-center border border-gold/35 text-gold">
@@ -239,10 +240,10 @@ export default function MenuPage() {
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-semibold tracking-wide text-gold font-display">
-                      Call Us
+                      {t.menu.callBtn}
                     </div>
                     <div className="text-[11px] mt-0.5 text-silver">
-                      {ADDRESS.phone1}
+                      Tap to call
                     </div>
                   </div>
                 </a>
@@ -257,21 +258,25 @@ export default function MenuPage() {
                   </div>
                   <div className="text-center">
                     <div className="text-sm font-semibold tracking-wide text-gold font-display">
-                      Book an Event
+                      {t.menu.bookBtn}
                     </div>
                     <div className="text-[11px] mt-0.5 text-silver">
-                      Reserve your date
+                      {t.menu.bookSubtext}
                     </div>
                   </div>
                 </Link>
               </div>
 
-              <div className="text-center text-silver text-xs flex items-center justify-center gap-2">
-                <Clock size={11} className="text-gold/60" />
-                {ADDRESS.timings}
-                <span className="mx-2 text-gold/20">|</span>
-                <MapPin size={11} className="text-gold/60" />
-                Nizampet, Khammam, Telangana
+              <div className="text-center text-silver text-xs flex flex-col sm:flex-row items-center justify-center gap-2">
+                <span className="flex items-center gap-1.5">
+                  <Clock size={11} className="text-gold/60" />
+                  {t.addressInfo.timings}
+                </span>
+                <span className="hidden sm:inline mx-2 text-gold/20">|</span>
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={11} className="text-gold/60" />
+                  Nizampet, Khammam, Telangana
+                </span>
               </div>
             </div>
           </GlassCard>
