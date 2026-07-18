@@ -138,7 +138,7 @@ export function GlassDatePicker({
       {open && (
         <div className="absolute z-50 mt-2 left-0 right-0 sm:left-0 sm:right-auto sm:w-[320px] animate-fade-in-up">
           {/* Glassmorphism container */}
-          <div className="backdrop-blur-xl bg-[#1a1508]/85 border border-gold/20 rounded-lg shadow-2xl shadow-black/60 overflow-hidden">
+          <div className="backdrop-blur-xl bg-[#2b2721]/95 border border-gold/25 rounded-lg shadow-2xl shadow-black/50 overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gold/10">
               <button

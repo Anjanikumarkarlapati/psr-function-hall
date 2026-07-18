@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu as MenuIcon, X } from 'lucide-react';
@@ -65,17 +64,17 @@ export function Navbar() {
         {/* Brand lockup */}
         <Link
           href="/"
-          aria-label="Pasumarthy Banquet Hall — home"
+          aria-label={`${t.navbar.brandName} — home`}
           className="group shrink-0 flex items-center rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-offset-4 focus-visible:ring-offset-dark"
         >
-          <Image
-            src="/images/brand-lockup.svg"
-            alt="Pasumarthy Banquet Hall"
-            width={760}
-            height={220}
-            className="h-auto w-[154px] sm:w-[190px] drop-shadow-[0_2px_8px_rgba(201,168,76,0.16)] transition-[filter,opacity] duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_3px_12px_rgba(201,168,76,0.25)]"
-            priority
-          />
+          <div className="text-left">
+            <div className="text-gold font-bold text-[18px] sm:text-[22px] leading-none tracking-wide font-display">
+              {t.navbar.brandName}
+            </div>
+            <div className="text-cream/30 text-[8px] sm:text-[9px] tracking-[0.28em] sm:tracking-[0.32em] uppercase mt-[2px] sm:mt-[3px]">
+              {t.navbar.subtitle}
+            </div>
+          </div>
         </Link>
 
         {/* Desktop Links */}

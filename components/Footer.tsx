@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { MapPin, Clock } from 'lucide-react';
 import { ADDRESS } from '@/lib/data';
 import { WhatsAppIcon } from './WhatsAppIcon';
@@ -18,16 +17,15 @@ export function Footer() {
         <div>
           <Link
             href="/"
-            aria-label="Pasumarthy Banquet Hall — home"
+            aria-label={`${t.navbar.brandName} — home`}
             className="group inline-block mb-4 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-offset-4 focus-visible:ring-offset-dark-card"
           >
-            <Image
-              src="/images/brand-lockup.svg"
-              alt="Pasumarthy Banquet Hall"
-              width={760}
-              height={220}
-              className="h-auto w-[180px] sm:w-[240px] drop-shadow-[0_3px_12px_rgba(201,168,76,0.15)] transition-[filter] duration-300 group-hover:brightness-110"
-            />
+            <div className="text-gold text-2xl font-bold font-display">
+              {t.navbar.brandName}
+            </div>
+            <div className="text-cream/22 text-[9px] tracking-[0.28em] uppercase mt-1">
+              {t.navbar.subtitle}
+            </div>
           </Link>
           <p className="max-w-xs text-cream/35 text-[12px] sm:text-sm leading-relaxed">
             {t.footer.tagline}

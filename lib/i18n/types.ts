@@ -7,6 +7,7 @@ export interface TranslationDictionary {
     events: string;
     bookNow: string;
     subtitle: string;
+    brandName: string;
   };
   home: {
     heroWelcome: string;

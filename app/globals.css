@@ -15,7 +15,7 @@
   --font-body: 'Inter', sans-serif;
 
   /* Responsive glass tokens — laptop/default */
-  --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.76), rgba(6, 5, 4, 0.62));
+  --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.55), rgba(6, 5, 4, 0.42));
   --glass-dark-filter: blur(24px) saturate(1.28);
   --glass-dark-border: 1px solid rgba(232, 200, 112, 0.22);
   --glass-dark-shadow: 0 20px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(0, 0, 0, 0.32);
@@ -166,7 +166,7 @@ h1, h2, h3, h4, h5, h6, p, span, a, div {
 @media (max-width: 640px) {
   /* More opaque glass and lower blur keep text clear and scrolling smooth. */
   :root {
-    --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.88), rgba(6, 5, 4, 0.80));
+    --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.68), rgba(6, 5, 4, 0.58));
     --glass-dark-filter: blur(12px) saturate(1.12);
     --glass-dark-border: 1px solid rgba(232, 200, 112, 0.26);
     --glass-dark-shadow: 0 14px 36px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(0, 0, 0, 0.26);

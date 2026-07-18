@@ -7,6 +7,7 @@ export const te: TranslationDictionary = {
     events: 'ఈవెంట్లు',
     bookNow: 'బుక్ చేయండి',
     subtitle: 'బ్యాంక్వెట్ హాల్ · ఖమ్మం',
+    brandName: 'పసుమర్తి',
   },
   home: {
     heroWelcome: 'స్వాగతం',

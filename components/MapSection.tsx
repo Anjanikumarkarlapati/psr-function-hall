@@ -69,7 +69,7 @@ export function MapSection() {
                     inset: 0,
                   }}
                   loading="lazy"
-                  title={`Pasumarthi Banquet Hall — ${v.label}`}
+                  title={`${t.navbar.brandName} ${t.home.heroBanquetHall} — ${v.label}`}
                   allowFullScreen
                 />
               ))}

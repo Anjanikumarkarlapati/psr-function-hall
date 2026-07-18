@@ -7,6 +7,7 @@ export const en: TranslationDictionary = {
     events: 'Events',
     bookNow: 'Book Now',
     subtitle: 'Banquet Hall · Khammam',
+    brandName: 'Pasumarthi',
   },
   home: {
     heroWelcome: 'Welcome to',
