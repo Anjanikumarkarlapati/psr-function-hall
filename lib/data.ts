@@ -52,6 +52,21 @@ export const WHATSAPP_NUMBERS = [
 /** @deprecated Use WHATSAPP_NUMBERS instead */
 export const WHATSAPP_NUMBER = WHATSAPP_NUMBERS[0].number;
 
+export const VENUE_LOCATION = {
+  latitude: 17.2500476,
+  longitude: 80.1448094,
+} as const;
+
+const VENUE_COORDINATES = `${VENUE_LOCATION.latitude},${VENUE_LOCATION.longitude}`;
+
+/**
+ * Google Maps uses the visitor's current device location as the origin when
+ * `origin` is omitted. The destination remains pinned to the venue coordinates.
+ */
+export const GOOGLE_MAPS_DIRECTIONS_URL =
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(VENUE_COORDINATES)}` +
+  '&travelmode=driving&dir_action=navigate';
+
 export const ADDRESS: Address = {
   line1: '4th Floor, Koppu Naresh Complex, Wyra Rd',
   line2: 'Above Avantara, Opp. Babu Rao Complex',
@@ -63,7 +78,7 @@ export const ADDRESS: Address = {
   timings: 'Mon – Sun  ·  10:00 AM – 10:00 PM',
   justdial:
     'https://www.justdial.com/Khammam/Pasumarthi-Banquet-Hall-Above-Avantara-Opposite-Babu-Rao-Compex-B-K-Bazar-Colony/9999P8742-8742-250125012404-V8A9_BZDET',
-  gmaps: 'https://www.google.com/maps/place/Pasumarthi+Banquet+hall/@17.2500476,80.1448094,17z',
+  gmaps: GOOGLE_MAPS_DIRECTIONS_URL,
 };
 
 // ─── Advertisements / Pamphlets ───────────────────────────────────────────────
@@ -330,12 +345,12 @@ export const MAP_VIEWS: MapView[] = [
   {
     id: 'map',
     label: 'Map',
-    src: 'https://maps.google.com/maps?q=17.2500476,80.1448094&z=17&output=embed',
+    src: `https://maps.google.com/maps?q=${VENUE_COORDINATES}&z=17&output=embed`,
   },
   {
     id: 'satellite',
     label: 'Satellite / 3D',
-    src: 'https://maps.google.com/maps?q=17.2500476,80.1448094&z=19&t=k&output=embed',
+    src: `https://maps.google.com/maps?q=${VENUE_COORDINATES}&z=19&t=k&output=embed`,
   },
   {
     id: 'street',

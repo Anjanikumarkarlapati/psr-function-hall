@@ -59,7 +59,7 @@ export default function MenuPage() {
         </GlassCard>
       </header>
 
-      <main className="relative overflow-hidden px-3 sm:px-5 lg:px-8 py-10 sm:py-16 bg-black/[0.58]">
+      <section className="relative overflow-hidden px-3 sm:px-5 lg:px-8 py-10 sm:py-16 bg-black/[0.58]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(212,170,76,0.11),transparent_28%)]" />
         <div className="relative max-w-4xl mx-auto space-y-6 sm:space-y-8">
           {/* Package Legend */}
@@ -285,7 +285,7 @@ export default function MenuPage() {
             </div>
           </GlassCard>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

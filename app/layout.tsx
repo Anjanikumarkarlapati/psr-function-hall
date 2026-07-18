@@ -77,8 +77,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable} ${notoTelugu.variable}`}>
-      <body className="min-h-screen bg-dark text-cream font-body">
+    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${inter.variable} ${notoTelugu.variable}`}>
+      <body suppressHydrationWarning className="min-h-screen bg-dark text-cream font-body">
         <Providers>
           <Navbar />
           <main className="pt-[60px] sm:pt-[68px]">{children}</main>

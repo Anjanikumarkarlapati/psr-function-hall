@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
+const isProduction = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
-  // Allows production validation to avoid colliding with a running dev server.
-  distDir: process.env.NEXT_DIST_DIR || '.next',
+  // Skip ESLint during builds (run separately via `npm run lint`)
+  // Avoids ESLint 9 vs Next 14 integration conflict
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Keep production builds separate from the development compiler cache.
+  // This prevents build validation from invalidating chunks used by `next dev`.
+  distDir:
+    process.env.NEXT_DIST_DIR ||
+    (process.env.NODE_ENV === 'production' ? '.next-build' : '.next'),
   images: {
     remotePatterns: [
       {
@@ -25,18 +35,27 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
-  // Handle chunk load errors after new deployments (stale JS chunks)
-  onDemandEntries: {
-    maxInactiveAge: 60 * 1000,
-    pagesBufferLength: 5,
-  },
   // Security & performance headers
   async headers() {
     return [
+      // Never cache route HTML in development. This keeps server markup and
+      // client chunks from different hot-reload revisions from being combined.
+      ...(!isProduction
+        ? [
+            {
+              source: '/:path*',
+              headers: [
+                {
+                  key: 'Cache-Control',
+                  value: 'no-store, max-age=0, must-revalidate',
+                },
+              ],
+            },
+          ]
+        : []),
       {
         source: '/(.*)',
         headers: [
-          // Cache static assets aggressively
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
@@ -62,12 +81,13 @@ const nextConfig = {
         ],
       },
       {
-        // Cache fonts
         source: '/_next/static/(.*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: isProduction
+              ? 'public, max-age=31536000, immutable'
+              : 'no-store, max-age=0, must-revalidate',
           },
         ],
       },

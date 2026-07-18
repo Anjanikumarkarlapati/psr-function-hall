@@ -33,35 +33,35 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
   const translateStartRef = useRef({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const resetZoom = useCallback(() => {
+    setZoom(1);
+    setTranslate({ x: 0, y: 0 });
+  }, []);
+
   const goNext = useCallback(() => {
     if (zoom > 1) return; // Don't navigate when zoomed
     setCurrentIndex((prev) => (prev + 1) % images.length);
     resetZoom();
-  }, [images.length, zoom]);
+  }, [images.length, resetZoom, zoom]);
 
   const goPrev = useCallback(() => {
     if (zoom > 1) return;
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
     resetZoom();
-  }, [images.length, zoom]);
+  }, [images.length, resetZoom, zoom]);
 
-  const resetZoom = () => {
-    setZoom(1);
-    setTranslate({ x: 0, y: 0 });
-  };
-
-  const handleZoomIn = () => {
+  const handleZoomIn = useCallback(() => {
     setZoom((z) => Math.min(z * 1.5, 4));
-  };
+  }, []);
 
-  const handleZoomOut = () => {
+  const handleZoomOut = useCallback(() => {
     const newZoom = zoom / 1.5;
     if (newZoom <= 1) {
       resetZoom();
     } else {
       setZoom(newZoom);
     }
-  };
+  }, [resetZoom, zoom]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -87,7 +87,7 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goNext, goPrev, onClose]);
+  }, [goNext, goPrev, handleZoomIn, handleZoomOut, onClose]);
 
   // Lock body scroll when lightbox is open
   useEffect(() => {

@@ -11,18 +11,6 @@ export default function EventsError({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Auto-recover from chunk load / navigation errors
-    if (
-      error.message?.includes('ChunkLoadError') ||
-      error.message?.includes('Loading chunk') ||
-      error.message?.includes('Failed to fetch') ||
-      error.message?.includes('dynamically imported module') ||
-      error.name === 'ChunkLoadError'
-    ) {
-      window.location.reload();
-      return;
-    }
-
     console.error('Events error:', error);
   }, [error]);
 

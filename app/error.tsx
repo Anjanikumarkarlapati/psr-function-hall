@@ -13,19 +13,6 @@ export default function Error({
   const router = useRouter();
 
   useEffect(() => {
-    // Auto-recover from chunk load errors (happens after new deployments)
-    // by doing a full page reload to get fresh JS bundles
-    if (
-      error.message?.includes('ChunkLoadError') ||
-      error.message?.includes('Loading chunk') ||
-      error.message?.includes('Failed to fetch') ||
-      error.message?.includes('dynamically imported module') ||
-      error.name === 'ChunkLoadError'
-    ) {
-      window.location.reload();
-      return;
-    }
-
     console.error('App error:', error);
   }, [error]);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle, MapPin, Clock, ExternalLink, AlertCircle } from 'lucide-react';
 import { ADDRESS, EVENT_TYPES } from '@/lib/data';
 import { WhatsAppIcon } from './WhatsAppIcon';
@@ -22,6 +22,17 @@ export function BookingForm() {
   const [whatsappUrls, setWhatsappUrls] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [minimumDate, setMinimumDate] = useState<string>();
+
+  useEffect(() => {
+    const now = new Date();
+    const localToday = new Date(
+      now.getTime() - now.getTimezoneOffset() * 60_000
+    )
+      .toISOString()
+      .slice(0, 10);
+    setMinimumDate(localToday);
+  }, []);
 
   const update =
     (key: keyof typeof form) =>
@@ -121,7 +132,7 @@ export function BookingForm() {
           <GlassDatePicker
             value={form.date}
             onChange={(date) => setForm((f) => ({ ...f, date }))}
-            min={new Date().toISOString().split('T')[0]}
+            min={minimumDate}
             placeholder={t.book.placeholders.eventDate || 'Select event date'}
             required
           />

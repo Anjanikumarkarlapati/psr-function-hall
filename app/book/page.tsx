@@ -1,18 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { GoldRule } from '@/components/GoldRule';
+import { BookingForm } from '@/components/BookingForm';
 import { useTranslation } from '@/lib/i18n';
-
-const BookingForm = dynamic(
-  () =>
-    import('@/components/BookingForm').then(({ BookingForm }) => BookingForm),
-  {
-    loading: () => (
-      <div className="h-[500px] animate-pulse border border-gold/12 bg-dark-surface" />
-    ),
-  }
-);
 
 export default function BookPage() {
   const { t } = useTranslation();

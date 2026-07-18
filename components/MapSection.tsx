@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Clock, ExternalLink, Navigation } from 'lucide-react';
 import { ADDRESS, MAP_VIEWS } from '@/lib/data';
 import { ProtectedPhone } from './ProtectedPhone';
 import { useTranslation } from '@/lib/i18n';
@@ -12,7 +12,36 @@ export function MapSection() {
   const [activeView, setActiveView] = useState<'map' | 'satellite' | 'street'>(
     'satellite'
   );
-  const { t } = useTranslation();
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const { t, locale } = useTranslation();
+  const activeMap = MAP_VIEWS.find((view) => view.id === activeView) ?? MAP_VIEWS[1];
+  const loadingLabel = locale === 'te' ? 'మ్యాప్ లోడ్ అవుతోంది…' : 'Loading map…';
+  const directionsLabel =
+    locale === 'te'
+      ? 'మీ ప్రస్తుత స్థానం నుండి దిశలు'
+      : 'Directions from current location';
+
+  const selectView = (view: 'map' | 'satellite' | 'street') => {
+    if (view === activeView) return;
+    setIsMapLoaded(false);
+    setActiveView(view);
+  };
+
+  // Check if venue is currently open (10 AM - 10 PM IST, every day)
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const checkOpen = () => {
+      const now = new Date();
+      // Convert to IST (UTC+5:30)
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const ist = new Date(utc + 5.5 * 3600000);
+      const hour = ist.getHours();
+      setIsOpen(hour >= 10 && hour < 22);
+    };
+    checkOpen();
+    const interval = setInterval(checkOpen, 60000); // re-check every minute
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="relative overflow-hidden py-12 sm:py-24 lg:py-28 px-3 sm:px-5 lg:px-8 bg-black/[0.64]">
@@ -38,41 +67,71 @@ export function MapSection() {
             className="glass-surface overflow-hidden rounded-2xl"
             style={glass.dark as React.CSSProperties}
           >
-            {/* Tab bar */}
-            <div className="bg-black/[0.35] border-b border-gold/15 flex">
-              {MAP_VIEWS.map((v) => (
+            {/* Responsive, keyboard-accessible map view tabs */}
+            <div
+              className="grid grid-cols-3 border-b border-gold/15 bg-black/[0.35]"
+              role="tablist"
+              aria-label={locale === 'te' ? 'మ్యాప్ వీక్షణ' : 'Map view'}
+            >
+              {MAP_VIEWS.map((view) => (
                 <button
-                  key={v.id}
-                  onClick={() => setActiveView(v.id)}
-                  className={`flex-1 py-3.5 text-[11px] tracking-[0.22em] uppercase transition-all touch-manipulation ${
-                    activeView === v.id
-                      ? 'text-gold bg-gold/8 border-b-2 border-gold'
-                      : 'text-cream/40 hover:text-cream/65 active:text-cream/80 border-b-2 border-transparent'
+                  key={view.id}
+                  id={`map-tab-${view.id}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeView === view.id}
+                  aria-controls="venue-map-panel"
+                  onClick={() => selectView(view.id)}
+                  className={`min-w-0 px-1 py-3 text-[9px] leading-tight tracking-[0.08em] uppercase transition-colors touch-manipulation sm:px-3 sm:py-3.5 sm:text-[11px] sm:tracking-[0.18em] ${
+                    activeView === view.id
+                      ? 'border-b-2 border-gold bg-gold/10 text-gold'
+                      : 'border-b-2 border-transparent text-cream/60 hover:bg-white/[0.03] hover:text-cream active:text-cream'
                   }`}
                 >
-                  {v.label}
+                  <span className="block truncate">{view.label}</span>
                 </button>
               ))}
             </div>
 
-            {/* Iframe container — only render the active iframe */}
-            <div className="relative h-[240px] sm:h-[360px] lg:h-[460px]">
-              {MAP_VIEWS.filter((v) => v.id === activeView).map((v) => (
-                <iframe
-                  key={v.id}
-                  src={v.src}
-                  width="100%"
-                  height="100%"
-                  style={{
-                    border: 0,
-                    position: 'absolute',
-                    inset: 0,
-                  }}
-                  loading="lazy"
-                  title={`${t.navbar.brandName} ${t.home.heroBanquetHall} — ${v.label}`}
-                  allowFullScreen
-                />
-              ))}
+            {/* One active embed keeps network use low and works with touch gestures. */}
+            <div
+              id="venue-map-panel"
+              role="tabpanel"
+              aria-labelledby={`map-tab-${activeView}`}
+              className="relative h-[280px] w-full bg-dark sm:h-[360px] lg:h-[460px]"
+            >
+              {!isMapLoaded && (
+                <div
+                  className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-dark-surface px-5 text-center"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <div className="h-7 w-7 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
+                  <span className="text-xs tracking-wide text-cream/65">{loadingLabel}</span>
+                  <a
+                    href={ADDRESS.gmaps}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-gold underline underline-offset-4"
+                  >
+                    {t.map.openInGoogleMaps}
+                  </a>
+                </div>
+              )}
+              <iframe
+                key={activeMap.id}
+                src={activeMap.src}
+                className={`absolute inset-0 h-full w-full transition-opacity duration-300 ${
+                  isMapLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{ border: 0 }}
+                loading="lazy"
+                title={`${t.navbar.brandName} ${t.home.heroBanquetHall} — ${activeMap.label}`}
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="fullscreen"
+                allowFullScreen
+                onLoad={() => setIsMapLoaded(true)}
+              />
             </div>
 
             {/* Footer bar */}
@@ -114,7 +173,7 @@ export function MapSection() {
                 </div>
                 <div>
                   <div className="text-gold text-lg font-bold font-display">
-                    Pasumarthy Banquet Hall
+                    {t.navbar.brandName} {t.home.heroBanquetHall}
                   </div>
                   <div className="text-cream/[0.55] text-[10px] tracking-[0.22em] uppercase mt-1">
                     Khammam · Telangana
@@ -172,9 +231,9 @@ export function MapSection() {
                     {t.addressInfo.timings}
                   </div>
                   <div className="inline-flex items-center gap-1.5 mt-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                    <span className="text-green-500/70 text-[11px]">
-                      {t.common.openNow}
+                    <div className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-400'}`} />
+                    <span className={`text-[11px] ${isOpen ? 'text-green-500/70' : 'text-red-400/70'}`}>
+                      {isOpen ? t.common.openNow : 'Closed'}
                     </span>
                   </div>
                 </div>
@@ -190,14 +249,18 @@ export function MapSection() {
                   {MAP_VIEWS.map((v) => (
                     <button
                       key={v.id}
-                      onClick={() => setActiveView(v.id)}
-                      className={`py-2 text-[10px] tracking-wide border transition-all ${
+                      type="button"
+                      onClick={() => selectView(v.id)}
+                      aria-pressed={activeView === v.id}
+                      className={`min-w-0 rounded-md border px-1 py-2.5 text-[9px] leading-tight tracking-wide transition-all touch-manipulation sm:px-2 sm:text-[10px] ${
                         activeView === v.id
                           ? 'border-gold/60 bg-gold/10 text-gold'
-                          : 'border-gold/15 text-cream/60 hover:border-gold/35 hover:text-cream/[0.55]'
+                          : 'border-gold/15 text-cream/60 hover:border-gold/35 hover:text-cream'
                       }`}
                     >
-                      {v.label === 'Satellite / 3D' ? t.map.view3d : v.label}
+                      <span className="block truncate">
+                        {v.label === 'Satellite / 3D' ? t.map.view3d : v.label}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -210,9 +273,10 @@ export function MapSection() {
                 href={ADDRESS.gmaps}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={directionsLabel}
                 className="flex items-center justify-center gap-2 w-full py-3.5 sm:py-3 bg-gold text-dark text-xs font-bold tracking-widest uppercase hover:bg-gold-bright active:bg-gold-bright transition-colors touch-manipulation"
               >
-                <MapPin size={13} /> {t.common.getDirections}
+                <Navigation size={13} /> {directionsLabel}
               </a>
               <a
                 href={ADDRESS.justdial}
