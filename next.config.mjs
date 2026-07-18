@@ -7,11 +7,8 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Keep production builds separate from the development compiler cache.
-  // This prevents build validation from invalidating chunks used by `next dev`.
-  distDir:
-    process.env.NEXT_DIST_DIR ||
-    (process.env.NODE_ENV === 'production' ? '.next-build' : '.next'),
+  // Use default .next directory for builds (required by Vercel)
+  distDir: '.next',
   images: {
     remotePatterns: [
       {
