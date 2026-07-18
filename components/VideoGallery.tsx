@@ -151,11 +151,11 @@ export function VideoGallery() {
       {/* Fullscreen Video Modal */}
       {activeVideo && (
         <div
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-2 sm:p-4"
+          className="fixed inset-0 z-[200] bg-black flex items-center justify-center"
           onClick={() => setActiveVideo(null)}
         >
           <button
-            className="absolute top-4 right-4 text-white/70 hover:text-white active:text-white transition-colors z-10 p-2 touch-manipulation"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 text-white/70 hover:text-white active:text-white transition-colors z-10 p-2 touch-manipulation"
             onClick={() => setActiveVideo(null)}
             aria-label="Close video"
           >
@@ -163,7 +163,7 @@ export function VideoGallery() {
           </button>
           <video
             src={activeVideo}
-            className="max-w-full max-h-[80vh] sm:max-h-[85vh] rounded-sm"
+            className="w-full h-full object-contain"
             controls
             autoPlay
             playsInline

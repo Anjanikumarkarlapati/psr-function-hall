@@ -136,7 +136,7 @@ export function GlassDatePicker({
 
       {/* Calendar dropdown */}
       {open && (
-        <div className="absolute z-50 mt-2 left-0 right-0 sm:left-auto sm:right-auto sm:w-[320px] animate-fade-in-up">
+        <div className="absolute z-50 mt-2 left-0 right-0 sm:left-0 sm:right-auto sm:w-[320px] animate-fade-in-up">
           {/* Glassmorphism container */}
           <div className="backdrop-blur-xl bg-[#1a1508]/85 border border-gold/20 rounded-lg shadow-2xl shadow-black/60 overflow-hidden">
             {/* Header */}
@@ -193,14 +193,14 @@ export function GlassDatePicker({
                     disabled={disabled}
                     onClick={() => selectDate(day)}
                     className={`
-                      w-full aspect-square flex items-center justify-center rounded-full text-[13px] transition-all
+                      w-full aspect-square flex items-center justify-center rounded-full text-[13px] sm:text-[13px] transition-all touch-manipulation
                       ${disabled
                         ? 'text-cream/10 cursor-not-allowed'
                         : selected
                           ? 'bg-gold text-dark font-bold shadow-lg shadow-gold/20'
                           : today
-                            ? 'border border-gold/40 text-gold hover:bg-gold/15'
-                            : 'text-cream/70 hover:bg-gold/10 hover:text-cream'
+                            ? 'border border-gold/40 text-gold hover:bg-gold/15 active:bg-gold/20'
+                            : 'text-cream/70 hover:bg-gold/10 hover:text-cream active:bg-gold/15'
                       }
                     `}
                   >

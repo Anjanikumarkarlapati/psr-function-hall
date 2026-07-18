@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, lazy, Suspense } from 'react';
+import Image from 'next/image';
 import { CATEGORIES, ADVERTISEMENTS } from '@/lib/data';
 import { GoldRule } from '@/components/GoldRule';
 import { PsrWatermark } from '@/components/WatermarkImage';
 import { useTranslation } from '@/lib/i18n';
+
+const Lightbox = lazy(() => import('@/components/Lightbox').then(m => ({ default: m.Lightbox })));
 
 // Collect all unique images from all categories, excluding pamphlets
 function getAllImages(): string[] {
@@ -78,18 +80,18 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-dark">
-      <div className="py-12 sm:py-20 px-4">
+      <div className="pt-16 pb-12 sm:py-20 px-3 sm:px-4">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-10 sm:mb-14">
-            <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-4">
+          <div className="text-center mb-8 sm:mb-14">
+            <p className="text-gold text-[9px] sm:text-[10px] tracking-[0.35em] sm:tracking-[0.5em] uppercase mb-3 sm:mb-4">
               {t.events.label}
             </p>
-            <h1 className="text-[30px] sm:text-[40px] md:text-5xl text-cream font-bold mb-4 font-display">
+            <h1 className="text-[26px] sm:text-[40px] md:text-5xl text-cream font-bold mb-3 sm:mb-4 font-display leading-tight">
               {t.events.heading}
             </h1>
             <GoldRule />
-            <p className="text-cream/40 text-sm mt-4 max-w-md mx-auto">
+            <p className="text-cream/40 text-[13px] sm:text-sm mt-3 sm:mt-4 max-w-md mx-auto leading-relaxed px-4 sm:px-0">
               {t.events.subtitle}
             </p>
           </div>
@@ -103,10 +105,12 @@ export default function EventsPage() {
                   className="group relative aspect-[4/3] overflow-hidden cursor-pointer bg-dark-card"
                   onClick={() => openLightbox(idx)}
                 >
-                  <img
+                  <Image
                     src={img}
                     alt={`Gallery photo ${idx + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   <PsrWatermark />
@@ -140,9 +144,12 @@ export default function EventsPage() {
                     className="group relative overflow-hidden border border-gold/15 hover:border-gold/30 transition-all cursor-pointer"
                     onClick={() => openLightbox(allImages.length + idx)}
                   >
-                    <img
+                    <Image
                       src={img}
                       alt={`Advertisement ${idx + 1}`}
+                      width={600}
+                      height={800}
+                      sizes="(max-width: 640px) 100vw, 50vw"
                       className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-500"
                       loading="lazy"
                     />
@@ -162,17 +169,17 @@ export default function EventsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 max-w-5xl mx-auto">
               {QUOTES.map((q, i) => (
                 <div
                   key={i}
-                  className="border border-gold/10 bg-dark-surface/50 p-6 sm:p-8 text-center hover:border-gold/25 transition-all"
+                  className="border border-gold/10 bg-dark-surface/50 p-5 sm:p-8 text-center hover:border-gold/25 transition-all"
                 >
-                  <div className="text-gold/30 text-3xl font-display mb-3">&ldquo;</div>
-                  <p className="text-cream/70 text-[14px] sm:text-[15px] leading-relaxed italic mb-4 font-display">
+                  <div className="text-gold/30 text-2xl sm:text-3xl font-display mb-2 sm:mb-3">&ldquo;</div>
+                  <p className="text-cream/70 text-[13px] sm:text-[15px] leading-relaxed italic mb-3 sm:mb-4 font-display">
                     {locale === 'te' ? q.te : q.en}
                   </p>
-                  <p className="text-cream/25 text-[11px] sm:text-xs leading-relaxed">
+                  <p className="text-cream/25 text-[10px] sm:text-xs leading-relaxed">
                     {locale === 'te' ? q.en : q.te}
                   </p>
                 </div>
@@ -184,54 +191,13 @@ export default function EventsPage() {
 
       {/* Lightbox */}
       {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
-          onClick={closeLightbox}
-        >
-          {/* Close button */}
-          <button
-            className="absolute top-4 right-4 text-white/70 hover:text-white z-10 p-2"
-            onClick={closeLightbox}
-            aria-label="Close"
-          >
-            <X size={28} />
-          </button>
-
-          {/* Prev button */}
-          <button
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2"
-            onClick={(e) => { e.stopPropagation(); goPrev(); }}
-            aria-label="Previous"
-          >
-            <ChevronLeft size={36} />
-          </button>
-
-          {/* Image */}
-          <div
-            className="max-w-[90vw] max-h-[85vh] flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={allLightboxImages[lightboxIndex]}
-              alt={`Gallery photo ${lightboxIndex + 1}`}
-              className="max-w-full max-h-[85vh] object-contain"
-            />
-          </div>
-
-          {/* Next button */}
-          <button
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2"
-            onClick={(e) => { e.stopPropagation(); goNext(); }}
-            aria-label="Next"
-          >
-            <ChevronRight size={36} />
-          </button>
-
-          {/* Counter */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-sm">
-            {lightboxIndex + 1} / {allLightboxImages.length}
-          </div>
-        </div>
+        <Suspense fallback={null}>
+          <Lightbox
+            images={allLightboxImages}
+            initialIndex={lightboxIndex}
+            onClose={closeLightbox}
+          />
+        </Suspense>
       )}
     </div>
   );

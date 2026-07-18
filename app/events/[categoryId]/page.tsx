@@ -1,148 +1,52 @@
-'use client';
-
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { CATEGORIES } from '@/lib/data';
-import { GalleryUpload } from '@/components/GalleryUpload';
-import { WatermarkImage } from '@/components/WatermarkImage';
-import { WhatsAppIcon } from '@/components/WhatsAppIcon';
-import { useTranslation } from '@/lib/i18n';
+import { CATEGORIES, WHATSAPP_NUMBERS } from '@/lib/data';
+import { decodeNumber } from '@/lib/obfuscate';
+import { CategoryDetailClient } from './CategoryDetailClient';
 
 interface PageProps {
   params: { categoryId: string };
 }
 
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return CATEGORIES.map(({ id }) => ({ categoryId: id }));
+}
+
+export function generateMetadata({ params }: PageProps): Metadata {
+  const category = CATEGORIES.find(({ id }) => id === params.categoryId);
+
+  if (!category) return {};
+
+  return {
+    title: category.name,
+    description: category.subtitle,
+    openGraph: {
+      title: `${category.name} | Pasumarthy Banquet Hall`,
+      description: category.subtitle,
+      images: [{ url: category.cover, alt: category.name }],
+    },
+  };
+}
+
 export default function CategoryDetailPage({ params }: PageProps) {
-  const { categoryId } = params;
-  const { t } = useTranslation();
-  const category = CATEGORIES.find((c) => c.id === categoryId);
+  const category = CATEGORIES.find(({ id }) => id === params.categoryId);
   if (!category) notFound();
 
-  const catTranslation = t.events.categories[category.id];
-  const others = CATEGORIES.filter((c) => c.id !== category.id).slice(0, 4);
+  const others = CATEGORIES.filter(({ id }) => id !== category.id).slice(0, 4);
+  const message = encodeURIComponent(
+    `Hello, I would like to enquire about a ${category.name} booking at Pasumarthy Banquet Hall.`
+  );
+  const whatsappHref = `https://wa.me/${decodeNumber(
+    WHATSAPP_NUMBERS[0].number
+  )}?text=${message}`;
 
   return (
-    <div className="min-h-screen bg-dark">
-      {/* Hero */}
-      <div className="relative h-[50vh] sm:h-[70vh] min-h-[320px] sm:min-h-[420px] flex flex-col justify-end overflow-hidden">
-        {category.cover ? (
-          <WatermarkImage
-            src={category.cover}
-            alt={category.name}
-            className="absolute inset-0 w-full h-full object-cover"
-            wrapperClassName="absolute inset-0"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-dark-card" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-dark via-black/50 to-black/20" />
-
-        {/* Breadcrumb */}
-        <div className="absolute top-[16px] sm:top-[20px] left-0 right-0 px-4 sm:px-6 md:px-10">
-          <Link
-            href="/events"
-            className="inline-flex items-center gap-2 text-cream/45 hover:text-gold text-xs tracking-wide transition-colors"
-          >
-            <ArrowLeft size={13} /> {t.events.backToEvents}
-          </Link>
-        </div>
-
-        {/* Title */}
-        <div className="relative px-4 sm:px-6 md:px-10 pb-8 sm:pb-14 max-w-4xl">
-          <div className="text-gold text-[10px] tracking-[0.45em] uppercase mb-2 sm:mb-3">
-            {catTranslation?.name || category.name}
-          </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight mb-3 sm:mb-4 font-display">
-            {catTranslation?.title || category.title}
-          </h1>
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="h-[1px] w-8 sm:w-10 bg-gold/50" />
-            <p className="text-white/50 text-xs sm:text-sm italic">
-              &ldquo;{catTranslation?.quote || category.quote}&rdquo;
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-16">
-        {/* Subtitle + CTA */}
-        <div className="grid md:grid-cols-[1fr_auto] gap-6 sm:gap-8 items-start mb-10 sm:mb-16 pb-10 sm:pb-16 border-b border-gold/10">
-          <div>
-            <p className="text-gold text-[10px] tracking-[0.38em] uppercase mb-3">
-              {t.events.aboutEvent}
-            </p>
-            <p className="text-cream/60 text-[14px] sm:text-[16px] leading-relaxed max-w-xl">
-              {catTranslation?.subtitle || category.subtitle}
-            </p>
-          </div>
-          <div className="flex flex-row sm:flex-col gap-3 shrink-0">
-            <Link
-              href="/book"
-              className="inline-flex items-center gap-2.5 px-5 sm:px-7 py-3 sm:py-3.5 bg-gold text-dark font-bold text-xs tracking-widest uppercase hover:bg-gold-bright transition-colors whitespace-nowrap"
-            >
-              {t.events.bookThisEvent}
-            </Link>
-            <Link
-              href="/book"
-              className="inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 bg-[#25D366] text-white font-bold text-xs tracking-widest uppercase hover:bg-[#20bd5a] transition-colors"
-            >
-              <WhatsAppIcon size={14} /> WhatsApp
-            </Link>
-          </div>
-        </div>
-
-        {/* Gallery (client component) */}
-        <GalleryUpload
-          categoryName={catTranslation?.name || category.name}
-          initialImages={category.images}
-        />
-
-        {/* Other Events */}
-        {others.length > 0 && (
-          <div>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-cream/60 text-xs tracking-[0.3em] uppercase">
-                {t.events.otherEvents}
-              </h3>
-              <Link
-                href="/events"
-                className="text-gold text-xs hover:underline flex items-center gap-1"
-              >
-                {t.events.viewAll} <ArrowRight size={11} />
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {others.map((cat) => {
-                const otherTranslation = t.events.categories[cat.id];
-                return (
-                  <Link
-                    key={cat.id}
-                    href={`/events/${cat.id}`}
-                    className="group relative h-36 overflow-hidden text-left bg-dark-card border border-gold/10 hover:border-gold/30 transition-all"
-                  >
-                    {cat.cover && (
-                      <WatermarkImage
-                        src={cat.cover}
-                        alt={cat.name}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        wrapperClassName="absolute inset-0"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-black/10" />
-                    <div className="absolute bottom-0 left-0 p-3">
-                      <div className="text-white/55 text-[10px] tracking-wide leading-snug group-hover:text-gold transition-colors">
-                        {otherTranslation?.name || cat.name}
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <CategoryDetailClient
+      category={category}
+      others={others}
+      whatsappHref={whatsappHref}
+    />
   );
 }

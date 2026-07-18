@@ -64,15 +64,15 @@ export function BookingForm() {
   };
 
   const inputClass =
-    'w-full bg-[#111009] border border-gold/15 text-cream text-[13px] px-4 py-3.5 focus:outline-none focus:border-gold/50 placeholder:text-cream/15 transition-colors';
+    'w-full bg-[#111009] border border-gold/15 text-cream text-[14px] sm:text-[13px] px-4 py-4 sm:py-3.5 rounded-none focus:outline-none focus:border-gold/50 placeholder:text-cream/15 transition-colors';
   const labelClass =
-    'block text-cream/40 text-[10px] tracking-[0.28em] uppercase mb-2';
+    'block text-cream/40 text-[10px] tracking-[0.22em] sm:tracking-[0.28em] uppercase mb-2';
 
   return (
     <div>
       <form
         onSubmit={handleSubmit}
-        className="border border-gold/12 bg-dark-surface p-5 sm:p-8 space-y-4 sm:space-y-5"
+        className="border border-gold/12 bg-dark-surface p-4 sm:p-8 space-y-5 sm:space-y-5"
       >
         <div>
           <label className={labelClass}>{t.book.labels.fullName}</label>
@@ -167,20 +167,25 @@ export function BookingForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-[#25D366] hover:bg-[#1eb85a] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold tracking-widest text-xs uppercase transition-colors flex items-center justify-center gap-3"
+            className="w-full py-[18px] sm:py-4 bg-[#25D366] hover:bg-[#1eb85a] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold tracking-widest text-[11px] sm:text-xs uppercase transition-colors flex items-center justify-center gap-3 touch-manipulation"
           >
             <WhatsAppIcon size={18} /> {loading ? 'Sending...' : t.book.submitBtn}
           </button>
         )}
 
         {sent && whatsappUrls.length > 0 && (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center gap-2 text-green-400/80 text-sm justify-center">
               <CheckCircle size={15} /> {t.book.successMsg}
             </div>
-            <p className="text-cream/50 text-xs text-center">
-              Please tap both buttons below to send the booking request:
-            </p>
+            <div className="border border-gold/15 bg-[#111009] p-4 text-center space-y-2">
+              <p className="text-cream/70 text-sm font-medium">
+                Please send the message to both numbers below
+              </p>
+              <p className="text-cream/40 text-xs leading-relaxed">
+                Tap each button — it will open WhatsApp with your booking details pre-filled. Just hit <span className="text-gold">Send</span> in WhatsApp.
+              </p>
+            </div>
             <div className="grid gap-3">
               {whatsappUrls.map((url, index) => (
                 <a
@@ -188,14 +193,14 @@ export function BookingForm() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4 bg-[#25D366] hover:bg-[#1eb85a] active:bg-[#19a34d] text-white font-bold tracking-widest text-xs uppercase transition-colors flex items-center justify-center gap-3 touch-manipulation"
+                  className="w-full py-[18px] sm:py-4 bg-[#25D366] hover:bg-[#1eb85a] active:bg-[#19a34d] text-white font-bold tracking-widest text-[11px] sm:text-xs uppercase transition-colors flex items-center justify-center gap-3 touch-manipulation"
                 >
-                  <WhatsAppIcon size={18} /> Send to Number {index + 1}
+                  <WhatsAppIcon size={18} /> Send to Owner {index + 1}
                 </a>
               ))}
             </div>
-            <p className="text-cream/30 text-[10px] text-center">
-              After sending to Number 1, come back here and tap Number 2
+            <p className="text-cream/30 text-[10px] text-center leading-relaxed">
+              After sending to Owner 1, come back here and tap Owner 2 to confirm your booking with both contacts.
             </p>
             <button
               type="button"
@@ -209,26 +214,26 @@ export function BookingForm() {
       </form>
 
       {/* Contact info below form */}
-      <div className="mt-10 text-center text-cream/28 text-[13px] space-y-2.5">
-        <div>
+      <div className="mt-8 sm:mt-10 text-center text-cream/28 text-[12px] sm:text-[13px] space-y-3 sm:space-y-2.5 px-2 sm:px-0">
+        <div className="leading-relaxed">
           {t.book.callPrompt}{' '}
-          <ProtectedPhone encoded={ADDRESS.phone1} className="text-[13px]" /> /{' '}
-          <ProtectedPhone encoded={ADDRESS.phone2} className="text-[13px]" />
+          <ProtectedPhone encoded={ADDRESS.phone1} className="text-[12px] sm:text-[13px]" /> /{' '}
+          <ProtectedPhone encoded={ADDRESS.phone2} className="text-[12px] sm:text-[13px]" />
         </div>
-        <div className="flex items-start justify-center gap-2 max-w-xs mx-auto">
+        <div className="flex items-start justify-center gap-2 max-w-[280px] sm:max-w-xs mx-auto">
           <MapPin size={12} className="text-gold mt-[3px] shrink-0" />
-          <span className="leading-relaxed text-xs">{t.addressInfo.full}</span>
+          <span className="leading-relaxed text-[11px] sm:text-xs">{t.addressInfo.full}</span>
         </div>
-        <div className="flex items-center justify-center gap-1.5 text-xs">
+        <div className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs">
           <Clock size={11} className="text-gold" />{' '}
           <span>{t.addressInfo.timings}</span>
         </div>
-        <div className="flex items-center justify-center gap-5 pt-1">
+        <div className="flex items-center justify-center gap-6 sm:gap-5 pt-2 sm:pt-1">
           <a
             href={ADDRESS.gmaps}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gold hover:underline text-xs flex items-center gap-1"
+            className="text-gold hover:underline text-xs flex items-center gap-1 py-2 touch-manipulation"
           >
             <ExternalLink size={11} /> Google Maps
           </a>
@@ -236,7 +241,7 @@ export function BookingForm() {
             href={ADDRESS.justdial}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gold hover:underline text-xs flex items-center gap-1"
+            className="text-gold hover:underline text-xs flex items-center gap-1 py-2 touch-manipulation"
           >
             <ExternalLink size={11} /> JustDial
           </a>

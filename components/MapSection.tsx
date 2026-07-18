@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react';
 import { ADDRESS, MAP_VIEWS } from '@/lib/data';
 import { ProtectedPhone } from './ProtectedPhone';
@@ -8,7 +9,7 @@ import { useTranslation } from '@/lib/i18n';
 
 export function MapSection() {
   const [activeView, setActiveView] = useState<'map' | 'satellite' | 'street'>(
-    'satellite'
+    'map'
   );
   const { t } = useTranslation();
 
@@ -38,10 +39,10 @@ export function MapSection() {
                 <button
                   key={v.id}
                   onClick={() => setActiveView(v.id)}
-                  className={`flex-1 py-3.5 text-[11px] tracking-[0.22em] uppercase transition-all ${
+                  className={`flex-1 py-3.5 text-[11px] tracking-[0.22em] uppercase transition-all touch-manipulation ${
                     activeView === v.id
                       ? 'text-gold bg-gold/8 border-b-2 border-gold'
-                      : 'text-cream/40 hover:text-cream/65 border-b-2 border-transparent'
+                      : 'text-cream/40 hover:text-cream/65 active:text-cream/80 border-b-2 border-transparent'
                   }`}
                 >
                   {v.label}
@@ -92,11 +93,25 @@ export function MapSection() {
           {/* Info Card */}
           <div className="border border-gold/[0.18] bg-dark-surface flex flex-col">
             <div className="border-b border-gold/12 px-4 sm:px-6 py-4 sm:py-5">
-              <div className="text-gold text-lg font-bold font-display">
-                Pasumarthi Banquet Hall
-              </div>
-              <div className="text-cream/30 text-[10px] tracking-[0.22em] uppercase mt-1">
-                Khammam · Telangana
+              <div className="flex items-center gap-3.5">
+                <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-gold/20 bg-[radial-gradient(circle,rgba(201,168,76,0.09),transparent_68%)] shadow-[inset_0_0_18px_rgba(201,168,76,0.04)]">
+                  <Image
+                    src="/images/brand-mark.svg"
+                    alt=""
+                    width={256}
+                    height={256}
+                    aria-hidden="true"
+                    className="h-12 w-12 object-contain drop-shadow-[0_2px_6px_rgba(201,168,76,0.2)]"
+                  />
+                </div>
+                <div>
+                  <div className="text-gold text-lg font-bold font-display">
+                    Pasumarthy Banquet Hall
+                  </div>
+                  <div className="text-cream/30 text-[10px] tracking-[0.22em] uppercase mt-1">
+                    Khammam · Telangana
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -163,7 +178,7 @@ export function MapSection() {
                 <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-3">
                   {t.common.explore}
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                   {MAP_VIEWS.map((v) => (
                     <button
                       key={v.id}

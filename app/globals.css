@@ -23,16 +23,39 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Prevent overscroll/bounce on iOS */
+  overscroll-behavior: none;
 }
 
 body {
   background-color: var(--color-dark);
   color: var(--color-cream);
   font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  /* Prevent horizontal overflow on mobile */
   overflow-x: hidden;
+  /* Safe area for notched phones */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Prevent images from overflowing their containers */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure long words (especially Telugu) wrap properly on mobile */
+h1, h2, h3, h4, h5, h6, p, span, a, div {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* ─── Selection ───────────────────────────────────────────────────── */
@@ -80,24 +103,19 @@ body {
 /* ─── Mobile Touch & Tap ───────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-  /* Prevent iOS zoom on input focus */
+  /* Prevent iOS zoom on input focus — must be 16px+ */
   input, select, textarea {
     font-size: 16px !important;
   }
-  
-  /* Improve tap targets */
-  a, button {
+
+  /* Ensure buttons have minimum touch target size */
+  button, [role="button"], a {
     min-height: 44px;
-    min-width: 44px;
+    min-height: max(44px, auto);
   }
 }
 
-/* ─── Mobile Viewport & Overscroll ─────────────────────────────────── */
-
-html, body {
-  overscroll-behavior-y: none;
-  -webkit-tap-highlight-color: transparent;
-}
+/* ─── Mobile Viewport ──────────────────────────────────────────────── */
 
 /* Fix 100vh issue on mobile browsers (address bar) */
 @supports (height: 100svh) {
@@ -111,10 +129,15 @@ html, body {
   touch-action: manipulation;
 }
 
-/* Prevent text size inflation on orientation change */
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+/* ─── Reduced Motion (Accessibility) ──────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ─── Marquee Animation ───────────────────────────────────────────── */
@@ -153,6 +176,24 @@ html {
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ─── Safe Area (Notched Phones) ─────────────────────────────────── */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .fixed.bottom-5,
+  .fixed.bottom-6 {
+    bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── Mobile Performance ──────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* Disable parallax on mobile for performance */
+  .bg-fixed {
+    background-attachment: scroll !important;
+  }
 }
 
 /* ─── Hide any injected carousel navigation arrows ─────────────────── */

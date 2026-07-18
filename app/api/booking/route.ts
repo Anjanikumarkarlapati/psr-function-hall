@@ -9,8 +9,19 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 5; // max 5 booking attempts per minute per IP
 
+function removeExpiredRateLimits(now: number) {
+  for (const [key, value] of rateLimitMap.entries()) {
+    if (now > value.resetAt) rateLimitMap.delete(key);
+  }
+}
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+
+  // Clean opportunistically instead of keeping a timer alive in serverless
+  // workers. The size guard prevents unbounded memory use under high traffic.
+  if (rateLimitMap.size > 250) removeExpiredRateLimits(now);
+
   const entry = rateLimitMap.get(ip);
 
   if (!entry || now > entry.resetAt) {
@@ -19,30 +30,18 @@ function isRateLimited(ip: string): boolean {
   }
 
   entry.count++;
-  if (entry.count > MAX_REQUESTS_PER_WINDOW) {
-    return true;
-  }
-  return false;
+  return entry.count > MAX_REQUESTS_PER_WINDOW;
 }
-
-// Clean up stale entries every 5 minutes to prevent memory leak
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, value] of rateLimitMap.entries()) {
-    if (now > value.resetAt) {
-      rateLimitMap.delete(key);
-    }
-  }
-}, 5 * 60 * 1000);
 
 // ─── Route Handler ───────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
   try {
     const ip =
+      request.headers.get('cf-connecting-ip') ||
       request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
       request.headers.get('x-real-ip') ||
-      'unknown';
+      `unknown:${(request.headers.get('user-agent') || 'client').slice(0, 80)}`;
 
     // Rate limit check
     if (isRateLimited(ip)) {
@@ -62,8 +61,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ url: 'https://wa.me/0000000000' });
     }
 
-    // Basic validation
-    if (!name || !phone || !event || !date || !guests) {
+    // Validate types before calling string methods on untrusted JSON.
+    if (
+      typeof name !== 'string' ||
+      typeof phone !== 'string' ||
+      typeof event !== 'string' ||
+      typeof date !== 'string' ||
+      (typeof guests !== 'string' && typeof guests !== 'number') ||
+      !name.trim() ||
+      !phone.trim() ||
+      !event.trim() ||
+      !date.trim() ||
+      String(guests).trim() === ''
+    ) {
       return NextResponse.json(
         { error: 'All fields are required.' },
         { status: 400 }
@@ -80,7 +90,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Guest count validation
-    const guestCount = parseInt(guests, 10);
+    const guestCount = parseInt(String(guests), 10);
     if (isNaN(guestCount) || guestCount < 1 || guestCount > 5000) {
       return NextResponse.json(
         { error: 'Guest count must be between 1 and 5000.' },

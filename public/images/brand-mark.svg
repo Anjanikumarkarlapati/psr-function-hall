@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">PSR Pasumarthy Banquet Hall crest</title>
+  <desc id="desc">A refined gold PSR monogram inside a crowned ornamental medallion.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF1B8"/>
+      <stop offset="0.28" stop-color="#E6C76E"/>
+      <stop offset="0.58" stop-color="#C99A35"/>
+      <stop offset="0.82" stop-color="#F3D985"/>
+      <stop offset="1" stop-color="#9A6817"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000" flood-opacity=".35"/>
+    </filter>
+  </defs>
+
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft-shadow)">
+    <circle cx="128" cy="131" r="76" stroke-width="2.4"/>
+    <circle cx="128" cy="131" r="69" stroke-width=".9" opacity=".72"/>
+
+    <!-- Crown -->
+    <path d="M104 51l7 14 9-17 8 15 8-15 9 17 7-14-4 25h-40z" stroke-width="2"/>
+    <path d="M109 76h38M113 81h30" stroke-width="1.7"/>
+    <circle cx="104" cy="51" r="2.4" fill="url(#gold)" stroke="none"/>
+    <circle cx="120" cy="48" r="2.4" fill="url(#gold)" stroke="none"/>
+    <circle cx="128" cy="63" r="2.2" fill="url(#gold)" stroke="none"/>
+    <circle cx="136" cy="48" r="2.4" fill="url(#gold)" stroke="none"/>
+    <circle cx="152" cy="51" r="2.4" fill="url(#gold)" stroke="none"/>
+
+    <!-- Upper flourish -->
+    <path d="M75 70C61 54 67 36 82 37c12 1 15 16 6 22-7 5-15-1-12-8M181 70c14-16 8-34-7-33-12 1-15 16-6 22 7 5 15-1 12-8" stroke-width="2.4"/>
+    <path d="M91 57c7-12 16-18 27-19M165 57c-7-12-16-18-27-19M111 39c7-8 13-11 17-22 4 11 10 14 17 22" stroke-width="1.7"/>
+    <path d="M128 18l3 9-3 6-3-6z" fill="url(#gold)" stroke="none"/>
+
+    <!-- Side flourishes -->
+    <path d="M56 87C35 79 25 92 33 105c6 9 19 5 17-5-1-7-10-8-13-2M52 111c-20 0-27 16-17 27 7 8 20 2 15-8-3-6-12-5-14 1M52 151c-20 0-27-16-17-27M56 175c-21 8-31-5-23-18" stroke-width="2.2"/>
+    <path d="M200 87c21-8 31 5 23 18-6 9-19 5-17-5 1-7 10-8 13-2M204 111c20 0 27 16 17 27-7 8-20 2-15-8 3-6 12-5 14 1M204 151c20 0 27-16 17-27M200 175c21 8 31-5 23-18" stroke-width="2.2"/>
+    <path d="M48 75l-11 3 8 8-11 5 15 3M208 75l11 3-8 8 11 5-15 3M48 181l-11-3 8-8-11-5 15-3M208 181l11-3-8-8 11-5-15-3" stroke-width="1.4" opacity=".8"/>
+
+    <!-- Lower flourish -->
+    <path d="M76 191c-14 15-8 31 7 29 11-1 14-15 5-21-7-4-14 2-11 9M180 191c14 15 8 31-7 29-11-1-14-15-5-21 7-4 14 2 11 9" stroke-width="2.2"/>
+    <path d="M90 207c11 8 23 12 38 12s27-4 38-12M128 219c-4 8-10 13-18 16M128 219c4 8 10 13 18 16" stroke-width="1.6"/>
+    <path d="M128 214l6 10-6 14-6-14z" fill="url(#gold)" stroke="none"/>
+  </g>
+
+  <g fill="url(#gold)" text-anchor="middle" filter="url(#soft-shadow)">
+    <text x="128" y="144" font-family="Georgia, 'Times New Roman', serif" font-size="61" font-weight="600" letter-spacing="-4">PSR</text>
+    <path d="M89 154h78" stroke="url(#gold)" stroke-width=".8"/>
+    <text x="128" y="171" font-family="Georgia, 'Times New Roman', serif" font-size="9.5" font-weight="700" letter-spacing="2.5">BANQUET HALL</text>
+    <path d="M111 181h34M104 181h-5M157 181h-5" stroke="url(#gold)" stroke-width="1"/>
+    <path d="M128 177l3 4-3 4-3-4z"/>
+  </g>
+</svg>

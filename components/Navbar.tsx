@@ -1,21 +1,26 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu as MenuIcon, X } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n';
 
-function LanguageToggle() {
+function LanguageToggle({ compact = false }: { compact?: boolean }) {
   const { locale, toggleLanguage } = useTranslation();
   const label = locale === 'en' ? 'Switch to Telugu' : 'Switch to English';
-  const text = locale === 'en' ? 'తెలుగు' : 'English';
+  const text = locale === 'en' ? 'తెలుగు' : 'EN';
 
   return (
     <button
       onClick={toggleLanguage}
       aria-label={label}
-      className="px-4 py-2.5 text-gold border border-gold/30 hover:border-gold/60 text-[13px] tracking-wide transition-all whitespace-nowrap touch-manipulation"
+      className={`text-gold border border-gold/30 hover:border-gold/60 tracking-wide transition-all whitespace-nowrap touch-manipulation ${
+        compact
+          ? 'px-2.5 py-1.5 text-[11px]'
+          : 'px-4 py-2.5 text-[13px]'
+      }`}
     >
       {text}
     </button>
@@ -57,14 +62,20 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 inset-x-0 z-50 bg-dark/95 backdrop-blur-lg border-b border-gold/15">
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-8 h-[60px] sm:h-[68px] flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="text-left shrink-0">
-          <div className="text-gold font-bold text-[18px] sm:text-[22px] leading-none tracking-wide font-display">
-            Pasumarthi
-          </div>
-          <div className="text-cream/30 text-[8px] sm:text-[9px] tracking-[0.28em] sm:tracking-[0.32em] uppercase mt-[2px] sm:mt-[3px]">
-            {t.navbar.subtitle}
-          </div>
+        {/* Brand lockup */}
+        <Link
+          href="/"
+          aria-label="Pasumarthy Banquet Hall — home"
+          className="group shrink-0 flex items-center rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-offset-4 focus-visible:ring-offset-dark"
+        >
+          <Image
+            src="/images/brand-lockup.svg"
+            alt="Pasumarthy Banquet Hall"
+            width={760}
+            height={220}
+            className="h-auto w-[154px] sm:w-[190px] drop-shadow-[0_2px_8px_rgba(201,168,76,0.16)] transition-[filter,opacity] duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_3px_12px_rgba(201,168,76,0.25)]"
+            priority
+          />
         </Link>
 
         {/* Desktop Links */}
@@ -91,14 +102,17 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          className="md:hidden text-cream/50 hover:text-gold transition-colors p-2 -mr-2 touch-manipulation"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={24} /> : <MenuIcon size={24} />}
-        </button>
+        {/* Mobile: Language toggle + Hamburger */}
+        <div className="flex md:hidden items-center gap-2.5">
+          <LanguageToggle compact />
+          <button
+            className="text-cream/50 hover:text-gold active:text-gold transition-colors p-2.5 -mr-2 touch-manipulation"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={24} /> : <MenuIcon size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu — slide-down with transition */}
@@ -112,7 +126,7 @@ export function Navbar() {
             key={link.href}
             href={link.href}
             onClick={() => setOpen(false)}
-            className={`block w-full text-left px-7 py-4.5 text-[15px] border-b border-gold/5 transition-colors touch-manipulation ${
+            className={`block w-full text-left px-7 py-[18px] text-[15px] border-b border-gold/5 transition-colors touch-manipulation ${
               isActive(link.href)
                 ? 'text-gold bg-gold/5'
                 : 'text-cream/60 active:text-gold active:bg-gold/5'
@@ -121,9 +135,6 @@ export function Navbar() {
             {link.label}
           </Link>
         ))}
-        <div className="px-7 py-4 border-b border-gold/5">
-          <LanguageToggle />
-        </div>
       </div>
     </nav>
   );
