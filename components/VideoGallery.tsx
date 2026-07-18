@@ -38,7 +38,7 @@ function VideoTile({ video, onPlay }: { video: typeof VIDEOS[number]; onPlay: (s
   return (
     <div
       ref={ref}
-      className="group relative overflow-hidden cursor-pointer h-[180px] sm:h-[240px] touch-manipulation active:scale-[0.98] transition-transform"
+      className="group relative overflow-hidden cursor-pointer h-[180px] sm:h-[240px] touch-manipulation active:scale-[0.98] transition-transform rounded-xl"
       style={glass.dark as React.CSSProperties}
       onClick={() => onPlay(video.src)}
       onMouseOver={() => videoRef.current?.play()}
@@ -56,7 +56,7 @@ function VideoTile({ video, onPlay }: { video: typeof VIDEOS[number]; onPlay: (s
           muted
           loop
           playsInline
-          preload="none"
+          preload="metadata"
         />
       )}
       {/* Placeholder gradient when video not loaded */}
@@ -125,7 +125,7 @@ export function VideoGallery() {
 
           {/* CTA tile */}
           <div
-            className="relative flex flex-col items-center justify-center text-center p-6 sm:p-8 gap-3 sm:gap-4 h-[180px] sm:h-[240px]"
+            className="relative flex flex-col items-center justify-center text-center p-6 sm:p-8 gap-3 sm:gap-4 h-[180px] sm:h-[240px] rounded-xl"
             style={glass.dark as React.CSSProperties}
           >
             <div className="w-8 h-[1px] bg-gold/40" />

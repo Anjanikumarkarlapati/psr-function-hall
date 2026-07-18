@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CATEGORIES, ADVERTISEMENTS } from '@/lib/data';
 import { GoldRule } from '@/components/GoldRule';
 import { PsrWatermark } from '@/components/WatermarkImage';
+import { VideoGallery } from '@/components/VideoGallery';
 import { useTranslation } from '@/lib/i18n';
 
 const Lightbox = lazy(() => import('@/components/Lightbox').then(m => ({ default: m.Lightbox })));
@@ -102,7 +103,7 @@ export default function EventsPage() {
               {allImages.map((img, idx) => (
                 <div
                   key={idx}
-                  className="group relative aspect-[4/3] overflow-hidden cursor-pointer bg-dark-card"
+                  className="group relative aspect-[4/3] overflow-hidden cursor-pointer bg-dark-card rounded-xl"
                   onClick={() => openLightbox(idx)}
                 >
                   <Image
@@ -141,7 +142,7 @@ export default function EventsPage() {
                 {ADVERTISEMENTS.map((img, idx) => (
                   <div
                     key={idx}
-                    className="group relative overflow-hidden border border-gold/15 hover:border-gold/30 transition-all cursor-pointer"
+                    className="group relative overflow-hidden border border-gold/15 hover:border-gold/30 transition-all cursor-pointer rounded-xl"
                     onClick={() => openLightbox(allImages.length + idx)}
                   >
                     <Image
@@ -159,6 +160,11 @@ export default function EventsPage() {
               </div>
             </div>
           )}
+
+          {/* Video Gallery Section */}
+          <div className="mt-14 sm:mt-20">
+            <VideoGallery />
+          </div>
 
           {/* Quotes Section */}
           <div className="mt-16 sm:mt-24">

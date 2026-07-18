@@ -25,6 +25,11 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
+  // Handle chunk load errors after new deployments (stale JS chunks)
+  onDemandEntries: {
+    maxInactiveAge: 60 * 1000,
+    pagesBufferLength: 5,
+  },
   // Security & performance headers
   async headers() {
     return [

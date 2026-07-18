@@ -6,16 +6,18 @@ import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react';
 import { ADDRESS, MAP_VIEWS } from '@/lib/data';
 import { ProtectedPhone } from './ProtectedPhone';
 import { useTranslation } from '@/lib/i18n';
+import { glass } from '@/styles/glass';
 
 export function MapSection() {
   const [activeView, setActiveView] = useState<'map' | 'satellite' | 'street'>(
-    'map'
+    'satellite'
   );
   const { t } = useTranslation();
 
   return (
-    <section className="py-12 sm:py-28 px-3 sm:px-4 bg-dark-card">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative overflow-hidden py-12 sm:py-24 lg:py-28 px-3 sm:px-5 lg:px-8 bg-black/[0.64]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_35%,rgba(212,170,76,0.09),transparent_30%)]" />
+      <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-8 sm:mb-14">
           <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-3 sm:mb-4">
             {t.map.label}
@@ -32,9 +34,12 @@ export function MapSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-3 sm:gap-6 items-start">
           {/* Map Panel */}
-          <div className="border border-gold/[0.18] overflow-hidden">
+          <div
+            className="glass-surface overflow-hidden rounded-2xl"
+            style={glass.dark as React.CSSProperties}
+          >
             {/* Tab bar */}
-            <div className="bg-dark-surface border-b border-gold/15 flex">
+            <div className="bg-black/[0.35] border-b border-gold/15 flex">
               {MAP_VIEWS.map((v) => (
                 <button
                   key={v.id}
@@ -71,8 +76,8 @@ export function MapSection() {
             </div>
 
             {/* Footer bar */}
-            <div className="bg-dark-surface border-t border-gold/10 px-3 sm:px-5 py-2.5 sm:py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <span className="text-cream/30 text-[10px] sm:text-[11px]">
+            <div className="bg-black/[0.35] border-t border-gold/10 px-3 sm:px-5 py-2.5 sm:py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <span className="text-cream/75 text-[10px] sm:text-[11px]">
                 {activeView === 'street'
                   ? t.map.footerStreet
                   : activeView === 'satellite'
@@ -91,7 +96,10 @@ export function MapSection() {
           </div>
 
           {/* Info Card */}
-          <div className="border border-gold/[0.18] bg-dark-surface flex flex-col">
+          <div
+            className="glass-surface overflow-hidden rounded-2xl flex flex-col"
+            style={glass.dark as React.CSSProperties}
+          >
             <div className="border-b border-gold/12 px-4 sm:px-6 py-4 sm:py-5">
               <div className="flex items-center gap-3.5">
                 <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-gold/20 bg-[radial-gradient(circle,rgba(201,168,76,0.09),transparent_68%)] shadow-[inset_0_0_18px_rgba(201,168,76,0.04)]">
@@ -108,7 +116,7 @@ export function MapSection() {
                   <div className="text-gold text-lg font-bold font-display">
                     Pasumarthy Banquet Hall
                   </div>
-                  <div className="text-cream/30 text-[10px] tracking-[0.22em] uppercase mt-1">
+                  <div className="text-cream/[0.55] text-[10px] tracking-[0.22em] uppercase mt-1">
                     Khammam · Telangana
                   </div>
                 </div>
@@ -122,10 +130,10 @@ export function MapSection() {
                   <MapPin size={13} className="text-gold" />
                 </div>
                 <div>
-                  <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-1.5">
+                  <div className="text-cream/60 text-[10px] tracking-[0.2em] uppercase mb-1.5">
                     {t.common.address}
                   </div>
-                  <div className="text-cream/60 text-[13px] leading-relaxed">
+                  <div className="text-cream/75 text-[13px] leading-relaxed">
                     {t.addressInfo.line1},<br />
                     {t.addressInfo.line2},<br />
                     {t.addressInfo.line3},<br />
@@ -141,11 +149,11 @@ export function MapSection() {
                   <Phone size={13} className="text-gold" />
                 </div>
                 <div>
-                  <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-1.5">
+                  <div className="text-cream/60 text-[10px] tracking-[0.2em] uppercase mb-1.5">
                     {t.common.phone}
                   </div>
-                  <div className="text-cream/60 text-[13px]">
-                    <ProtectedPhone encoded={ADDRESS.phone1} className="text-[13px] text-cream/60" />
+                  <div className="text-cream/75 text-[13px]">
+                    <ProtectedPhone encoded={ADDRESS.phone1} className="text-[13px] text-cream/75" />
                   </div>
                 </div>
               </div>
@@ -157,10 +165,10 @@ export function MapSection() {
                   <Clock size={13} className="text-gold" />
                 </div>
                 <div>
-                  <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-1.5">
+                  <div className="text-cream/60 text-[10px] tracking-[0.2em] uppercase mb-1.5">
                     {t.common.hours}
                   </div>
-                  <div className="text-cream/60 text-[13px]">
+                  <div className="text-cream/75 text-[13px]">
                     {t.addressInfo.timings}
                   </div>
                   <div className="inline-flex items-center gap-1.5 mt-2">
@@ -175,7 +183,7 @@ export function MapSection() {
 
               {/* Explore buttons */}
               <div>
-                <div className="text-cream/35 text-[10px] tracking-[0.2em] uppercase mb-3">
+                <div className="text-cream/60 text-[10px] tracking-[0.2em] uppercase mb-3">
                   {t.common.explore}
                 </div>
                 <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
@@ -186,7 +194,7 @@ export function MapSection() {
                       className={`py-2 text-[10px] tracking-wide border transition-all ${
                         activeView === v.id
                           ? 'border-gold/60 bg-gold/10 text-gold'
-                          : 'border-gold/15 text-cream/35 hover:border-gold/35 hover:text-cream/55'
+                          : 'border-gold/15 text-cream/60 hover:border-gold/35 hover:text-cream/[0.55]'
                       }`}
                     >
                       {v.label === 'Satellite / 3D' ? t.map.view3d : v.label}

@@ -13,6 +13,28 @@
   --color-cream: #f5f0e8;
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
+
+  /* Responsive glass tokens — laptop/default */
+  --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.76), rgba(6, 5, 4, 0.62));
+  --glass-dark-filter: blur(24px) saturate(1.28);
+  --glass-dark-border: 1px solid rgba(232, 200, 112, 0.22);
+  --glass-dark-shadow: 0 20px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(0, 0, 0, 0.32);
+  --glass-gold-background: linear-gradient(145deg, rgba(212, 170, 76, 0.18), rgba(92, 68, 25, 0.10));
+  --glass-gold-filter: blur(18px) saturate(1.22);
+  --glass-gold-border: 1px solid rgba(232, 200, 112, 0.42);
+  --glass-gold-shadow: 0 12px 34px rgba(71, 48, 10, 0.22), inset 0 1px 0 rgba(255, 245, 216, 0.15);
+  --glass-silver-background: linear-gradient(145deg, rgba(221, 218, 211, 0.12), rgba(93, 90, 84, 0.08));
+  --glass-silver-filter: blur(18px) saturate(1.16);
+  --glass-silver-border: 1px solid rgba(225, 220, 210, 0.25);
+  --glass-silver-shadow: 0 12px 30px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.11);
+  --glass-light-background: linear-gradient(145deg, rgba(245, 240, 232, 0.10), rgba(245, 240, 232, 0.04));
+  --glass-light-filter: blur(16px) saturate(1.12);
+  --glass-light-border: 1px solid rgba(245, 240, 232, 0.18);
+  --glass-light-shadow: 0 10px 26px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --glass-chip-background: linear-gradient(145deg, rgba(19, 16, 12, 0.80), rgba(6, 5, 4, 0.70));
+  --glass-chip-filter: blur(12px) saturate(1.12);
+  --glass-chip-border: 1px solid rgba(232, 200, 112, 0.34);
+  --glass-chip-shadow: 0 6px 18px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* ─── Base Styles ──────────────────────────────────────────────────── */
@@ -100,9 +122,69 @@ h1, h2, h3, h4, h5, h6, p, span, a, div {
   }
 }
 
+/* ─── Glass Surfaces ───────────────────────────────────────────────── */
+
+.glass-surface {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.glass-surface::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10), transparent 28%, transparent 72%, rgba(212, 170, 76, 0.05));
+  content: '';
+  pointer-events: none;
+}
+
+.glass-interactive {
+  transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+}
+
+.glass-interactive:hover {
+  border-color: rgba(232, 200, 112, 0.38) !important;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.13) !important;
+  transform: translate3d(0, -2px, 0);
+}
+
+.glass-interactive:active {
+  transform: translate3d(0, 0, 0) scale(0.99);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-surface {
+    background: rgba(12, 10, 8, 0.94) !important;
+  }
+}
+
 /* ─── Mobile Touch & Tap ───────────────────────────────────────────── */
 
 @media (max-width: 640px) {
+  /* More opaque glass and lower blur keep text clear and scrolling smooth. */
+  :root {
+    --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.88), rgba(6, 5, 4, 0.80));
+    --glass-dark-filter: blur(12px) saturate(1.12);
+    --glass-dark-border: 1px solid rgba(232, 200, 112, 0.26);
+    --glass-dark-shadow: 0 14px 36px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(0, 0, 0, 0.26);
+    --glass-gold-background: linear-gradient(145deg, rgba(212, 170, 76, 0.22), rgba(74, 54, 20, 0.17));
+    --glass-gold-filter: blur(10px) saturate(1.12);
+    --glass-silver-background: linear-gradient(145deg, rgba(221, 218, 211, 0.15), rgba(54, 51, 47, 0.13));
+    --glass-silver-filter: blur(10px) saturate(1.08);
+    --glass-light-filter: blur(9px) saturate(1.06);
+    --glass-chip-filter: blur(8px) saturate(1.06);
+  }
+
+  .glass-surface::before {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 36%, rgba(212, 170, 76, 0.04));
+  }
+
+  .glass-interactive:hover {
+    transform: none;
+  }
   /* Prevent iOS zoom on input focus — must be 16px+ */
   input, select, textarea {
     font-size: 16px !important;

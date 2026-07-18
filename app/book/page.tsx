@@ -18,8 +18,15 @@ export default function BookPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-dark">
-      <div className="pt-20 pb-12 sm:py-24 px-3 sm:px-4">
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Background image — same as homepage hero */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url('/images/hall-bg.png')` }}
+      />
+      <div className="absolute inset-0 bg-black/80" />
+
+      <div className="relative pt-20 pb-12 sm:py-24 px-3 sm:px-4">
         <div className="max-w-lg mx-auto">
           {/* Header */}
           <div className="text-center mb-7 sm:mb-12">

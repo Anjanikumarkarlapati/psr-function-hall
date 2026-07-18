@@ -16,7 +16,8 @@ export function GlassCard({
 }: GlassCardProps) {
   return (
     <div
-      className={className}
+      className={`glass-surface ${className}`}
+      data-glass-variant={variant}
       style={{ ...glass[variant], ...style } as CSSProperties}
     >
       {children}
