@@ -7,9 +7,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Keep production builds separate from the development cache. Running
-  // `next build` while `next dev` is active must never mix webpack runtimes.
-  distDir: isProduction ? '.next-build' : '.next',
+  // Use default .next directory for builds (compatible with Vercel).
+  // Tip: stop `next dev` before running `next build` locally to avoid
+  // webpack runtime conflicts.
   images: {
     remotePatterns: [
       {
