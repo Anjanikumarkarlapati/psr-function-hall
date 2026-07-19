@@ -9,3 +9,13 @@ tsconfig.tsbuildinfo
 *.tsbuildinfo
 
 .vercel
+
+# Old Vite files (not used - project is Next.js)
+src/
+index.html
+vite.config.ts
+pnpm-workspace.yaml
+default_shadcn_theme.css
+dev-server.log
+*.png
+!public/**/*.png
