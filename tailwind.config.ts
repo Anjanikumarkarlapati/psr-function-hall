@@ -26,6 +26,7 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'serif'],
         body: ['var(--font-body)', 'sans-serif'],
+        montserrat: ['var(--font-body)', 'sans-serif'],
       },
       animation: {
         marquee: 'marquee 30s linear infinite',

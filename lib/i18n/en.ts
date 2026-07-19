@@ -18,6 +18,7 @@ export const en: TranslationDictionary = {
     scroll: 'Scroll',
     marquee: [
       'Finest Banquet Hall in Khammam',
+      'Fully Air-Conditioned',
       'Marble Interiors',
       'Exquisite Cuisine',
       'All Celebrations',
@@ -31,11 +32,12 @@ export const en: TranslationDictionary = {
     aboutDesc1: 'Pasumarthi Banquet Hall stands as one of Khammam\u2019s most distinguished celebration venues. Our stunning marble floors, crystal chandelier, and silver-draped walls create an atmosphere of timeless elegance.',
     aboutDesc2: 'From intimate family gatherings to grand wedding receptions, we offer customisable spaces, exquisite cuisine, and dedicated event coordination for every unforgettable moment.',
     stats: [
-      { number: '200+', label: 'Events Hosted' },
+      { number: '100+', label: 'Events Hosted' },
       { number: '400+', label: 'Guests Capacity' },
       { number: '5+', label: 'Years Service' },
     ],
     features: [
+      { title: 'Fully Air-Conditioned', desc: 'Our entire banquet hall is centrally air-conditioned, ensuring your guests stay comfortable throughout the celebration.' },
       { title: 'Grand Marble Interiors', desc: 'Pristine marble floors, silver curtains, and a stunning crystal chandelier create an atmosphere of royalty.' },
       { title: 'Exquisite Catering', desc: 'From savoury mains to traditional sweets — every dish is prepared with the finest ingredients.' },
       { title: 'Dedicated Event Team', desc: 'Our coordinators handle décor, catering, and logistics so you can focus entirely on celebrating.' },

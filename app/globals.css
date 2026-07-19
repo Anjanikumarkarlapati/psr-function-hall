@@ -11,8 +11,8 @@
   --color-dark-surface: #161514;
   --color-silver: #a8a5a0;
   --color-cream: #f5f0e8;
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Cinzel Decorative', serif;
+  --font-body: 'Montserrat', sans-serif;
 
   /* Responsive glass tokens — laptop/default */
   --glass-dark-background: rgba(10, 9, 8, 0.85);

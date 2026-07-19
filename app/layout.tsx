@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Playfair_Display, Inter, Noto_Sans_Telugu } from 'next/font/google';
+import { Cinzel_Decorative, Montserrat, Noto_Sans_Telugu } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { CallFloat } from '@/components/CallFloat';
@@ -7,13 +7,14 @@ import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 import { Providers } from './providers';
 import './globals.css';
 
-const playfair = Playfair_Display({
+const cinzel = Cinzel_Decorative({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
+  weight: ['400', '700', '900'],
 });
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
@@ -78,7 +79,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${inter.variable} ${notoTelugu.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${cinzel.variable} ${montserrat.variable} ${notoTelugu.variable}`}>
       <body suppressHydrationWarning className="min-h-screen bg-dark text-cream font-body">
         <Providers>
           <Navbar />

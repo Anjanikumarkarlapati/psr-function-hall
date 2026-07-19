@@ -567,7 +567,7 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
 
             {/* Glass stat cards */}
             <div className="grid grid-cols-3 gap-3">
-              {[{ n: "200+", l: "Events Hosted" }, { n: "400+", l: "Guests Capacity" }, { n: "5+", l: "Years Service" }].map((s) => (
+              {[{ n: "100+", l: "Events Hosted" }, { n: "400+", l: "Guests Capacity" }, { n: "5+", l: "Years Service" }].map((s) => (
                 <div key={s.l} className="p-5 text-center" style={glass.dark}>
                   <div className="text-[32px] text-[#d4aa4c] font-semibold leading-none mb-1"
                     style={{ fontFamily: "var(--font-display)" }}>{s.n}</div>

@@ -58,33 +58,109 @@ export default function HomePage() {
           variant="dark"
           className="relative z-10 w-full max-w-[calc(100vw-1.5rem)] sm:max-w-2xl overflow-hidden rounded-[1.4rem] sm:rounded-[2rem] px-4 sm:px-10 lg:px-14 py-10 sm:py-14 text-center"
         >
-          <div className="w-12 h-[1px] bg-gold-light mx-auto mb-6 sm:mb-8" />
-          <p className="text-gold-light text-[10px] sm:text-[11px] tracking-[0.28em] sm:tracking-[0.5em] uppercase mb-4 sm:mb-6">
+          {/* WELCOME TO */}
+          <p className="font-body text-gold-light text-[11px] sm:text-[13px] tracking-[0.3em] sm:tracking-[0.45em] uppercase mb-5 sm:mb-7">
             {t.home.heroWelcome}
           </p>
-          <h1 className="font-display text-[32px] sm:text-[58px] md:text-7xl font-light leading-[1.05] tracking-tight text-cream drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-            Pasumarthi
+
+          {/* PSR Crest */}
+          <div className="flex justify-center mb-4 sm:mb-5">
+            <Image
+              src="/images/brand-mark.svg"
+              alt="PSR Crest"
+              width={80}
+              height={80}
+              className="w-16 h-16 sm:w-20 sm:h-20 opacity-90"
+            />
+          </div>
+
+          {/* PASUMARTHY — Cinzel Decorative */}
+          <h1 className="font-display text-[34px] sm:text-[56px] md:text-[68px] font-bold leading-[1.05] tracking-wide text-cream drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)] uppercase">
+            Pasumarthy
           </h1>
-          <p className="font-display text-[28px] sm:text-[48px] md:text-6xl font-semibold italic leading-[1.1] text-gold-light mt-1 sm:mt-2">
+
+          {/* BANQUET HALL — Montserrat */}
+          <p className="font-body text-[16px] sm:text-[22px] md:text-[26px] font-light leading-[1.3] tracking-[0.25em] sm:tracking-[0.35em] text-cream/90 mt-1 sm:mt-2 uppercase">
             {t.home.heroBanquetHall}
           </p>
+
           <GoldRule />
-          <p className="text-cream/70 text-[13px] sm:text-[15px] mt-5 sm:mt-6 mb-7 sm:mb-10 leading-relaxed font-body px-2 sm:px-0 max-w-md mx-auto">
+
+          {/* Tagline */}
+          <p className="text-cream/65 text-[13px] sm:text-[15px] mt-5 sm:mt-6 mb-7 sm:mb-10 leading-relaxed font-body italic px-4 sm:px-6 max-w-md mx-auto">
             {t.home.heroTagline}
           </p>
+
+          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/book"
-              className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3.5 bg-gold-light text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright active:scale-[0.98] transition-all text-center touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
+              className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3.5 bg-gold-light text-dark font-bold tracking-[0.2em] text-[11px] sm:text-[12px] uppercase rounded-sm hover:bg-gold-bright active:scale-[0.98] transition-all text-center touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
             >
               {t.home.heroBookBtn}
             </Link>
             <Link
               href="/menu"
-              className="glass-surface glass-interactive w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3.5 text-cream/90 text-[11px] font-semibold tracking-widest uppercase text-center border border-cream/30 hover:border-cream/50 touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
+              className="glass-surface glass-interactive w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3.5 text-cream/90 text-[11px] sm:text-[12px] font-semibold tracking-[0.2em] uppercase text-center border border-cream/40 hover:border-cream/60 rounded-sm touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
             >
               {t.home.heroMenuBtn}
             </Link>
+          </div>
+
+          {/* Amenities — Parking & AC */}
+          <div className="flex items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-8">
+            <div className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold-light" aria-hidden="true">
+                <rect x="1" y="3" width="22" height="18" rx="2" />
+                <path d="M9 17V7h4a3 3 0 0 1 0 6H9" />
+              </svg>
+              <span className="font-body text-[11px] sm:text-[12px] text-cream/70 tracking-wide uppercase">
+                Free Parking
+              </span>
+            </div>
+            <span className="w-[1px] h-4 bg-cream/20" aria-hidden="true" />
+            <div className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold-light" aria-hidden="true">
+                <path d="M8 16a4 4 0 0 1-4-4 4 4 0 0 1 4-4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4" />
+                <path d="M5 20v-4" />
+                <path d="M19 20v-4" />
+                <path d="M12 20v-8" />
+                <path d="M9 4h6" />
+                <path d="M12 4v4" />
+              </svg>
+              <span className="font-body text-[11px] sm:text-[12px] text-cream/70 tracking-wide uppercase">
+                Fully AC
+              </span>
+            </div>
+          </div>
+
+          {/* Parking Details */}
+          <div className="mt-4 sm:mt-5 border border-gold/20 rounded-lg px-4 py-3 sm:px-5 sm:py-3.5 bg-gold/[0.04]">
+            <p className="font-body text-[10px] sm:text-[11px] text-gold-light/80 tracking-[0.2em] uppercase mb-2 text-center">
+              Parking Details
+            </p>
+            <div className="flex items-center justify-center gap-4 sm:gap-6">
+              <div className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold-light" aria-hidden="true">
+                  <path d="M5 17h14M5 17v-5l1-4h12l1 4v5M5 17H3m16 0h2M7 14h.01M17 14h.01M9 9h6" />
+                </svg>
+                <span className="font-body text-[11px] sm:text-[12px] text-cream/70 leading-snug">
+                  Cars — Floor <span className="text-gold-light font-semibold">-2</span>
+                </span>
+              </div>
+              <span className="w-[1px] h-4 bg-cream/20" aria-hidden="true" />
+              <div className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold-light" aria-hidden="true">
+                  <path d="M5 18v-1a4 4 0 0 1 4-4h0" />
+                  <circle cx="9" cy="18" r="1" />
+                  <circle cx="17" cy="18" r="1" />
+                  <path d="M14 18h-4M9 13V9l3-3 5 3v4" />
+                </svg>
+                <span className="font-body text-[11px] sm:text-[12px] text-cream/70 leading-snug">
+                  Bikes &amp; Scootys — Floor <span className="text-gold-light font-semibold">-1</span>
+                </span>
+              </div>
+            </div>
           </div>
         </GlassCard>
 

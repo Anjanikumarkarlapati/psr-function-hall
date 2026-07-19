@@ -61,7 +61,7 @@ export function WhatsAppFloat() {
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-0 right-4 z-50 flex flex-col items-end gap-2.5 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:bottom-6 sm:right-6 sm:pb-0"
+      className="fixed bottom-[18px] right-[18px] z-[9999] flex flex-col items-end gap-3 pb-[env(safe-area-inset-bottom)] sm:bottom-6 sm:right-6 sm:pb-0"
     >
       {showMenu && (
         <div
@@ -123,17 +123,15 @@ export function WhatsAppFloat() {
         aria-expanded={showMenu}
         aria-controls={MENU_ID}
         aria-haspopup="menu"
-        className="group relative flex h-14 min-w-14 touch-manipulation items-center justify-center gap-2.5 rounded-full border border-white/20 bg-[#128C4A] px-4 text-white shadow-[0_12px_30px_rgba(5,35,18,0.34),inset_0_1px_0_rgba(255,255,255,0.22)] transition-[transform,background-color] duration-200 hover:bg-[#0f7e43] active:-translate-y-px active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:w-14 sm:px-0"
+        className="whatsapp-fab group relative flex h-14 w-14 touch-manipulation items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-[250ms] ease-[ease] hover:scale-[1.08] active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:h-12 sm:w-auto sm:min-w-[7.5rem] sm:gap-2 sm:rounded-full sm:border sm:border-white/20 sm:bg-[#128C4A] sm:px-4 sm:shadow-[0_12px_30px_rgba(5,35,18,0.34),inset_0_1px_0_rgba(255,255,255,0.22)] sm:hover:scale-100 sm:hover:bg-[#0f7e43] sm:active:-translate-y-px sm:active:scale-[0.98]"
       >
-        <span className="grid place-items-center transition-transform duration-200 group-hover:scale-105">
-          <WhatsAppIcon size={29} />
-        </span>
-        <span className="text-[12px] font-bold tracking-wide sm:hidden">
+        <WhatsAppIcon size={20} className="h-5 w-5 shrink-0" />
+        <span className="hidden whitespace-nowrap text-[12px] font-bold tracking-wide sm:inline">
           {showMenu ? (locale === 'te' ? 'మూసివేయి' : 'Close') : 'WhatsApp'}
         </span>
         <span
           aria-hidden="true"
-          className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-[3px] border-dark bg-gold-bright"
+          className="absolute -right-0.5 -top-0.5 hidden h-3.5 w-3.5 rounded-full border-[3px] border-dark bg-gold-bright sm:block"
         />
       </button>
     </div>

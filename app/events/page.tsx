@@ -110,8 +110,8 @@ const MEDIA_SECTIONS: MediaSection[] = [
     id: 'venue',
     title: { en: 'Hall & Venue', te: 'హాల్ & వేదిక' },
     description: {
-      en: 'A full view of the air-conditioned hall, guest seating, aisle and stage.',
-      te: 'ఎయిర్ కండిషన్డ్ హాల్, అతిథుల సీటింగ్, నడక మార్గం మరియు స్టేజ్ యొక్క పూర్తి దృశ్యం.',
+      en: 'A full view of our fully air-conditioned (AC) hall, guest seating, aisle and stage.',
+      te: 'మా పూర్తి ఎయిర్ కండిషన్డ్ (AC) హాల్, అతిథుల సీటింగ్, నడక మార్గం మరియు స్టేజ్ యొక్క పూర్తి దృశ్యం.',
     },
     images: ['/images/gallery/wedding-hall-seating.jpg'],
   },
@@ -212,6 +212,15 @@ export default function EventsPage() {
           <p className="text-cream/70 text-[13px] sm:text-[15px] mt-4 sm:mt-5 leading-relaxed font-body px-2 sm:px-0 max-w-md mx-auto">
             {t.events.subtitle}
           </p>
+
+          {/* AC Function Hall badge */}
+          <div className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 border border-gold/30 rounded-full bg-gold/[0.06]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-gold-light"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg>
+            <span className="text-gold-light text-[11px] sm:text-xs tracking-[0.18em] uppercase font-semibold">
+              {locale === 'te' ? 'AC ఫంక్షన్ హాల్' : 'AC Function Hall'}
+            </span>
+          </div>
+
           <div className="w-12 h-[1px] bg-gold/30 mx-auto mt-6 sm:mt-8" />
         </GlassCard>
 
@@ -474,8 +483,8 @@ export default function EventsPage() {
             </h2>
             <p className="text-cream/75 text-[14px] sm:text-[15px] mb-7 sm:mb-10 leading-relaxed px-2 sm:px-0">
               {locale === 'te'
-                ? 'మీ ప్రత్యేక వేడుక కోసం మా బ్యాంక్వెట్ హాల్‌ను ఇప్పుడే బుక్ చేసుకోండి'
-                : 'Reserve our premium banquet hall for your special celebration today'}
+                ? 'మీ ప్రత్యేక వేడుక కోసం మా AC బ్యాంక్వెట్ హాల్‌ను ఇప్పుడే బుక్ చేసుకోండి'
+                : 'Reserve our fully air-conditioned premium banquet hall for your special celebration today'}
             </p>
             <Link
               href="/book"

@@ -273,25 +273,39 @@ export function MapSection() {
               </div>
               <div className="h-[1px] bg-gold/8" />
 
-              {/* Primary phone — the full row opens number one in the dialer. */}
-              <button
-                type="button"
-                onClick={() => openPhoneDialer(ADDRESS.phone1)}
-                aria-label={locale === 'te' ? 'ప్రధాన నంబర్‌కు కాల్ చేయండి' : 'Call primary phone number'}
-                className="group flex w-full touch-manipulation items-start gap-3.5 text-left active:scale-[0.99]"
-              >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center border border-gold/25 transition-colors group-hover:border-gold/55 group-hover:bg-gold/10">
+              {/* Phone numbers */}
+              <div className="flex items-start gap-3.5">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center border border-gold/25">
                   <Phone size={13} className="text-gold" />
                 </span>
-                <span>
+                <div>
                   <span className="mb-1.5 block text-[10px] uppercase tracking-[0.2em] text-cream/60">
                     {t.common.phone}
                   </span>
-                  <span className="block text-[13px] text-gold/80 underline decoration-dotted underline-offset-4 transition-colors group-hover:text-gold">
-                    {locale === 'te' ? 'కాల్ చేయడానికి నొక్కండి' : 'Tap to call'}
-                  </span>
-                </span>
-              </button>
+                  <div className="space-y-1.5">
+                    <button
+                      type="button"
+                      onClick={() => openPhoneDialer(ADDRESS.phone1)}
+                      aria-label={locale === 'te' ? 'ప్రధాన నంబర్‌కు కాల్ చేయండి' : 'Call primary phone number'}
+                      className="group block w-full touch-manipulation text-left active:scale-[0.99]"
+                    >
+                      <span className="block text-[13px] text-gold/80 underline decoration-dotted underline-offset-4 transition-colors group-hover:text-gold">
+                        {locale === 'te' ? 'నంబర్ 1 — కాల్ చేయండి' : 'Number 1 — Tap to call'}
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => openPhoneDialer(ADDRESS.phone2)}
+                      aria-label={locale === 'te' ? 'రెండవ నంబర్‌కు కాల్ చేయండి' : 'Call secondary phone number'}
+                      className="group block w-full touch-manipulation text-left active:scale-[0.99]"
+                    >
+                      <span className="block text-[13px] text-gold/80 underline decoration-dotted underline-offset-4 transition-colors group-hover:text-gold">
+                        {locale === 'te' ? 'నంబర్ 2 — కాల్ చేయండి' : 'Number 2 — Tap to call'}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <div className="h-[1px] bg-gold/8" />
 
               {/* Hours */}
