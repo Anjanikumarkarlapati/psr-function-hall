@@ -107,22 +107,21 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Amenities & Parking — unified compact grid */}
-          <div className="mt-6 sm:mt-8 border border-gold/20 rounded-lg px-4 py-4 sm:px-5 sm:py-4 bg-gold/[0.04]">
-            {/* Top row: Free Parking + Fully AC */}
-            <div className="flex items-center justify-center gap-4 sm:gap-6 mb-3">
-              <div className="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-gold-light" aria-hidden="true">
+          {/* Amenities & Parking */}
+          <div className="mt-6 sm:mt-8 w-full max-w-sm mx-auto sm:max-w-none">
+            {/* Amenity badges row */}
+            <div className="flex items-center justify-center gap-3 sm:gap-5 mb-3 sm:mb-4">
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-gold/25 bg-gold/[0.05] px-3 py-1.5 sm:px-4 sm:py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-gold-light" aria-hidden="true">
                   <rect x="1" y="3" width="22" height="18" rx="2" />
                   <path d="M9 17V7h4a3 3 0 0 1 0 6H9" />
                 </svg>
-                <span className="font-body text-[11px] sm:text-[12px] text-cream/70 tracking-wide uppercase">
+                <span className="font-body text-[10px] sm:text-[11px] text-cream/80 tracking-wider uppercase whitespace-nowrap">
                   Free Parking
                 </span>
               </div>
-              <span className="w-[1px] h-4 bg-cream/20" aria-hidden="true" />
-              <div className="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-gold-light" aria-hidden="true">
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-gold/25 bg-gold/[0.05] px-3 py-1.5 sm:px-4 sm:py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-gold-light" aria-hidden="true">
                   <path d="M8 16a4 4 0 0 1-4-4 4 4 0 0 1 4-4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4" />
                   <path d="M5 20v-4" />
                   <path d="M19 20v-4" />
@@ -130,32 +129,30 @@ export default function HomePage() {
                   <path d="M9 4h6" />
                   <path d="M12 4v4" />
                 </svg>
-                <span className="font-body text-[11px] sm:text-[12px] text-cream/70 tracking-wide uppercase">
+                <span className="font-body text-[10px] sm:text-[11px] text-cream/80 tracking-wider uppercase whitespace-nowrap">
                   Fully AC
                 </span>
               </div>
             </div>
 
-            <div className="h-[1px] bg-gold/15 mb-3" />
-
-            {/* Bottom: Parking floor grid — stacks on mobile */}
-            <div className="grid grid-cols-2 gap-2">
-              <div className="flex flex-col items-center rounded-md border border-gold/15 bg-gold/[0.04] px-2 py-2.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold-light mb-1.5" aria-hidden="true">
+            {/* Parking floor cards */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <div className="flex flex-col items-center rounded-lg border border-gold/20 bg-gold/[0.04] px-3 py-3 sm:px-4 sm:py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-gold-light mb-1.5 sm:mb-2" aria-hidden="true">
                   <path d="M5 17h14M5 17v-5l1-4h12l1 4v5M5 17H3m16 0h2M7 14h.01M17 14h.01M9 9h6" />
                 </svg>
-                <span className="font-body text-[11px] text-cream/70 leading-snug">Cars</span>
-                <span className="font-body text-[13px] text-gold-light font-semibold mt-0.5">Floor -2</span>
+                <span className="font-body text-[10px] sm:text-[11px] text-cream/60 tracking-wide uppercase">Cars</span>
+                <span className="font-body text-[14px] sm:text-[16px] text-gold-light font-bold mt-0.5 tabular-nums">Floor -2</span>
               </div>
-              <div className="flex flex-col items-center rounded-md border border-gold/15 bg-gold/[0.04] px-2 py-2.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold-light mb-1.5" aria-hidden="true">
+              <div className="flex flex-col items-center rounded-lg border border-gold/20 bg-gold/[0.04] px-3 py-3 sm:px-4 sm:py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-gold-light mb-1.5 sm:mb-2" aria-hidden="true">
                   <path d="M5 18v-1a4 4 0 0 1 4-4h0" />
                   <circle cx="9" cy="18" r="1" />
                   <circle cx="17" cy="18" r="1" />
                   <path d="M14 18h-4M9 13V9l3-3 5 3v4" />
                 </svg>
-                <span className="font-body text-[11px] text-cream/70 leading-snug">Bikes &amp; Scootys</span>
-                <span className="font-body text-[13px] text-gold-light font-semibold mt-0.5">Floor -1</span>
+                <span className="font-body text-[10px] sm:text-[11px] text-cream/60 tracking-wide uppercase">Bikes</span>
+                <span className="font-body text-[14px] sm:text-[16px] text-gold-light font-bold mt-0.5 tabular-nums">Floor -1</span>
               </div>
             </div>
           </div>

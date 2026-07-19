@@ -40,24 +40,50 @@ export function VideoPreviewTile({
   // frame. Forcing a tiny seek once data is available makes every tile show
   // a real thumbnail. The moov atom sits before mdat in these files, so the
   // seek only pulls a small byte range near the start, not the whole file.
+  //
+  // `loadeddata` isn't reliable here: with `preload="metadata"` many browsers
+  // only fetch duration/dimensions and never download enough to decode a
+  // frame, so `loadeddata` can simply never fire. `loadedmetadata` fires as
+  // soon as duration/dimensions are known (which preload="metadata"
+  // guarantees), and seeking from there forces the browser to fetch and
+  // decode the target frame. We mark the tile ready once that seek settles
+  // (`seeked`), with `loadeddata`/`canplay` as fallbacks for browsers that
+  // already have a frame painted without needing an explicit seek.
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
 
-    const handleLoadedData = () => {
-      if (el.currentTime === 0) {
-        try {
-          el.currentTime = 0.05;
-        } catch {
-          // Some browsers throw if the media isn't seekable yet — ignored,
-          // frameReady still flips so the placeholder fades regardless.
-        }
+    let seeked = false;
+
+    const markReady = () => setFrameReady(true);
+
+    const requestFrame = () => {
+      if (seeked) return;
+      seeked = true;
+      try {
+        el.currentTime = 0.05;
+      } catch {
+        // Some browsers throw if the media isn't seekable yet — fall back
+        // to whatever frame is already available.
+        markReady();
       }
-      setFrameReady(true);
     };
 
-    el.addEventListener('loadeddata', handleLoadedData);
-    return () => el.removeEventListener('loadeddata', handleLoadedData);
+    el.addEventListener('loadedmetadata', requestFrame);
+    el.addEventListener('seeked', markReady);
+    el.addEventListener('loadeddata', markReady);
+    el.addEventListener('canplay', markReady);
+
+    // If metadata is already loaded by the time this effect runs (e.g. fast
+    // cache hit), the `loadedmetadata` event may have already fired.
+    if (el.readyState >= 1) requestFrame();
+
+    return () => {
+      el.removeEventListener('loadedmetadata', requestFrame);
+      el.removeEventListener('seeked', markReady);
+      el.removeEventListener('loadeddata', markReady);
+      el.removeEventListener('canplay', markReady);
+    };
   }, []);
 
   // Play/pause the video based on hover state
