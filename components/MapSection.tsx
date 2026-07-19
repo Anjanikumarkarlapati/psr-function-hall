@@ -2,9 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, Phone, Clock, ExternalLink, Navigation } from 'lucide-react';
-import { ADDRESS, MAP_VIEWS } from '@/lib/data';
-import { ProtectedPhone } from './ProtectedPhone';
+import { MapPin, Phone, Clock, ExternalLink, Navigation, LoaderCircle } from 'lucide-react';
+import {
+  ADDRESS,
+  GOOGLE_MAPS_DIRECTIONS_URL,
+  MAP_VIEWS,
+  getGoogleMapsDirectionsUrl,
+  getGoogleMapsViewUrl,
+} from '@/lib/data';
+import { openPhoneDialer } from '@/lib/obfuscate';
 import { useTranslation } from '@/lib/i18n';
 import { glass } from '@/styles/glass';
 
@@ -13,9 +19,14 @@ export function MapSection() {
     'satellite'
   );
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
+  const [directionsStatus, setDirectionsStatus] = useState<string | null>(null);
   const { t, locale } = useTranslation();
   const activeMap = MAP_VIEWS.find((view) => view.id === activeView) ?? MAP_VIEWS[1];
+  const activeMapUrl = getGoogleMapsViewUrl(activeView);
   const loadingLabel = locale === 'te' ? 'మ్యాప్ లోడ్ అవుతోంది…' : 'Loading map…';
+  const locatingLabel =
+    locale === 'te' ? 'మీ ప్రస్తుత స్థానాన్ని గుర్తిస్తోంది…' : 'Finding your current location…';
   const directionsLabel =
     locale === 'te'
       ? 'మీ ప్రస్తుత స్థానం నుండి దిశలు'
@@ -25,6 +36,66 @@ export function MapSection() {
     if (view === activeView) return;
     setIsMapLoaded(false);
     setActiveView(view);
+  };
+
+  const handleDirections = () => {
+    const mapsWindow = window.open('', '_blank');
+    if (mapsWindow) {
+      mapsWindow.opener = null;
+      mapsWindow.document.title = locatingLabel;
+      mapsWindow.document.body.textContent = locatingLabel;
+      mapsWindow.document.body.style.cssText =
+        'margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0908;color:#d4aa4c;font:16px system-ui,sans-serif';
+    }
+
+    const navigateToMaps = (url: string) => {
+      if (mapsWindow && !mapsWindow.closed) {
+        mapsWindow.location.replace(url);
+      } else {
+        window.location.assign(url);
+      }
+    };
+
+    if (!navigator.geolocation) {
+      setDirectionsStatus(
+        locale === 'te'
+          ? 'GPS అందుబాటులో లేదు. Google Maps ప్రస్తుత స్థానాన్ని ఉపయోగిస్తోంది.'
+          : 'GPS is unavailable. Google Maps will use your current location.'
+      );
+      navigateToMaps(GOOGLE_MAPS_DIRECTIONS_URL);
+      return;
+    }
+
+    setIsLocating(true);
+    setDirectionsStatus(locatingLabel);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setIsLocating(false);
+        setDirectionsStatus(
+          locale === 'te' ? 'Google Mapsలో మార్గం తెరవబడుతోంది…' : 'Opening your route in Google Maps…'
+        );
+        navigateToMaps(
+          getGoogleMapsDirectionsUrl({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          })
+        );
+      },
+      () => {
+        setIsLocating(false);
+        setDirectionsStatus(
+          locale === 'te'
+            ? 'స్థాన అనుమతి లభించలేదు. Google Maps ప్రస్తుత స్థానాన్ని ఉపయోగిస్తోంది.'
+            : 'Location permission was unavailable. Google Maps will use your current location.'
+        );
+        navigateToMaps(GOOGLE_MAPS_DIRECTIONS_URL);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 12_000,
+        maximumAge: 60_000,
+      }
+    );
   };
 
   // Check if venue is currently open (10 AM - 10 PM IST, every day)
@@ -51,7 +122,7 @@ export function MapSection() {
           <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-3 sm:mb-4">
             {t.map.label}
           </p>
-          <h2 className="text-[24px] sm:text-[34px] md:text-4xl text-cream font-bold mb-3 sm:mb-4 font-display">
+          <h2 className="text-[24px] sm:text-[34px] md:text-4xl text-cream font-light mb-3 sm:mb-4 font-display">
             {t.map.heading}
           </h2>
           <div className="flex items-center gap-3 justify-center my-2">
@@ -109,7 +180,7 @@ export function MapSection() {
                   <div className="h-7 w-7 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
                   <span className="text-xs tracking-wide text-cream/65">{loadingLabel}</span>
                   <a
-                    href={ADDRESS.gmaps}
+                    href={activeMapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-gold underline underline-offset-4"
@@ -144,7 +215,7 @@ export function MapSection() {
                   : t.map.footerMap}
               </span>
               <a
-                href={ADDRESS.gmaps}
+                href={activeMapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gold text-[11px] flex items-center gap-1 hover:underline shrink-0 touch-manipulation py-1"
@@ -172,7 +243,7 @@ export function MapSection() {
                   />
                 </div>
                 <div>
-                  <div className="text-gold text-lg font-bold font-display">
+                  <div className="text-gold text-lg font-semibold font-display">
                     {t.navbar.brandName} {t.home.heroBanquetHall}
                   </div>
                   <div className="text-cream/[0.55] text-[10px] tracking-[0.22em] uppercase mt-1">
@@ -202,20 +273,25 @@ export function MapSection() {
               </div>
               <div className="h-[1px] bg-gold/8" />
 
-              {/* Phone */}
-              <div className="flex items-start gap-3.5">
-                <div className="w-7 h-7 border border-gold/25 flex items-center justify-center shrink-0">
+              {/* Primary phone — the full row opens number one in the dialer. */}
+              <button
+                type="button"
+                onClick={() => openPhoneDialer(ADDRESS.phone1)}
+                aria-label={locale === 'te' ? 'ప్రధాన నంబర్‌కు కాల్ చేయండి' : 'Call primary phone number'}
+                className="group flex w-full touch-manipulation items-start gap-3.5 text-left active:scale-[0.99]"
+              >
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center border border-gold/25 transition-colors group-hover:border-gold/55 group-hover:bg-gold/10">
                   <Phone size={13} className="text-gold" />
-                </div>
-                <div>
-                  <div className="text-cream/60 text-[10px] tracking-[0.2em] uppercase mb-1.5">
+                </span>
+                <span>
+                  <span className="mb-1.5 block text-[10px] uppercase tracking-[0.2em] text-cream/60">
                     {t.common.phone}
-                  </div>
-                  <div className="text-cream/75 text-[13px]">
-                    <ProtectedPhone encoded={ADDRESS.phone1} className="text-[13px] text-cream/75" />
-                  </div>
-                </div>
-              </div>
+                  </span>
+                  <span className="block text-[13px] text-gold/80 underline decoration-dotted underline-offset-4 transition-colors group-hover:text-gold">
+                    {locale === 'te' ? 'కాల్ చేయడానికి నొక్కండి' : 'Tap to call'}
+                  </span>
+                </span>
+              </button>
               <div className="h-[1px] bg-gold/8" />
 
               {/* Hours */}
@@ -269,15 +345,29 @@ export function MapSection() {
 
             {/* Action buttons */}
             <div className="px-4 sm:px-6 pb-5 sm:pb-6 space-y-2">
-              <a
-                href={ADDRESS.gmaps}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={handleDirections}
+                disabled={isLocating}
                 aria-label={directionsLabel}
-                className="flex items-center justify-center gap-2 w-full py-3.5 sm:py-3 bg-gold text-dark text-xs font-bold tracking-widest uppercase hover:bg-gold-bright active:bg-gold-bright transition-colors touch-manipulation"
+                className="flex w-full touch-manipulation items-center justify-center gap-2 bg-gold py-3.5 text-xs font-bold uppercase tracking-widest text-dark transition-colors hover:bg-gold-bright active:bg-gold-bright disabled:cursor-wait disabled:opacity-75 sm:py-3"
               >
-                <Navigation size={13} /> {directionsLabel}
-              </a>
+                {isLocating ? (
+                  <LoaderCircle size={14} className="animate-spin" />
+                ) : (
+                  <Navigation size={13} />
+                )}
+                {isLocating ? locatingLabel : directionsLabel}
+              </button>
+              {directionsStatus && (
+                <p
+                  className="px-2 text-center text-[10px] leading-relaxed text-cream/55"
+                  role="status"
+                  aria-live="polite"
+                >
+                  {directionsStatus}
+                </p>
+              )}
               <a
                 href={ADDRESS.justdial}
                 target="_blank"

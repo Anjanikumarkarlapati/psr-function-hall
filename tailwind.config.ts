@@ -17,8 +17,8 @@ const config: Config = {
         },
         dark: {
           DEFAULT: '#0a0908',
-          card: '#060504',
-          surface: '#0d0b09',
+          card: '#111110',
+          surface: '#161514',
         },
         silver: '#a8a5a0',
         cream: '#f5f0e8',

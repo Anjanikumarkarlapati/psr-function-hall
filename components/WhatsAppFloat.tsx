@@ -1,14 +1,19 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WHATSAPP_NUMBERS } from '@/lib/data';
 import { decodeNumber } from '@/lib/obfuscate';
 import { useTranslation } from '@/lib/i18n';
+import { WhatsAppIcon } from './WhatsAppIcon';
+
+const MENU_ID = 'whatsapp-contact-menu';
 
 export function WhatsAppFloat() {
   const { locale } = useTranslation();
   const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const firstContactRef = useRef<HTMLAnchorElement>(null);
 
   const getMessage = () =>
     locale === 'te'
@@ -20,63 +25,116 @@ export function WhatsAppFloat() {
     return `https://wa.me/${number}?text=${encodeURIComponent(getMessage())}`;
   };
 
-  // Close menu when tapping outside (important for mobile)
   useEffect(() => {
     if (!showMenu) return;
-    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      firstContactRef.current?.focus();
+    });
+
+    const handleOutsidePress = (event: PointerEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
         setShowMenu(false);
       }
     };
-    document.addEventListener('mousedown', handleOutsideClick);
-    document.addEventListener('touchstart', handleOutsideClick);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowMenu(false);
+        triggerRef.current?.focus();
+      }
+    };
+
+    document.addEventListener('pointerdown', handleOutsidePress);
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-      document.removeEventListener('touchstart', handleOutsideClick);
+      window.cancelAnimationFrame(focusFrame);
+      document.removeEventListener('pointerdown', handleOutsidePress);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [showMenu]);
 
+  const openLabel = locale === 'te' ? 'WhatsAppలో సంప్రదించండి' : 'Contact us on WhatsApp';
+  const closeLabel = locale === 'te' ? 'WhatsApp ఎంపికలను మూసివేయండి' : 'Close WhatsApp options';
+
   return (
-    <div ref={menuRef} className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2">
-      {/* Popup with both number options */}
+    <div
+      ref={containerRef}
+      className="fixed bottom-0 right-4 z-50 flex flex-col items-end gap-2.5 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:bottom-6 sm:right-6 sm:pb-0"
+    >
       {showMenu && (
-        <div className="bg-[#1a1a1a] border border-gold/20 rounded-xl shadow-2xl shadow-black/50 p-3 sm:p-4 space-y-2 sm:space-y-2.5 mb-1 max-w-[calc(100vw-2rem)] w-[260px] sm:w-auto">
-          <p className="text-cream/60 text-[11px] tracking-wider uppercase text-center px-2 font-medium">
-            {locale === 'te' ? 'మెసేజ్ పంపండి' : 'Send message to'}
-          </p>
+        <div
+          id={MENU_ID}
+          role="menu"
+          aria-label={locale === 'te' ? 'WhatsApp సంప్రదింపు ఎంపికలు' : 'WhatsApp contact options'}
+          className="w-[min(20rem,calc(100vw-1.5rem))] max-h-[min(70dvh,28rem)] origin-bottom-right space-y-2 overflow-y-auto overscroll-contain rounded-2xl border border-white/10 bg-dark-surface/95 p-3.5 text-cream shadow-[0_18px_48px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl sm:w-[19rem] sm:p-4"
+        >
+          <div className="flex items-center gap-3 border-b border-white/[0.08] px-1 pb-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#128C4A] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]">
+              <WhatsAppIcon size={22} />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-cream">
+                {locale === 'te' ? 'WhatsApp బుకింగ్' : 'WhatsApp booking'}
+              </p>
+              <p className="mt-0.5 text-[11px] leading-snug text-cream/50">
+                {locale === 'te' ? 'సంప్రదింపును ఎంచుకోండి' : 'Choose a booking contact'}
+              </p>
+            </div>
+          </div>
+
           {WHATSAPP_NUMBERS.map((_, index) => (
             <a
               key={index}
+              ref={index === 0 ? firstContactRef : undefined}
               href={getUrl(index)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 sm:px-5 py-3 bg-[#25D366] hover:bg-[#1eb85a] active:bg-[#19a34d] text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap touch-manipulation"
+              role="menuitem"
+              onClick={() => setShowMenu(false)}
+              className="flex min-h-14 touch-manipulation items-center gap-3 rounded-xl border border-white/10 bg-[#128C4A] px-4 py-3 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-[transform,background-color] duration-200 hover:bg-[#0f7e43] active:-translate-y-px active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             >
-              <svg width={18} height={18} viewBox="0 0 24 24" fill="white" className="shrink-0">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                <path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.785.476 3.549 1.38 5.094L2 22l5.025-1.321A10.003 10.003 0 0 0 12.004 22C17.531 22 22 17.523 22 12.004S17.531 2 12.004 2zm0 18.182a8.181 8.181 0 0 1-4.17-1.143l-.3-.178-3.081.809.82-3.001-.196-.309A8.128 8.128 0 0 1 3.822 12c0-4.517 3.667-8.182 8.182-8.182S20.182 7.483 20.182 12c0 4.517-3.665 8.182-8.178 8.182z" />
-              </svg>
-              {locale === 'te' ? `నంబర్ ${index + 1}` : `Number ${index + 1}`}
+              <WhatsAppIcon size={23} className="shrink-0" />
+              <span className="min-w-0 text-left">
+                <span className="block text-sm font-semibold leading-tight">
+                  {locale === 'te' ? `బుకింగ్ టీమ్ ${index + 1}` : `Booking team ${index + 1}`}
+                </span>
+                <span className="mt-1 block text-[10px] leading-tight text-white/70">
+                  {locale === 'te' ? 'WhatsAppలో తెరవండి' : 'Open in WhatsApp'}
+                </span>
+              </span>
             </a>
           ))}
-          <p className="text-cream/30 text-[10px] text-center pt-0.5 sm:pt-1">
+
+          <p className="px-2 pt-0.5 text-center text-[10px] leading-relaxed text-cream/[0.38]">
             {locale === 'te'
-              ? 'దయచేసి రెండు నంబర్లకు పంపండి'
-              : 'Please send to both numbers'}
+              ? 'వేగవంతమైన స్పందన కోసం రెండు టీమ్‌లను ప్రయత్నించండి'
+              : 'Try either team for the fastest response'}
           </p>
         </div>
       )}
 
-      {/* Floating button */}
       <button
-        onClick={() => setShowMenu((prev) => !prev)}
-        aria-label="Contact us on WhatsApp"
-        className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#1eb85a] active:bg-[#19a34d] shadow-lg shadow-black/30 flex items-center justify-center transition-transform hover:scale-110 active:scale-95 touch-manipulation"
+        ref={triggerRef}
+        type="button"
+        onClick={() => setShowMenu((current) => !current)}
+        aria-label={showMenu ? closeLabel : openLabel}
+        aria-expanded={showMenu}
+        aria-controls={MENU_ID}
+        aria-haspopup="menu"
+        className="group relative flex h-14 min-w-14 touch-manipulation items-center justify-center gap-2.5 rounded-full border border-white/20 bg-[#128C4A] px-4 text-white shadow-[0_12px_30px_rgba(5,35,18,0.34),inset_0_1px_0_rgba(255,255,255,0.22)] transition-[transform,background-color] duration-200 hover:bg-[#0f7e43] active:-translate-y-px active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:w-14 sm:px-0"
       >
-        <svg width={26} height={26} viewBox="0 0 24 24" fill="white">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-          <path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.785.476 3.549 1.38 5.094L2 22l5.025-1.321A10.003 10.003 0 0 0 12.004 22C17.531 22 22 17.523 22 12.004S17.531 2 12.004 2zm0 18.182a8.181 8.181 0 0 1-4.17-1.143l-.3-.178-3.081.809.82-3.001-.196-.309A8.128 8.128 0 0 1 3.822 12c0-4.517 3.667-8.182 8.182-8.182S20.182 7.483 20.182 12c0 4.517-3.665 8.182-8.178 8.182z" />
-        </svg>
+        <span className="grid place-items-center transition-transform duration-200 group-hover:scale-105">
+          <WhatsAppIcon size={29} />
+        </span>
+        <span className="text-[12px] font-bold tracking-wide sm:hidden">
+          {showMenu ? (locale === 'te' ? 'మూసివేయి' : 'Close') : 'WhatsApp'}
+        </span>
+        <span
+          aria-hidden="true"
+          className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-[3px] border-dark bg-gold-bright"
+        />
       </button>
     </div>
   );

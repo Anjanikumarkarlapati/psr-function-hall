@@ -7,34 +7,34 @@
   --color-gold-light: #d4aa4c;
   --color-gold-bright: #e8c870;
   --color-dark: #0a0908;
-  --color-dark-card: #060504;
-  --color-dark-surface: #0d0b09;
+  --color-dark-card: #111110;
+  --color-dark-surface: #161514;
   --color-silver: #a8a5a0;
   --color-cream: #f5f0e8;
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 
   /* Responsive glass tokens — laptop/default */
-  --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.55), rgba(6, 5, 4, 0.42));
-  --glass-dark-filter: blur(24px) saturate(1.28);
-  --glass-dark-border: 1px solid rgba(232, 200, 112, 0.22);
-  --glass-dark-shadow: 0 20px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(0, 0, 0, 0.32);
-  --glass-gold-background: linear-gradient(145deg, rgba(212, 170, 76, 0.18), rgba(92, 68, 25, 0.10));
-  --glass-gold-filter: blur(18px) saturate(1.22);
-  --glass-gold-border: 1px solid rgba(232, 200, 112, 0.42);
-  --glass-gold-shadow: 0 12px 34px rgba(71, 48, 10, 0.22), inset 0 1px 0 rgba(255, 245, 216, 0.15);
-  --glass-silver-background: linear-gradient(145deg, rgba(221, 218, 211, 0.12), rgba(93, 90, 84, 0.08));
-  --glass-silver-filter: blur(18px) saturate(1.16);
-  --glass-silver-border: 1px solid rgba(225, 220, 210, 0.25);
-  --glass-silver-shadow: 0 12px 30px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.11);
-  --glass-light-background: linear-gradient(145deg, rgba(245, 240, 232, 0.10), rgba(245, 240, 232, 0.04));
-  --glass-light-filter: blur(16px) saturate(1.12);
-  --glass-light-border: 1px solid rgba(245, 240, 232, 0.18);
-  --glass-light-shadow: 0 10px 26px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --glass-chip-background: linear-gradient(145deg, rgba(19, 16, 12, 0.80), rgba(6, 5, 4, 0.70));
-  --glass-chip-filter: blur(12px) saturate(1.12);
-  --glass-chip-border: 1px solid rgba(232, 200, 112, 0.34);
-  --glass-chip-shadow: 0 6px 18px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --glass-dark-background: rgba(10, 9, 8, 0.85);
+  --glass-dark-filter: none;
+  --glass-dark-border: 1px solid rgba(201, 168, 76, 0.18);
+  --glass-dark-shadow: 0 2px 12px rgba(0, 0, 0, 0.40);
+  --glass-gold-background: rgba(10, 9, 8, 0.90);
+  --glass-gold-filter: none;
+  --glass-gold-border: 1px solid rgba(201, 168, 76, 0.35);
+  --glass-gold-shadow: 0 2px 12px rgba(0, 0, 0, 0.30);
+  --glass-silver-background: rgba(10, 9, 8, 0.85);
+  --glass-silver-filter: none;
+  --glass-silver-border: 1px solid rgba(168, 165, 160, 0.22);
+  --glass-silver-shadow: 0 2px 12px rgba(0, 0, 0, 0.30);
+  --glass-light-background: rgba(10, 9, 8, 0.80);
+  --glass-light-filter: none;
+  --glass-light-border: 1px solid rgba(245, 240, 232, 0.12);
+  --glass-light-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  --glass-chip-background: rgba(10, 9, 8, 0.92);
+  --glass-chip-filter: none;
+  --glass-chip-border: 1px solid rgba(201, 168, 76, 0.30);
+  --glass-chip-shadow: 0 1px 6px rgba(0, 0, 0, 0.30);
 }
 
 /* ─── Base Styles ──────────────────────────────────────────────────── */
@@ -49,10 +49,12 @@ html {
   text-size-adjust: 100%;
   /* Prevent overscroll/bounce on iOS */
   overscroll-behavior: none;
+  /* Prevent horizontal overflow on mobile */
+  overflow-x: hidden;
 }
 
 body {
-  background-color: var(--color-dark);
+  background-color: #0a0908;
   color: var(--color-cream);
   font-family: var(--font-body);
   font-size: 16px;
@@ -136,19 +138,18 @@ h1, h2, h3, h4, h5, h6, p, span, a, div {
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10), transparent 28%, transparent 72%, rgba(212, 170, 76, 0.05));
+  background: none;
   content: '';
   pointer-events: none;
 }
 
 .glass-interactive {
-  transition: border-color 240ms ease, box-shadow 240ms ease, transform 240ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .glass-interactive:hover {
-  border-color: rgba(232, 200, 112, 0.38) !important;
-  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.13) !important;
-  transform: translate3d(0, -2px, 0);
+  border-color: rgba(201, 168, 76, 0.35) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45) !important;
 }
 
 .glass-interactive:active {
@@ -157,29 +158,36 @@ h1, h2, h3, h4, h5, h6, p, span, a, div {
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-surface {
-    background: rgba(12, 10, 8, 0.94) !important;
+    background: rgba(10, 9, 8, 0.95) !important;
   }
+}
+
+/* Skip painting and layout work for content that is far below the viewport. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
 }
 
 /* ─── Mobile Touch & Tap ───────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-  /* More opaque glass and lower blur keep text clear and scrolling smooth. */
+  /* Mobile surfaces — flat, no backdrop filter needed */
   :root {
-    --glass-dark-background: linear-gradient(145deg, rgba(18, 15, 11, 0.68), rgba(6, 5, 4, 0.58));
-    --glass-dark-filter: blur(12px) saturate(1.12);
-    --glass-dark-border: 1px solid rgba(232, 200, 112, 0.26);
-    --glass-dark-shadow: 0 14px 36px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(0, 0, 0, 0.26);
-    --glass-gold-background: linear-gradient(145deg, rgba(212, 170, 76, 0.22), rgba(74, 54, 20, 0.17));
-    --glass-gold-filter: blur(10px) saturate(1.12);
-    --glass-silver-background: linear-gradient(145deg, rgba(221, 218, 211, 0.15), rgba(54, 51, 47, 0.13));
-    --glass-silver-filter: blur(10px) saturate(1.08);
-    --glass-light-filter: blur(9px) saturate(1.06);
-    --glass-chip-filter: blur(8px) saturate(1.06);
+    --glass-dark-background: rgba(10, 9, 8, 0.92);
+    --glass-dark-filter: none;
+    --glass-dark-border: 1px solid rgba(201, 168, 76, 0.20);
+    --glass-dark-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --glass-gold-background: rgba(10, 9, 8, 0.94);
+    --glass-gold-filter: none;
+    --glass-gold-border: 1px solid rgba(201, 168, 76, 0.38);
+    --glass-silver-background: rgba(10, 9, 8, 0.92);
+    --glass-silver-filter: none;
+    --glass-light-filter: none;
+    --glass-chip-filter: none;
   }
 
   .glass-surface::before {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 36%, rgba(212, 170, 76, 0.04));
+    background: none;
   }
 
   .glass-interactive:hover {

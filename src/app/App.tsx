@@ -841,10 +841,12 @@ function HomePage({ onNav }: { onNav: (n: NavState) => void }) {
 
 // ─── Menu Page ────────────────────────────────────────────────────────────────
 
-const MENU_2_EXTRAS = ["Welcome Drink", "Chicken Biryani"];
+const MENU_2_EXTRAS = ["Chicken Biryani"];
+const WELCOME_DRINK = "Welcome Drink";
+const SNACKS = "Snacks";
 
 function MenuPage({ onNav }: { onNav: (n: NavState) => void }) {
-  const allItems = [...MENU_ITEMS, ...MENU_2_EXTRAS];
+  const allItems = [...MENU_ITEMS, WELCOME_DRINK, SNACKS, ...MENU_2_EXTRAS];
   const hallBg = {
     backgroundImage: `url(${hallImage})`,
     backgroundAttachment: "fixed",
@@ -878,30 +880,7 @@ function MenuPage({ onNav }: { onNav: (n: NavState) => void }) {
       <div className="px-4 py-16">
         <div className="max-w-4xl mx-auto space-y-8">
 
-          {/* ── Package legend ──────────────────────────────────────── */}
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[
-              { label: "Menu 1", count: "23 Dishes", desc: "Complete vegetarian spread — all dishes listed below without extras.", extra: null },
-              { label: "Menu 2", count: "25 Dishes + Welcome Drink", desc: "Everything in Menu 1, plus Welcome Drink & Chicken Biryani.", extra: "Includes extras" },
-            ].map((pkg, i) => (
-              <div key={i} className="p-5 flex items-start gap-4" style={glass.dark}>
-                <div className="w-8 h-8 flex items-center justify-center shrink-0 bg-[#d4aa4c]/15 border border-[#d4aa4c]/30 text-[#d4aa4c] font-bold text-sm"
-                  style={{ fontFamily: "var(--font-display)" }}>{i + 1}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span className="text-white/85 text-[15px] font-medium" style={{ fontFamily: "var(--font-display)" }}>{pkg.label}</span>
-                    <span className="text-[#d4aa4c] text-[10px] tracking-wide px-2 py-0.5 bg-[#d4aa4c]/10 border border-[#d4aa4c]/25">{pkg.count}</span>
-                    {pkg.extra && (
-                      <span className="text-green-400 text-[9px] tracking-wide px-2 py-0.5 bg-green-400/8 border border-green-400/20">{pkg.extra}</span>
-                    )}
-                  </div>
-                  <p className="text-[#a8a5a0] text-xs leading-relaxed">{pkg.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ── Combined menu card ──────────────────────────────────── */}
+          {/* ── Unified menu card ──────────────────────────────────── */}
           <div style={glass.dark} className="overflow-hidden">
             {/* Card header */}
             <div className="px-8 py-6 flex items-center justify-between flex-wrap gap-3"
@@ -915,11 +894,15 @@ function MenuPage({ onNav }: { onNav: (n: NavState) => void }) {
               <div className="flex items-center gap-4 text-[11px] text-[#a8a5a0]">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-[#d4aa4c]/60" />
-                  Menu 1 &amp; 2
+                  Veg
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-green-400/70" />
-                  Menu 2 only
+                  Selectable
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-red-400/70" />
+                  Non Veg
                 </div>
               </div>
             </div>
@@ -928,28 +911,30 @@ function MenuPage({ onNav }: { onNav: (n: NavState) => void }) {
             <div className="p-8">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3.5">
                 {allItems.map((item, i) => {
-                  const isExtra = MENU_2_EXTRAS.includes(item);
+                  const isNonVeg = MENU_2_EXTRAS.includes(item);
+                  const isWelcomeDrink = item === WELCOME_DRINK;
+                  const isSnacks = item === SNACKS;
+                  const isGreen = isWelcomeDrink || isSnacks;
                   return (
                     <div key={i} className="flex items-center gap-3">
-                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isExtra ? "bg-green-400/70" : "bg-[#d4aa4c]/45"}`} />
-                      <span className={`text-[13px] leading-snug ${isExtra ? "text-green-300/80 font-medium" : "text-[#a8a5a0]"}`}>
+                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${isNonVeg ? "bg-red-400/70" : isGreen ? "bg-green-400/70" : "bg-[#d4aa4c]/45"}`} />
+                      <span className={`text-[13px] leading-snug ${isNonVeg ? "text-red-300/80 font-medium" : isGreen ? "text-green-300/80 font-medium" : "text-[#a8a5a0]"}`}>
                         {item}
                       </span>
-                      {isExtra && (
-                        <span className="text-[9px] text-green-400/70 px-1.5 py-0.5 border border-green-400/20 tracking-wide shrink-0">M2</span>
+                      {isNonVeg && (
+                        <span className="text-[9px] text-red-400/70 px-1.5 py-0.5 border border-red-400/20 tracking-wide shrink-0">Non Veg</span>
                       )}
                     </div>
                   );
                 })}
               </div>
 
-              {/* Welcome Drink note */}
+              {/* Note */}
               <div className="mt-8 pt-6 flex items-start gap-3"
                 style={{ borderTop: "1px solid rgba(212,170,76,0.1)" }}>
-                <div className="w-[2px] h-10 bg-green-400/40 shrink-0 mt-0.5" />
+                <div className="w-[2px] h-10 bg-[#d4aa4c]/40 shrink-0 mt-0.5" />
                 <p className="text-[#a8a5a0] text-xs leading-relaxed">
-                  Items marked <span className="text-green-300/80 font-medium">M2</span> are exclusive to Menu 2 — Welcome Drink is served on arrival and Chicken Biryani replaces or accompanies the standard rice course.
-                  Contact us to discuss customisation.
+                  Welcome drinks and snacks can be selected — contact us.
                 </p>
               </div>
             </div>

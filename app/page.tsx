@@ -1,34 +1,36 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import { Star, ArrowRight, ExternalLink } from 'lucide-react';
 import { CATEGORIES, REVIEWS, ADDRESS } from '@/lib/data';
 import { glass } from '@/styles/glass';
 import { GlassCard } from '@/components/GlassCard';
 import { GoldRule } from '@/components/GoldRule';
-import { Lightbox } from '@/components/Lightbox';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
 import { MapSection } from '@/components/MapSection';
 import { VideoGallery } from '@/components/VideoGallery';
+import { Lightbox } from '@/components/Lightbox';
 import { useTranslation } from '@/lib/i18n';
 
+// Flat list of all category images for the lightbox
+const ALL_CATEGORY_IMAGES = CATEGORIES.flatMap((c) => c.images);
+
 const HALL_BG = '/images/hall-bg.png';
-const HOME_GALLERY_IMAGES = CATEGORIES
-  .map(({ cover }) => cover)
-  .filter((cover): cover is string => Boolean(cover));
 
 export default function HomePage() {
   const { t } = useTranslation();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const openImage = (src?: string) => {
-    if (!src) return;
-
-    const index = HOME_GALLERY_IMAGES.indexOf(src);
-    if (index !== -1) setLightboxIndex(index);
-  };
+  // Opens lightbox at the first image of the clicked category
+  function openCategory(categoryId: string) {
+    const cat = CATEGORIES.find((c) => c.id === categoryId);
+    if (!cat) return;
+    const firstImage = cat.images[0];
+    const idx = ALL_CATEGORY_IMAGES.indexOf(firstImage);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+  }
 
   return (
     <div className="relative">
@@ -45,15 +47,7 @@ export default function HomePage() {
           aria-hidden="true"
         />
       </div>
-      <div className="fixed inset-0 -z-10 bg-black/60" />
-
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={HOME_GALLERY_IMAGES}
-          initialIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-        />
-      )}
+      <div className="fixed inset-0 -z-10 bg-black/75" />
 
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden px-3 sm:px-5 lg:px-8 py-16 sm:py-20">
@@ -62,52 +56,39 @@ export default function HomePage() {
 
         <GlassCard
           variant="dark"
-          className="relative z-10 w-full max-w-[calc(100vw-1.5rem)] sm:max-w-2xl overflow-hidden rounded-[1.4rem] sm:rounded-[2rem] px-4 sm:px-10 lg:px-14 py-8 sm:py-12 text-center"
+          className="relative z-10 w-full max-w-[calc(100vw-1.5rem)] sm:max-w-2xl overflow-hidden rounded-[1.4rem] sm:rounded-[2rem] px-4 sm:px-10 lg:px-14 py-10 sm:py-14 text-center"
         >
-          <div className="w-12 h-[1px] bg-gold-light mx-auto mb-5 sm:mb-6" />
-          <p className="text-gold-light text-[10px] sm:text-[11px] tracking-[0.28em] sm:tracking-[0.5em] uppercase mb-3 sm:mb-4">
+          <div className="w-12 h-[1px] bg-gold-light mx-auto mb-6 sm:mb-8" />
+          <p className="text-gold-light text-[10px] sm:text-[11px] tracking-[0.28em] sm:tracking-[0.5em] uppercase mb-4 sm:mb-6">
             {t.home.heroWelcome}
           </p>
-          <div className="relative mx-auto mb-4 sm:mb-5 flex h-36 w-36 sm:h-48 sm:w-48 items-center justify-center">
-            <div className="absolute inset-3 rounded-full bg-gold/10 blur-2xl" />
-            <Image
-              src="/images/brand-mark.svg"
-              alt="PSR Pasumarthy Banquet Hall crest"
-              width={256}
-              height={256}
-              className="relative h-full w-full object-contain drop-shadow-[0_8px_22px_rgba(201,168,76,0.2)]"
-              priority
-            />
-          </div>
-          <h1 className="font-display text-[28px] sm:text-[58px] md:text-7xl font-semibold italic leading-[0.94] tracking-tight text-gold-light drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-            Pasumarthy
+          <h1 className="font-display text-[32px] sm:text-[58px] md:text-7xl font-light leading-[1.05] tracking-tight text-cream drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
+            Pasumarthi
           </h1>
-          <p className="mt-2 mb-5 sm:mb-6 text-[11px] sm:text-[15px] font-semibold tracking-[0.18em] sm:tracking-[0.38em] uppercase text-gold-light">
+          <p className="font-display text-[28px] sm:text-[48px] md:text-6xl font-semibold italic leading-[1.1] text-gold-light mt-1 sm:mt-2">
             {t.home.heroBanquetHall}
           </p>
           <GoldRule />
-          <p className="text-white/70 text-[13px] sm:text-[15px] mt-4 sm:mt-5 mb-6 sm:mb-9 leading-relaxed font-body px-2 sm:px-0">
+          <p className="text-cream/70 text-[13px] sm:text-[15px] mt-5 sm:mt-6 mb-7 sm:mb-10 leading-relaxed font-body px-2 sm:px-0 max-w-md mx-auto">
             {t.home.heroTagline}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/book"
-              className="w-full sm:w-auto rounded-xl px-7 sm:px-9 py-4 sm:py-3.5 bg-gold-light text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright active:scale-[0.98] transition-all text-center touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
+              className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3.5 bg-gold-light text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright active:scale-[0.98] transition-all text-center touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
             >
               {t.home.heroBookBtn}
             </Link>
             <Link
               href="/menu"
-              className="glass-surface glass-interactive w-full sm:w-auto rounded-xl px-7 sm:px-9 py-4 sm:py-3.5 text-gold-light text-[11px] font-semibold tracking-widest uppercase text-center touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
-              style={glass.silver as React.CSSProperties}
+              className="glass-surface glass-interactive w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-3.5 text-cream/90 text-[11px] font-semibold tracking-widest uppercase text-center border border-cream/30 hover:border-cream/50 touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
             >
               {t.home.heroMenuBtn}
             </Link>
           </div>
-          <div className="w-12 h-[1px] bg-gold-light/40 mx-auto mt-6 sm:mt-8" />
         </GlassCard>
 
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
           <div className="w-[1px] h-6 sm:h-10 bg-gold-light" />
           <span className="text-gold-light text-[8px] sm:text-[9px] tracking-[0.5em] uppercase">
             {t.home.scroll}
@@ -134,9 +115,9 @@ export default function HomePage() {
       </div>
 
       {/* ── About Section ────────────────────────────────────────── */}
-      <section className="relative py-14 sm:py-24 lg:py-28 px-3 sm:px-5 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-black/[0.62]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(212,170,76,0.12),transparent_34%)]" />
+      <section className="defer-render relative py-14 sm:py-24 lg:py-28 px-3 sm:px-5 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(212,170,76,0.08),transparent_34%)]" />
 
         <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
           {/* Left — text + stats */}
@@ -147,7 +128,7 @@ export default function HomePage() {
             >
               {t.home.aboutLabel}
             </GlassCard>
-            <h2 className="text-[24px] sm:text-[38px] md:text-5xl text-white font-light leading-[1.12] sm:leading-[1.08] mb-4 sm:mb-7 font-display text-balance">
+            <h2 className="text-[24px] sm:text-[38px] md:text-5xl text-cream font-light leading-[1.12] sm:leading-[1.08] mb-4 sm:mb-7 font-display text-balance">
               {t.home.aboutHeading1}
               <br />
               <span className="text-gold font-semibold italic">
@@ -156,26 +137,25 @@ export default function HomePage() {
               <br />
               {t.home.aboutHeading3}
             </h2>
-            <div className="max-w-[62ch] space-y-3 text-cream/75 leading-relaxed text-[14px] sm:text-[15px] mb-6 sm:mb-10">
+            <div className="max-w-[62ch] space-y-3 text-silver leading-relaxed text-[14px] sm:text-[15px] mb-6 sm:mb-10">
               <p>{t.home.aboutDesc1}</p>
               <p>{t.home.aboutDesc2}</p>
             </div>
 
-            {/* Glass stat cards */}
+            {/* Stat cards */}
             <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {t.home.stats.map((s) => (
-                <GlassCard
+                <div
                   key={s.label}
-                  variant="dark"
-                  className="glass-interactive overflow-hidden rounded-xl sm:rounded-2xl p-2.5 sm:p-5 text-center"
+                  className="border border-gold/25 rounded-lg p-2.5 sm:p-5 text-center bg-dark-card"
                 >
                   <div className="text-[20px] sm:text-[32px] text-gold-light font-semibold leading-none mb-1.5 font-display tabular-nums">
                     {s.number}
                   </div>
-                  <div className="text-cream/70 text-[9px] sm:text-[10px] tracking-wide leading-snug">
+                  <div className="text-silver text-[9px] sm:text-[10px] tracking-wide leading-snug">
                     {s.label}
                   </div>
-                </GlassCard>
+                </div>
               ))}
             </div>
           </div>
@@ -183,21 +163,20 @@ export default function HomePage() {
           {/* Right — feature cards */}
           <div className="space-y-2.5 sm:space-y-3 md:pt-[70px]">
             {t.home.features.map((f, i) => (
-              <GlassCard
+              <div
                 key={i}
-                variant="dark"
-                className="glass-interactive overflow-hidden rounded-2xl p-4 sm:p-5 flex gap-3 sm:gap-4 items-start"
+                className="border border-gold/15 rounded-lg p-4 sm:p-5 flex gap-3 sm:gap-4 items-start bg-dark-card"
               >
-                <div className="w-[2px] h-9 rounded-full bg-gradient-to-b from-gold-light to-gold/20 shrink-0 mt-1" />
+                <div className="w-[2px] self-stretch rounded-full bg-gold shrink-0" />
                 <div>
-                  <div className="text-white text-[15px] sm:text-[16px] font-medium mb-1 font-display">
+                  <div className="text-gold-light text-[15px] sm:text-[16px] font-semibold mb-1 font-display">
                     {f.title}
                   </div>
-                  <div className="text-cream/70 text-[13px] leading-relaxed">
+                  <div className="text-silver text-[13px] leading-relaxed">
                     {f.desc}
                   </div>
                 </div>
-              </GlassCard>
+              </div>
             ))}
           </div>
         </div>
@@ -210,8 +189,8 @@ export default function HomePage() {
       <MapSection />
 
       {/* ── Events Preview ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-14 sm:py-24 px-3 sm:px-5 lg:px-8 bg-black/[0.58]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(212,170,76,0.11),transparent_30%)]" />
+      <section className="defer-render relative overflow-hidden py-14 sm:py-24 px-3 sm:px-5 lg:px-8 bg-black/65">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(212,170,76,0.08),transparent_30%)]" />
         <div className="relative max-w-7xl mx-auto">
           {/* Glass heading */}
           <div className="text-center mb-8 sm:mb-14">
@@ -222,10 +201,10 @@ export default function HomePage() {
               <span className="block text-gold-light text-[10px] tracking-[0.32em] sm:tracking-[0.42em] uppercase mb-3">
                 {t.home.eventsLabel}
               </span>
-              <h2 className="text-[24px] sm:text-[34px] md:text-4xl text-white font-light leading-tight font-display text-balance">
+              <h2 className="text-[24px] sm:text-[34px] md:text-4xl text-cream font-light leading-tight font-display text-balance">
                 {t.home.eventsHeading1}
                 <br />
-                <span className="text-gold font-semibold italic">
+                <span className="text-gold-light font-semibold italic">
                   {t.home.eventsHeading2}
                 </span>
               </h2>
@@ -240,8 +219,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
             <button
               type="button"
-              onClick={() => openImage(CATEGORIES[0].cover)}
-              className="group relative col-span-1 sm:col-span-2 lg:col-span-2 w-full overflow-hidden bg-dark-card h-[200px] sm:h-[280px] cursor-zoom-in rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              onClick={() => openCategory(CATEGORIES[0].id)}
+              className="group relative col-span-1 sm:col-span-2 lg:col-span-2 w-full overflow-hidden bg-dark-card h-[200px] sm:h-[280px] rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold text-left touch-manipulation"
             >
               {CATEGORIES[0].cover && (
                 <Image
@@ -261,7 +240,7 @@ export default function HomePage() {
                 >
                   {t.events.categories[CATEGORIES[0].id]?.name || CATEGORIES[0].name}
                 </span>
-                <h3 className="text-white text-lg sm:text-2xl font-light leading-snug mb-2 sm:mb-3 font-display">
+                <h3 className="text-gold-light text-lg sm:text-2xl font-light leading-snug mb-2 sm:mb-3 font-display">
                   {t.events.categories[CATEGORIES[0].id]?.title || CATEGORIES[0].title}
                 </h3>
                 <div className="flex items-center gap-2 text-gold sm:text-gold/0 sm:group-hover:text-gold transition-all duration-300">
@@ -271,7 +250,7 @@ export default function HomePage() {
                   <ArrowRight size={12} />
                 </div>
               </div>
-              <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/25 transition-all duration-500" />
+              <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/25 transition-all duration-500 rounded-xl" />
             </button>
 
             <div className="col-span-1 sm:col-span-2 lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
@@ -279,8 +258,8 @@ export default function HomePage() {
                 <button
                   key={cat.id}
                   type="button"
-                  onClick={() => openImage(cat.cover)}
-                  className="group relative w-full overflow-hidden bg-dark-card h-[160px] sm:h-[280px] cursor-zoom-in rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                  onClick={() => openCategory(cat.id)}
+                  className="group relative w-full overflow-hidden bg-dark-card h-[160px] sm:h-[280px] rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold text-left touch-manipulation"
                 >
                   {cat.cover && (
                     <Image
@@ -300,7 +279,7 @@ export default function HomePage() {
                     >
                       {t.events.categories[cat.id]?.name || cat.name}
                     </span>
-                    <h3 className="text-white text-sm sm:text-base font-light leading-snug mb-1.5 sm:mb-2.5 font-display">
+                    <h3 className="text-gold-light text-sm sm:text-base font-light leading-snug mb-1.5 sm:mb-2.5 font-display">
                       {t.events.categories[cat.id]?.title || cat.title}
                     </h3>
                     <div className="flex items-center gap-1.5 text-gold sm:text-gold/0 sm:group-hover:text-gold transition-all duration-300">
@@ -310,7 +289,7 @@ export default function HomePage() {
                       <ArrowRight size={10} />
                     </div>
                   </div>
-                  <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/[0.22] transition-all duration-500" />
+                  <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/[0.22] transition-all duration-500 rounded-xl" />
                 </button>
               ))}
             </div>
@@ -322,8 +301,8 @@ export default function HomePage() {
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => openImage(cat.cover)}
-                className="group relative w-full overflow-hidden bg-dark-card h-[130px] sm:h-[160px] cursor-zoom-in rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                onClick={() => openCategory(cat.id)}
+                className="group relative w-full overflow-hidden bg-dark-card h-[130px] sm:h-[160px] rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold text-left touch-manipulation"
               >
                 {cat.cover && (
                   <Image
@@ -337,14 +316,14 @@ export default function HomePage() {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 text-left">
-                  <div className="text-white/55 text-[10px] leading-snug group-hover:text-gold/80 transition-colors duration-300">
+                  <div className="text-cream/70 text-[10px] leading-snug group-hover:text-gold/80 transition-colors duration-300">
                     {t.events.categories[cat.id]?.name || cat.name}
                   </div>
-                  <div className="mt-1 sm:mt-1.5 text-gold/0 group-hover:text-gold/70 transition-all duration-300">
+                  <div className="mt-1 sm:mt-1.5 text-gold/70 sm:text-gold/0 sm:group-hover:text-gold/70 transition-all duration-300">
                     <ArrowRight size={10} />
                   </div>
                 </div>
-                <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/[0.18] transition-all duration-500" />
+                <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/[0.18] transition-all duration-500 rounded-xl" />
               </button>
             ))}
           </div>
@@ -352,7 +331,7 @@ export default function HomePage() {
           <div className="text-center mt-8 sm:mt-12">
             <Link
               href="/events"
-              className="glass-surface glass-interactive inline-flex items-center gap-3 rounded-xl px-6 sm:px-8 py-3.5 text-gold-light font-semibold text-[11px] tracking-[0.24em] sm:tracking-[0.3em] uppercase touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
+              className="glass-surface glass-interactive inline-flex items-center gap-3 px-6 sm:px-8 py-3.5 text-gold-light font-semibold text-[11px] tracking-[0.24em] sm:tracking-[0.3em] uppercase touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
               style={glass.gold as React.CSSProperties}
             >
               {t.home.exploreAll} <ArrowRight size={12} />
@@ -362,8 +341,8 @@ export default function HomePage() {
       </section>
 
       {/* ── Reviews ──────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-16 sm:py-24 px-3 sm:px-5 lg:px-8 bg-black/[0.68]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_75%,rgba(212,170,76,0.09),transparent_32%)]" />
+      <section className="defer-render relative overflow-hidden py-16 sm:py-24 px-3 sm:px-5 lg:px-8 bg-black/72">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_75%,rgba(212,170,76,0.06),transparent_32%)]" />
         <div className="relative max-w-6xl mx-auto">
           <div className="text-center mb-10 sm:mb-14">
             <GlassCard
@@ -374,7 +353,7 @@ export default function HomePage() {
             </GlassCard>
             <h2 className="text-[24px] sm:text-[34px] md:text-4xl text-cream font-light mb-3 font-display text-balance">
               {t.home.reviewsHeading}{' '}
-              <span className="text-gold font-semibold italic">
+              <span className="text-gold-light font-semibold italic">
                 {t.home.reviewsSubheading}
               </span>
             </h2>
@@ -402,7 +381,7 @@ export default function HomePage() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="text-white text-sm font-medium font-display">
+                    <div className="text-gold-light text-sm font-medium font-display">
                       {r.name}
                     </div>
                     <div className="text-gold-light/80 text-xs mt-0.5 tracking-wide">
@@ -456,8 +435,7 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="relative py-16 sm:py-24 lg:py-28 px-3 sm:px-5 overflow-hidden">
-        <div className="absolute inset-0 bg-black/60" />
+      <section className="relative py-16 sm:py-24 lg:py-28 px-3 sm:px-5 overflow-hidden">        <div className="absolute inset-0 bg-black/70" />
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -471,10 +449,10 @@ export default function HomePage() {
             <p className="text-gold-light text-[10px] tracking-[0.32em] sm:tracking-[0.44em] uppercase mb-4">
               {t.home.ctaLabel}
             </p>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl text-white font-light mb-2 font-display">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-cream font-light mb-2 font-display">
               {t.home.ctaHeading1}
             </h2>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl text-gold font-semibold italic mb-5 sm:mb-6 font-display">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl text-gold-light font-semibold italic mb-5 sm:mb-6 font-display">
               {t.home.ctaHeading2}
             </h2>
             <p className="text-cream/75 text-[14px] sm:text-[15px] mb-7 sm:mb-10 leading-relaxed px-2 sm:px-0">
@@ -482,7 +460,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/book"
-              className="inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl px-8 sm:px-10 py-4 bg-gold text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright active:scale-[0.98] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-gold text-dark font-bold tracking-widest text-[11px] uppercase hover:bg-gold-bright active:scale-[0.98] transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-bright"
             >
               <WhatsAppIcon size={16} /> {t.home.ctaBtn}
             </Link>
@@ -490,6 +468,15 @@ export default function HomePage() {
           </GlassCard>
         </div>
       </section>
+
+      {/* ── Lightbox ─────────────────────────────────────────────── */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={ALL_CATEGORY_IMAGES}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </div>
   );
 }

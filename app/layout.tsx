@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Playfair_Display, Inter, Noto_Sans_Telugu } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { CallFloat } from '@/components/CallFloat';
 import { WhatsAppFloat } from '@/components/WhatsAppFloat';
 import { Providers } from './providers';
 import './globals.css';
@@ -83,6 +84,7 @@ export default function RootLayout({
           <Navbar />
           <main className="pt-[60px] sm:pt-[68px]">{children}</main>
           <Footer />
+          <CallFloat />
           <WhatsAppFloat />
         </Providers>
       </body>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 
 interface LightboxProps {
@@ -212,7 +213,7 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
         <div className="flex items-center gap-2">
           <button
             onClick={handleZoomOut}
-            className="p-2 text-white/60 hover:text-white active:text-white transition-colors touch-manipulation"
+            className="flex h-11 w-11 items-center justify-center text-white/60 hover:text-white active:text-white transition-colors touch-manipulation"
             aria-label="Zoom out"
             disabled={zoom <= 1}
           >
@@ -220,7 +221,7 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
           </button>
           <button
             onClick={handleZoomIn}
-            className="p-2 text-white/60 hover:text-white active:text-white transition-colors touch-manipulation"
+            className="flex h-11 w-11 items-center justify-center text-white/60 hover:text-white active:text-white transition-colors touch-manipulation"
             aria-label="Zoom in"
             disabled={zoom >= 4}
           >
@@ -228,7 +229,7 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
           </button>
           <button
             onClick={onClose}
-            className="p-2 text-white/60 hover:text-white active:text-white transition-colors touch-manipulation"
+            className="flex h-11 w-11 items-center justify-center text-white/60 hover:text-white active:text-white transition-colors touch-manipulation"
             aria-label="Close"
           >
             <X size={24} />
@@ -246,24 +247,27 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
           paddingLeft: 'max(0.5rem, env(safe-area-inset-left))',
         }}
       >
-        <img
+        <Image
           src={images[currentIndex]}
           alt={`Photo ${currentIndex + 1}`}
-          className="max-w-full max-h-full object-contain transition-transform duration-200 ease-out"
+          fill
+          sizes="100vw"
+          priority
+          className="object-contain transition-transform duration-200 ease-out"
           style={{
             transform: `scale(${zoom}) translate(${translate.x / zoom}px, ${translate.y / zoom}px)`,
-            width: '100%',
-            height: '100%',
           }}
           draggable={false}
         />
         {/* Logo watermark — bottom right */}
         <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 pointer-events-none select-none z-10">
           <div className="bg-black/50 backdrop-blur-[3px] rounded-md p-1.5 sm:p-2">
-            <img
-              src="/images/logo.png"
+            <Image
+              src="/images/brand-mark.svg"
               alt=""
-              className="w-10 h-10 sm:w-12 sm:h-12 object-contain opacity-75"
+              width={48}
+              height={48}
+              className="h-10 w-10 object-contain opacity-75 sm:h-12 sm:w-12"
               aria-hidden="true"
             />
           </div>
@@ -274,14 +278,14 @@ export function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
       {images.length > 1 && zoom <= 1 && (
         <>
           <button
-            className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 active:bg-black/70 text-white/70 hover:text-white transition-all touch-manipulation"
+            className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 active:bg-black/70 text-white/70 hover:text-white transition-all touch-manipulation"
             onClick={goPrev}
             aria-label="Previous image"
           >
             <ChevronLeft size={24} />
           </button>
           <button
-            className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 active:bg-black/70 text-white/70 hover:text-white transition-all touch-manipulation"
+            className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 active:bg-black/70 text-white/70 hover:text-white transition-all touch-manipulation"
             onClick={goNext}
             aria-label="Next image"
           >

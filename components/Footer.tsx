@@ -20,7 +20,7 @@ export function Footer() {
             aria-label={`${t.navbar.brandName} — home`}
             className="group inline-block mb-4 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-offset-4 focus-visible:ring-offset-dark-card"
           >
-            <div className="text-gold text-2xl font-bold font-display">
+            <div className="text-gold text-2xl font-semibold font-display">
               {t.navbar.brandName}
             </div>
             <div className="text-cream/22 text-[9px] tracking-[0.28em] uppercase mt-1">
@@ -51,9 +51,6 @@ export function Footer() {
               <ProtectedPhone encoded={ADDRESS.phone1} showIcon className="text-[12px] sm:text-[13px]" />
             </div>
             <div className="flex items-center gap-3">
-              <ProtectedPhone encoded={ADDRESS.phone2} showIcon className="text-[12px] sm:text-[13px]" />
-            </div>
-            <div className="flex items-center gap-3">
               <Clock size={12} className="text-gold shrink-0" />
               <span>{t.addressInfo.timings}</span>
             </div>
@@ -69,24 +66,24 @@ export function Footer() {
           <h4 className="text-cream/45 text-[10px] font-semibold tracking-[0.22em] sm:tracking-[0.28em] uppercase mb-4 sm:mb-5">
             {t.footer.navigateHeading}
           </h4>
-          <div className="space-y-1 sm:space-y-3 text-cream/35 text-[13px]">
-            <Link href="/" className="block hover:text-gold active:text-gold transition-colors py-2 sm:py-0.5 touch-manipulation">
+          <div className="text-cream/35 text-[13px]">
+            <Link href="/" className="flex min-h-11 items-center hover:text-gold active:text-gold transition-colors sm:min-h-0 sm:py-0.5 touch-manipulation">
               {t.navbar.home}
             </Link>
-            <Link href="/menu" className="block hover:text-gold active:text-gold transition-colors py-2 sm:py-0.5 touch-manipulation">
+            <Link href="/menu" className="flex min-h-11 items-center hover:text-gold active:text-gold transition-colors sm:min-h-0 sm:py-0.5 touch-manipulation">
               {t.navbar.menu}
             </Link>
-            <Link href="/events" className="block hover:text-gold active:text-gold transition-colors py-2 sm:py-0.5 touch-manipulation">
+            <Link href="/events" className="flex min-h-11 items-center hover:text-gold active:text-gold transition-colors sm:min-h-0 sm:py-0.5 touch-manipulation">
               {t.navbar.events}
             </Link>
-            <Link href="/book" className="block hover:text-gold active:text-gold transition-colors py-2 sm:py-0.5 touch-manipulation">
+            <Link href="/book" className="flex min-h-11 items-center hover:text-gold active:text-gold transition-colors sm:min-h-0 sm:py-0.5 touch-manipulation">
               {t.navbar.bookNow}
             </Link>
             <a
               href={ADDRESS.justdial}
               target="_blank"
               rel="noopener noreferrer"
-              className="block hover:text-gold active:text-gold transition-colors py-2 sm:py-0.5 touch-manipulation"
+              className="flex min-h-11 items-center hover:text-gold active:text-gold transition-colors sm:min-h-0 sm:py-0.5 touch-manipulation"
             >
               {t.common.justdialListing}
             </a>

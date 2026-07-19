@@ -53,7 +53,7 @@ export function CategoryDetailClient({
           <div className="text-gold text-[9px] sm:text-[10px] tracking-[0.35em] sm:tracking-[0.45em] uppercase mb-2 sm:mb-3">
             {catTranslation?.name || category.name}
           </div>
-          <h1 className="text-[22px] sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight mb-2 sm:mb-4 font-display">
+          <h1 className="text-[22px] sm:text-4xl md:text-5xl lg:text-6xl text-white font-light leading-tight mb-2 sm:mb-4 font-display">
             {catTranslation?.title || category.title}
           </h1>
           <div className="flex items-start gap-2 sm:gap-4">

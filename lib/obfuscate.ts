@@ -42,3 +42,14 @@ export function decodeNumber(encoded: string): string {
 export function decodeDisplayNumber(encoded: string): string {
   return decodeNumber(encoded);
 }
+
+/** Build a normalized tel: URL without exposing the clear number in initial markup. */
+export function getPhoneTelUrl(encoded: string): string {
+  const number = decodeDisplayNumber(encoded).replace(/[^\d+]/g, '');
+  return `tel:${number}`;
+}
+
+/** Open the device dialer from a direct user interaction. */
+export function openPhoneDialer(encoded: string): void {
+  window.location.assign(getPhoneTelUrl(encoded));
+}

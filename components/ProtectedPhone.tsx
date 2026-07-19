@@ -2,43 +2,45 @@
 
 import { useState } from 'react';
 import { Phone } from 'lucide-react';
-import { decodeDisplayNumber } from '@/lib/obfuscate';
+import {
+  decodeDisplayNumber,
+  getPhoneTelUrl,
+  openPhoneDialer,
+} from '@/lib/obfuscate';
 
 interface ProtectedPhoneProps {
-  /** The obfuscated (base64) phone number */
+  /** The obfuscated (base64) phone number. */
   encoded: string;
-  /** Optional CSS class for the wrapper */
+  /** Optional CSS class for the wrapper. */
   className?: string;
-  /** Show phone icon */
+  /** Show a phone icon inside the call action. */
   showIcon?: boolean;
 }
 
 /**
- * Renders a phone number that is hidden until the user clicks/taps.
- * This prevents bots from scraping phone numbers from the DOM.
- * 
- * Before interaction: shows "Tap to reveal number"
- * After interaction: decodes and shows the actual number
+ * Keeps the clear number out of the initial DOM, then opens the device dialer
+ * on the first explicit tap. The number remains visible after returning.
  */
-export function ProtectedPhone({ encoded, className = '', showIcon = false }: ProtectedPhoneProps) {
-  const [revealed, setRevealed] = useState(false);
+export function ProtectedPhone({
+  encoded,
+  className = '',
+  showIcon = false,
+}: ProtectedPhoneProps) {
   const [number, setNumber] = useState('');
 
-  const handleReveal = () => {
-    if (!revealed) {
-      // Only decode when user explicitly clicks
-      setNumber(decodeDisplayNumber(encoded));
-      setRevealed(true);
-    }
+  const handleCall = () => {
+    setNumber(decodeDisplayNumber(encoded));
+    openPhoneDialer(encoded);
   };
 
-  if (revealed) {
+  if (number) {
     return (
       <a
-        href={`tel:${number.replace(/\s/g, '')}`}
-        className={`text-gold hover:underline transition-colors ${className}`}
+        href={getPhoneTelUrl(encoded)}
+        className={`touch-manipulation text-gold transition-colors hover:underline ${className}`}
+        aria-label={`Call ${number}`}
       >
-        {showIcon && <Phone size={12} className="inline mr-1.5 text-gold shrink-0" />}
+        {showIcon && <Phone size={12} className="mr-1.5 inline shrink-0 text-gold" />}
         {number}
       </a>
     );
@@ -47,12 +49,12 @@ export function ProtectedPhone({ encoded, className = '', showIcon = false }: Pr
   return (
     <button
       type="button"
-      onClick={handleReveal}
-      className={`text-gold/70 hover:text-gold transition-colors cursor-pointer underline decoration-dotted underline-offset-4 ${className}`}
-      aria-label="Tap to reveal phone number"
+      onClick={handleCall}
+      className={`touch-manipulation cursor-pointer text-gold/70 underline decoration-dotted underline-offset-4 transition-colors hover:text-gold ${className}`}
+      aria-label="Call primary phone number"
     >
-      {showIcon && <Phone size={12} className="inline mr-1.5 text-gold shrink-0" />}
-      Tap to reveal number
+      {showIcon && <Phone size={12} className="mr-1.5 inline shrink-0 text-gold" />}
+      Tap to call
     </button>
   );
 }

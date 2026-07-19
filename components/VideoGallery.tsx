@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { Play, X } from 'lucide-react';
+import { useState } from 'react';
+import { X } from 'lucide-react';
 import { useTranslation } from '@/lib/i18n';
 import { glass } from '@/styles/glass';
+import { VideoPreviewTile } from './VideoPreviewTile';
 
 const VIDEOS = [
   { id: 1, src: '/videos/hall-tour-1.mp4', label: 'Hall Interior' },
@@ -12,79 +13,6 @@ const VIDEOS = [
   { id: 4, src: '/videos/hall-tour-4.mp4', label: 'Venue Overview' },
   { id: 5, src: '/videos/hall-tour-5.mp4', label: 'Celebration Moments' },
 ];
-
-/** Individual video tile — only loads the video when visible in viewport */
-function VideoTile({ video, onPlay }: { video: typeof VIDEOS[number]; onPlay: (src: string) => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '200px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className="group relative overflow-hidden cursor-pointer h-[180px] sm:h-[240px] touch-manipulation active:scale-[0.98] transition-transform rounded-xl"
-      style={glass.dark as React.CSSProperties}
-      onClick={() => onPlay(video.src)}
-      onMouseOver={() => videoRef.current?.play()}
-      onMouseOut={() => {
-        const el = videoRef.current;
-        if (el) { el.pause(); el.currentTime = 0; }
-      }}
-    >
-      {/* Only mount the video element once visible */}
-      {isVisible && (
-        <video
-          ref={videoRef}
-          src={video.src}
-          className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        />
-      )}
-      {/* Placeholder gradient when video not loaded */}
-      {!isVisible && (
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-surface to-dark-card" />
-      )}
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-      {/* Play icon */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-gold/20 border border-gold/40 group-hover:bg-gold/30 group-hover:scale-110 group-active:scale-95 transition-all duration-300">
-          <Play size={20} className="text-gold ml-0.5 sm:ml-1" fill="currentColor" />
-        </div>
-      </div>
-      {/* Label */}
-      <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4">
-        <span
-          className="inline-block text-gold text-[9px] tracking-[0.35em] uppercase px-2 py-0.5"
-          style={glass.chip as React.CSSProperties}
-        >
-          {video.label}
-        </span>
-      </div>
-      {/* Hover border */}
-      <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/25 transition-all duration-500" />
-    </div>
-  );
-}
 
 export function VideoGallery() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
@@ -101,9 +29,9 @@ export function VideoGallery() {
           >
             {t.home.videoLabel}
           </span>
-          <h2 className="text-[24px] sm:text-4xl text-white font-light mb-3 font-display">
+          <h2 className="text-[24px] sm:text-4xl text-cream font-light mb-3 font-display">
             {t.home.videoHeading}{' '}
-            <span className="text-gold font-semibold italic">
+            <span className="text-gold-light font-semibold italic">
               {t.home.videoHeadingAccent}
             </span>
           </h2>
@@ -120,7 +48,7 @@ export function VideoGallery() {
         {/* Video Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {VIDEOS.map((video) => (
-            <VideoTile key={video.id} video={video} onPlay={setActiveVideo} />
+            <VideoPreviewTile key={video.id} video={video} onPlay={setActiveVideo} />
           ))}
 
           {/* CTA tile */}

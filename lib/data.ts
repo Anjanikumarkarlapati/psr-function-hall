@@ -52,20 +52,63 @@ export const WHATSAPP_NUMBERS = [
 /** @deprecated Use WHATSAPP_NUMBERS instead */
 export const WHATSAPP_NUMBER = WHATSAPP_NUMBERS[0].number;
 
-export const VENUE_LOCATION = {
+export interface GeoCoordinates {
+  latitude: number;
+  longitude: number;
+}
+
+export const VENUE_LOCATION: GeoCoordinates = {
   latitude: 17.2500476,
   longitude: 80.1448094,
 } as const;
 
-const VENUE_COORDINATES = `${VENUE_LOCATION.latitude},${VENUE_LOCATION.longitude}`;
+const formatCoordinates = ({ latitude, longitude }: GeoCoordinates) =>
+  `${latitude},${longitude}`;
+
+const VENUE_COORDINATES = formatCoordinates(VENUE_LOCATION);
+
+/** Opens the exact venue pin rather than starting a directions journey. */
+export const GOOGLE_MAPS_PLACE_URL =
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE_COORDINATES)}`;
 
 /**
- * Google Maps uses the visitor's current device location as the origin when
- * `origin` is omitted. The destination remains pinned to the venue coordinates.
+ * Builds a driving route to the venue. When an origin is unavailable, Google
+ * Maps resolves the visitor's current device location itself.
  */
-export const GOOGLE_MAPS_DIRECTIONS_URL =
-  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(VENUE_COORDINATES)}` +
-  '&travelmode=driving&dir_action=navigate';
+export function getGoogleMapsDirectionsUrl(origin?: GeoCoordinates) {
+  const params = new URLSearchParams({
+    api: '1',
+    destination: VENUE_COORDINATES,
+    travelmode: 'driving',
+    dir_action: 'navigate',
+  });
+
+  if (origin) params.set('origin', formatCoordinates(origin));
+
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
+}
+
+/** Opens the selected Google Maps mode centered on the same venue pin. */
+export function getGoogleMapsViewUrl(view: MapView['id']) {
+  const params = new URLSearchParams({ api: '1' });
+
+  if (view === 'street') {
+    params.set('map_action', 'pano');
+    params.set('viewpoint', VENUE_COORDINATES);
+    params.set('heading', '221.69');
+    params.set('pitch', '0');
+    params.set('fov', '80');
+  } else {
+    params.set('map_action', 'map');
+    params.set('center', VENUE_COORDINATES);
+    params.set('zoom', view === 'satellite' ? '19' : '18');
+    params.set('basemap', view === 'satellite' ? 'satellite' : 'roadmap');
+  }
+
+  return `https://www.google.com/maps/@?${params.toString()}`;
+}
+
+export const GOOGLE_MAPS_DIRECTIONS_URL = getGoogleMapsDirectionsUrl();
 
 export const ADDRESS: Address = {
   line1: '4th Floor, Koppu Naresh Complex, Wyra Rd',
@@ -78,7 +121,7 @@ export const ADDRESS: Address = {
   timings: 'Mon – Sun  ·  10:00 AM – 10:00 PM',
   justdial:
     'https://www.justdial.com/Khammam/Pasumarthi-Banquet-Hall-Above-Avantara-Opposite-Babu-Rao-Compex-B-K-Bazar-Colony/9999P8742-8742-250125012404-V8A9_BZDET',
-  gmaps: GOOGLE_MAPS_DIRECTIONS_URL,
+  gmaps: GOOGLE_MAPS_PLACE_URL,
 };
 
 // ─── Advertisements / Pamphlets ───────────────────────────────────────────────
@@ -116,7 +159,11 @@ export const MENU_ITEMS: string[] = [
   'Mineral Water',
 ];
 
-export const MENU_2_EXTRAS: string[] = ['Welcome Drink', 'Chicken Biryani', 'Mutton Curry'];
+export const MENU_2_EXTRAS: string[] = ['Chicken Biryani', 'Mutton Curry'];
+
+export const WELCOME_DRINK: string = 'Welcome Drink';
+
+export const SNACKS: string = 'Snacks';
 
 // ─── Reviews ──────────────────────────────────────────────────────────────────
 

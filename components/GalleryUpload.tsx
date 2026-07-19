@@ -24,7 +24,7 @@ export function GalleryUpload({ categoryName, initialImages }: GalleryUploadProp
         <p className="text-gold text-[10px] tracking-[0.38em] uppercase mb-1">
           {t.gallery.decorationGallery}
         </p>
-        <h2 className="text-xl sm:text-2xl text-cream font-bold font-display">
+        <h2 className="text-xl sm:text-2xl text-cream font-light font-display">
           {initialImages.length} {initialImages.length !== 1 ? t.gallery.photosCount : t.gallery.photoCount}
         </h2>
       </div>
