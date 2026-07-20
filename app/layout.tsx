@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Cinzel_Decorative, Montserrat, Noto_Sans_Telugu } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
@@ -135,6 +136,7 @@ export default function RootLayout({
           <CallFloat />
           <WhatsAppFloat />
         </Providers>
+        <GoogleAnalytics gaId="G-KQFXL5N1R3" />
       </body>
     </html>
   );
