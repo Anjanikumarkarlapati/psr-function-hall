@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CATEGORIES, WHATSAPP_NUMBERS } from '@/lib/data';
 import { decodeNumber } from '@/lib/obfuscate';
+import { createPageMetadata } from '@/lib/seo';
 import { CategoryDetailClient } from './CategoryDetailClient';
 
 interface PageProps {
@@ -19,15 +20,13 @@ export function generateMetadata({ params }: PageProps): Metadata {
 
   if (!category) return {};
 
-  return {
-    title: category.name,
+  return createPageMetadata({
+    title: `${category.name} Venue in Khammam`,
     description: category.subtitle,
-    openGraph: {
-      title: `${category.name} | Pasumarthy Banquet Hall`,
-      description: category.subtitle,
-      images: [{ url: category.cover, alt: category.name }],
-    },
-  };
+    path: `/events/${category.id}`,
+    image: category.cover,
+    imageAlt: `${category.name} setup at Pasumarthy Banquet Hall in Khammam`,
+  });
 }
 
 export default function CategoryDetailPage({ params }: PageProps) {
