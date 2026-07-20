@@ -120,7 +120,7 @@ export const ADDRESS: Address = {
   phone2: 'NzcwMzcgNjYwMzcgMTkr', // obfuscated — use decodeDisplayNumber()
   timings: 'Mon – Sun  ·  10:00 AM – 10:00 PM',
   justdial:
-    'https://www.justdial.com/Khammam/Pasumarthi-Banquet-Hall-Above-Avantara-Opposite-Babu-Rao-Compex-B-K-Bazar-Colony/9999P8742-8742-250125012404-V8A9_BZDET',
+    'https://www.justdial.com/Khammam/Pasumarthy-Banquet-Hall-Above-Avantara-Opposite-Babu-Rao-Compex-B-K-Bazar-Colony/9999P8742-8742-250125012404-V8A9_BZDET',
   gmaps: GOOGLE_MAPS_PLACE_URL,
 };
 

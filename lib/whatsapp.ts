@@ -15,7 +15,7 @@ export function buildWhatsAppUrl(
   whatsappNumber: string
 ): string {
   const lines = [
-    '*New Booking Request — Pasumarthi Banquet Hall*',
+    '*New Booking Request — Pasumarthy Banquet Hall*',
     '',
     `*Name:* ${data.name}`,
     `*Phone:* ${data.phone}`,

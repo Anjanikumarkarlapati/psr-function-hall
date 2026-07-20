@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
     }
 
     const lines = [
-      '*New Booking Request — Pasumarthi Banquet Hall*',
+      '*New Booking Request — Pasumarthy Banquet Hall*',
       '',
       `*Name:* ${normalizedName}`,
       `*Phone:* ${normalizedPhone}`,

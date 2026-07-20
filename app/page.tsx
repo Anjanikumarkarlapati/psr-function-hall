@@ -12,6 +12,7 @@ import { WhatsAppIcon } from '@/components/WhatsAppIcon';
 import { MapSection } from '@/components/MapSection';
 import { VideoGallery } from '@/components/VideoGallery';
 import { Lightbox } from '@/components/Lightbox';
+import { BirthdayOfferBanner } from '@/components/BirthdayOfferBanner';
 import { useTranslation } from '@/lib/i18n';
 
 // Flat list of all category images for the lightbox
@@ -547,6 +548,9 @@ export default function HomePage() {
           onClose={() => setLightboxIndex(null)}
         />
       )}
+
+      {/* ── Birthday Offer Notification ──────────────────────────── */}
+      <BirthdayOfferBanner />
     </div>
   );
 }

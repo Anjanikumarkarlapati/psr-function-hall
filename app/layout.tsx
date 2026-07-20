@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   keywords: [
     'banquet hall khammam',
     'wedding venue khammam',
-    'pasumarthi banquet hall',
+    'pasumarthy banquet hall',
     'function hall khammam',
     'reception hall telangana',
   ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     apple: '/images/brand-mark.svg',
   },
   openGraph: {
-    title: 'Pasumarthi Banquet Hall — Premium Venue in Khammam',
+    title: 'Pasumarthy Banquet Hall — Premium Venue in Khammam',
     description:
       'A distinguished celebration venue for weddings, receptions, engagements, birthdays, and family events in Khammam.',
     type: 'website',
