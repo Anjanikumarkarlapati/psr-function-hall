@@ -25,7 +25,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
     description: category.subtitle,
     path: `/events/${category.id}`,
     image: category.cover,
-    imageAlt: `${category.name} setup at Pasumarthy Banquet Hall in Khammam`,
+    imageAlt: `${category.name} setup at Pasumarthi Banquet Hall in Khammam`,
   });
 }
 
@@ -35,7 +35,7 @@ export default function CategoryDetailPage({ params }: PageProps) {
 
   const others = CATEGORIES.filter(({ id }) => id !== category.id).slice(0, 4);
   const message = encodeURIComponent(
-    `Hello, I would like to enquire about a ${category.name} booking at Pasumarthy Banquet Hall.`
+    `Hello, I would like to enquire about a ${category.name} booking at Pasumarthi Banquet Hall.`
   );
   const whatsappHref = `https://wa.me/${decodeNumber(
     WHATSAPP_NUMBERS[0].number

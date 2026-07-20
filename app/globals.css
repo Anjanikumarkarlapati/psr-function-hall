@@ -271,7 +271,8 @@ h1, h2, h3, h4, h5, h6, p, span, a, div {
 /* ─── Responsive Birthday Offer ───────────────────────────────────── */
 
 .birthday-offer-position {
-  bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  top: calc(4.5rem + env(safe-area-inset-top, 0px));
+  bottom: auto;
 }
 
 .birthday-offer-surface {
@@ -285,6 +286,7 @@ h1, h2, h3, h4, h5, h6, p, span, a, div {
 
 @media (min-width: 640px) {
   .birthday-offer-position {
+    top: auto;
     bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
   }
 

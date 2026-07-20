@@ -75,9 +75,9 @@ export default function HomePage() {
             />
           </div>
 
-          {/* PASUMARTHY — Cinzel Decorative */}
+          {/* PASUMARTHI — Cinzel Decorative */}
           <h1 className="font-display text-[34px] sm:text-[56px] md:text-[68px] font-bold leading-[1.05] tracking-wide text-cream drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)] uppercase">
-            Pasumarthy
+            Pasumarthi
           </h1>
 
           {/* BANQUET HALL — Montserrat */}

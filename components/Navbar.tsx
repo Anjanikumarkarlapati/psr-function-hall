@@ -70,7 +70,7 @@ export function Navbar() {
         >
           <Image
             src="/images/brand-lockup.svg"
-            alt="Pasumarthy Banquet Hall"
+            alt="Pasumarthi Banquet Hall"
             width={760}
             height={220}
             className="h-auto w-[154px] sm:w-[190px] drop-shadow-[0_2px_8px_rgba(201,168,76,0.16)] transition-[filter,opacity] duration-300 group-hover:brightness-110 group-hover:drop-shadow-[0_3px_12px_rgba(201,168,76,0.25)]"

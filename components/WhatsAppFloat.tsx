@@ -18,7 +18,7 @@ export function WhatsAppFloat() {
   const getMessage = () =>
     locale === 'te'
       ? 'నమస్కారం, పసుమర్తి బ్యాంక్వెట్ హాల్ బుకింగ్ గురించి విచారించాలనుకుంటున్నాను.'
-      : 'Hello, I would like to enquire about booking Pasumarthy Banquet Hall.';
+      : 'Hello, I would like to enquire about booking Pasumarthi Banquet Hall.';
 
   const getUrl = (index: number) => {
     const number = decodeNumber(WHATSAPP_NUMBERS[index].number);

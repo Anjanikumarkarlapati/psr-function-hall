@@ -14,7 +14,7 @@ export function BirthdayOfferBanner() {
   const whatsappUrl = `https://wa.me/${decodeNumber(
     WHATSAPP_NUMBERS[0].number
   )}?text=${encodeURIComponent(
-    'Hello, I would like to know more about your special birthday offers at Pasumarthy Banquet Hall.'
+    'Hello, I would like to know more about your special birthday offers at Pasumarthi Banquet Hall.'
   )}`;
 
   return (
@@ -25,15 +25,6 @@ export function BirthdayOfferBanner() {
       aria-label="Birthday special offer"
     >
       <div className="birthday-offer-surface relative overflow-hidden rounded-2xl border border-white/20">
-        <button
-          type="button"
-          onClick={() => setVisible(false)}
-          className="absolute right-1 top-1 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-cream/80 transition-colors hover:bg-black/65 hover:text-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:right-2 sm:top-2"
-          aria-label="Close birthday offer notification"
-        >
-          <X size={16} aria-hidden="true" />
-        </button>
-
         <div className="flex min-w-0">
           <div className="relative min-h-[148px] w-[clamp(5.75rem,28vw,7rem)] flex-shrink-0 sm:min-h-[154px] sm:w-44 md:w-48 lg:w-[12.5rem]">
             <Image
@@ -53,10 +44,21 @@ export function BirthdayOfferBanner() {
             </div>
           </div>
 
-          <div className="min-w-0 flex-1 px-3 py-3 pr-12 sm:px-5 sm:py-4 sm:pr-14 lg:px-6 lg:py-5 lg:pr-16">
-            <h3 className="mb-1 pr-1 font-display text-[12px] font-semibold leading-tight text-gold-light sm:mb-1.5 sm:text-[16px] lg:text-[17px]">
-              Special Offers for Birthdays!
-            </h3>
+          <div className="min-w-0 flex-1 px-3 py-3 sm:px-5 sm:py-4 sm:pr-14 lg:px-6 lg:py-5 lg:pr-16">
+            <div className="flex items-start gap-2 sm:block">
+              <h3 className="mb-1 min-w-0 flex-1 font-display text-[12px] font-semibold leading-tight text-gold-light sm:mb-1.5 sm:pr-12 sm:text-[16px] lg:text-[17px]">
+                Special Offers for Birthdays!
+              </h3>
+              <button
+                type="button"
+                onClick={() => setVisible(false)}
+                className="flex h-11 w-11 flex-none touch-manipulation items-center justify-center rounded-xl border border-white/15 bg-white/10 text-cream transition-[background-color,color,transform] duration-200 hover:bg-white/15 hover:text-white active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:absolute sm:right-2 sm:top-2 sm:z-10 sm:rounded-full sm:border-0 sm:bg-black/45 sm:text-cream/80 sm:hover:bg-black/65 sm:hover:text-cream"
+                aria-label="Close birthday offer notification"
+                title="Close offer"
+              >
+                <X size={20} className="sm:h-4 sm:w-4" aria-hidden="true" />
+              </button>
+            </div>
             <p className="mb-2 line-clamp-2 text-[10px] leading-relaxed text-cream/75 sm:mb-3 sm:line-clamp-none sm:text-[12px] lg:text-[13px]">
               Contact us for exclusive birthday celebration packages and decorations.
             </p>

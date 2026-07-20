@@ -7,7 +7,7 @@ export const en: TranslationDictionary = {
     events: 'Events',
     bookNow: 'Book Now',
     subtitle: 'Banquet Hall · Khammam',
-    brandName: 'Pasumarthy',
+    brandName: 'Pasumarthi',
   },
   home: {
     heroWelcome: 'Welcome to',
@@ -29,7 +29,7 @@ export const en: TranslationDictionary = {
     aboutHeading1: 'One of the Finest',
     aboutHeading2: 'Banquet Halls',
     aboutHeading3: 'in Khammam',
-    aboutDesc1: 'Pasumarthy Banquet Hall stands as one of Khammam\u2019s most distinguished celebration venues. Our stunning marble floors, crystal chandelier, and silver-draped walls create an atmosphere of timeless elegance.',
+    aboutDesc1: 'Pasumarthi Banquet Hall stands as one of Khammam\u2019s most distinguished celebration venues. Our stunning marble floors, crystal chandelier, and silver-draped walls create an atmosphere of timeless elegance.',
     aboutDesc2: 'From intimate family gatherings to grand wedding receptions, we offer customisable spaces, exquisite cuisine, and dedicated event coordination for every unforgettable moment.',
     stats: [
       { number: '100+', label: 'Events Hosted' },
@@ -249,7 +249,7 @@ export const en: TranslationDictionary = {
     contactHeading: 'Contact',
     navigateHeading: 'Navigate',
     whatsappBooking: 'WhatsApp Booking Available',
-    copyright: '© 2026 Pasumarthy Banquet Hall · All rights reserved · Khammam, Telangana',
+    copyright: '© 2026 Pasumarthi Banquet Hall · All rights reserved · Khammam, Telangana',
   },
   gallery: {
     decorationGallery: 'Decoration Gallery',

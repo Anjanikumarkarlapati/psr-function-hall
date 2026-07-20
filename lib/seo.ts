@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
-export const SITE_NAME = 'Pasumarthy Banquet Hall';
+export const SITE_NAME = 'Pasumarthi Banquet Hall';
 export const SITE_URL = 'https://www.psrfunctionhallkhammam.in';
 export const DEFAULT_TITLE =
-  'Pasumarthy Banquet Hall | Premium Function Hall in Khammam';
+  'Pasumarthi Banquet Hall | Premium Function Hall in Khammam';
 export const DEFAULT_DESCRIPTION =
-  'Pasumarthy Banquet Hall is one of the best banquet and function halls in Khammam for weddings, receptions, engagements, birthday parties, baby showers, corporate events and family celebrations.';
+  'Pasumarthi Banquet Hall is one of the best banquet and function halls in Khammam for weddings, receptions, engagements, birthday parties, baby showers, corporate events and family celebrations.';
 export const DEFAULT_OG_IMAGE =
   '/images/gallery/wedding-stage-floral-arch.jpg';
 
